@@ -8,7 +8,7 @@ A happier Codable by using SourceKittenFramework to automatically create Codable
 3. Unsupported automatic synthesis for non-RawRepresentable enums, even if each element is codable.
 4. Unsmupported ultiple key mapping
 5. Difficulty debugging.
-6. Does not automatically use the default values in the definition.
+6. Does not automatically use the default values in the definition when missing corresponding key in json data.
 7. Unsupported 0/1 to false/true
 
 ## Usage
