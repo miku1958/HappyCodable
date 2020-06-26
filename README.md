@@ -1,5 +1,5 @@
 # HappyCodable
-A happier codable by using SourceKittenFramework to automatically create code codable relies on by using SourceKittenFramework.
+A happier way to automatically create Codable related code is by using SourceKittenFramework.
 
 ## What's wrong with Codable ?
 
