@@ -3,9 +3,10 @@ A happier codable by using SourceKittenFramework to automatically create code co
 
 ## What's wrong with Codable ?
 
-1. unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys
-2. unsupport ignore specific coding key.
-3. unsupport automatic synthesis for non-RawRepresentable enums, even if each element is codable
+1. Unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys.
+2. Unsupport ignore specific coding key.
+3. Unsupport automatic synthesis for non-RawRepresentable enums, even if each element is codable.
+4. Difficulty debugging.
 
 ## Usage
 
