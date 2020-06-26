@@ -31,7 +31,7 @@ struct Person: HappyCodable {
 	var age: String = "abc"
 	
 	@Happy.uncoding
-	var abc: String = "abc" // build fail if coded, so we need to "uncode" it
+	var abc: String = "abc" // Build fail if coded, so we need to "uncode" it.
 }
 ```
 
@@ -81,7 +81,7 @@ also support non-RawRepresentable enum:
 ```
 enum EnumTest: HappyCodableEnum {
 	case value(num: Int, name: String)
-//	case call(() -> Void) // build fail if added, due to (() -> Void) can't be codable
+//	case call(() -> Void) // Build fails if added, since (() -> Void) can't be codable
 	case name0(String)
 	case name1(String, last: String)
 	case name2(first: String, String)
