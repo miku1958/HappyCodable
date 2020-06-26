@@ -6,7 +6,7 @@ A happier Codable by using SourceKittenFramework to automatically create Codable
 1. Unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys.
 2. Unsupported ignore specific coding key.
 3. Unsupported automatic synthesis for non-RawRepresentable enums, even if each element is codable.
-4. Unsmupported multiple key mapping
+4. Unsupported multiple key mapping to one property
 5. Difficulty debugging.
 6. Does not automatically use the default values in the definition when missing corresponding key in json data.
 7. Unsupported 0/1 to false/true
