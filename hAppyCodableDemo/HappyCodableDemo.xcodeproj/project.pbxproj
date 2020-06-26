@@ -1,0 +1,596 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06D2242856016397432F3F6A /* libPods-HappyCodableCommandLine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */; };
+		83F4F6533A9B1850203D389A /* Pods_HappyCodableDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */; };
+		FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916A8247A5F1A0080665E /* AppDelegate.swift */; };
+		FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916AA247A5F1A0080665E /* ViewController.swift */; };
+		FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8916AC247A5F1B0080665E /* Assets.xcassets */; };
+		FF8916B0247A5F1B0080665E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF8916AE247A5F1B0080665E /* Main.storyboard */; };
+		FFA32FEA24A635BF009DBE2A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA32FE624A63541009DBE2A /* Test.swift */; };
+		FFBB4A4B249B14F90055CA66 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBB4A4A249B14F90055CA66 /* main.swift */; };
+		FFBB4A4C249B190A0055CA66 /* HappyCodable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF155F7E249A161B009A002B /* HappyCodable.generated.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FFBB4A4E249B27A70055CA66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF891678247A5AFC0080665E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FFBB4A2D249B13FF0055CA66;
+			remoteInfo = HappyCodableCommandLine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FFBB4A2C249B13FF0055CA66 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		13F3D776CCD091D3C2A40CCB /* Pods-HappyCodableDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableDemo.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		2ADC64C83B367C31BA94F8B5 /* Pods-HappyCodableDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableDemo.release.xcconfig"; path = "Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo.release.xcconfig"; sourceTree = "<group>"; };
+		2FCBCE44B725E6E673731E69 /* Pods-HappyCodable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodable.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodable/Pods-HappyCodable.debug.xcconfig"; sourceTree = "<group>"; };
+		450E0DF62299CEA5D8A97212 /* Pods-hAppyCodableDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hAppyCodableDemo.release.xcconfig"; path = "Target Support Files/Pods-hAppyCodableDemo/Pods-hAppyCodableDemo.release.xcconfig"; sourceTree = "<group>"; };
+		5CB2DB2199EC23BED04A178A /* Pods-hAppyCodableDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hAppyCodableDemo.debug.xcconfig"; path = "Target Support Files/Pods-hAppyCodableDemo/Pods-hAppyCodableDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		6E3E6D938487EABD00D517E4 /* Pods-HappyCodableCommandLine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableCommandLine.release.xcconfig"; path = "Target Support Files/Pods-HappyCodableCommandLine/Pods-HappyCodableCommandLine.release.xcconfig"; sourceTree = "<group>"; };
+		78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyCodableDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96C6A7EEAF11763A7573B758 /* Pods-HappyCodableCommandLine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableCommandLine.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodableCommandLine/Pods-HappyCodableCommandLine.debug.xcconfig"; sourceTree = "<group>"; };
+		A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HappyCodableCommandLine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F187321C51F5E31B907CA71C /* Pods-HappyCodable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodable.release.xcconfig"; path = "Target Support Files/Pods-HappyCodable/Pods-HappyCodable.release.xcconfig"; sourceTree = "<group>"; };
+		FF155F7E249A161B009A002B /* HappyCodable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyCodable.generated.swift; sourceTree = "<group>"; };
+		FF89168D247A5D7D0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF89169D247A5DCF0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyCodableDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF8916A8247A5F1A0080665E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FF8916AA247A5F1A0080665E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FF8916AC247A5F1B0080665E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF8916AF247A5F1B0080665E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF8916B1247A5F1B0080665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF8916B2247A5F1B0080665E /* hAppyCodableDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = hAppyCodableDemo.entitlements; sourceTree = "<group>"; };
+		FFA32FE624A63541009DBE2A /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HappyCodableCommandLine; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFBB4A4A249B14F90055CA66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF8916A3247A5F1A0080665E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83F4F6533A9B1850203D389A /* Pods_HappyCodableDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFBB4A2B249B13FF0055CA66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06D2242856016397432F3F6A /* libPods-HappyCodableCommandLine.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B556B32BDA05E177458921B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5CB2DB2199EC23BED04A178A /* Pods-hAppyCodableDemo.debug.xcconfig */,
+				450E0DF62299CEA5D8A97212 /* Pods-hAppyCodableDemo.release.xcconfig */,
+				13F3D776CCD091D3C2A40CCB /* Pods-HappyCodableDemo.debug.xcconfig */,
+				2ADC64C83B367C31BA94F8B5 /* Pods-HappyCodableDemo.release.xcconfig */,
+				2FCBCE44B725E6E673731E69 /* Pods-HappyCodable.debug.xcconfig */,
+				F187321C51F5E31B907CA71C /* Pods-HappyCodable.release.xcconfig */,
+				96C6A7EEAF11763A7573B758 /* Pods-HappyCodableCommandLine.debug.xcconfig */,
+				6E3E6D938487EABD00D517E4 /* Pods-HappyCodableCommandLine.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A79A9558D9C03727C0993E75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FF89169D247A5DCF0080665E /* SWXMLHash.framework */,
+				FF89168D247A5D7D0080665E /* SWXMLHash.framework */,
+				78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */,
+				A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF891677247A5AFC0080665E = {
+			isa = PBXGroup;
+			children = (
+				FF8916A7247A5F1A0080665E /* HappyCodableDemo */,
+				FFBB4A2F249B13FF0055CA66 /* HappyCodableCommandLine */,
+				FF891681247A5AFC0080665E /* Products */,
+				3B556B32BDA05E177458921B /* Pods */,
+				A79A9558D9C03727C0993E75 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FF891681247A5AFC0080665E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */,
+				FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF8916A7247A5F1A0080665E /* HappyCodableDemo */ = {
+			isa = PBXGroup;
+			children = (
+				FF155F7E249A161B009A002B /* HappyCodable.generated.swift */,
+				FFA32FE624A63541009DBE2A /* Test.swift */,
+				FF8916A8247A5F1A0080665E /* AppDelegate.swift */,
+				FF8916AA247A5F1A0080665E /* ViewController.swift */,
+				FF8916AC247A5F1B0080665E /* Assets.xcassets */,
+				FF8916AE247A5F1B0080665E /* Main.storyboard */,
+				FF8916B1247A5F1B0080665E /* Info.plist */,
+				FF8916B2247A5F1B0080665E /* hAppyCodableDemo.entitlements */,
+			);
+			path = HappyCodableDemo;
+			sourceTree = "<group>";
+		};
+		FFBB4A2F249B13FF0055CA66 /* HappyCodableCommandLine */ = {
+			isa = PBXGroup;
+			children = (
+				FFBB4A4A249B14F90055CA66 /* main.swift */,
+			);
+			path = HappyCodableCommandLine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF8916A5247A5F1A0080665E /* HappyCodableDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF8916B3247A5F1B0080665E /* Build configuration list for PBXNativeTarget "HappyCodableDemo" */;
+			buildPhases = (
+				FFBB4A50249B27AF0055CA66 /* ShellScript */,
+				2635AF5171A7E14D993F0C8A /* [CP] Check Pods Manifest.lock */,
+				FF8916A2247A5F1A0080665E /* Sources */,
+				FF8916A3247A5F1A0080665E /* Frameworks */,
+				FF8916A4247A5F1A0080665E /* Resources */,
+				56543EF39786838B90ADDDB0 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FFBB4A4F249B27A70055CA66 /* PBXTargetDependency */,
+			);
+			name = HappyCodableDemo;
+			productName = hAppyCodableDemo;
+			productReference = FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFBB4A34249B13FF0055CA66 /* Build configuration list for PBXNativeTarget "HappyCodableCommandLine" */;
+			buildPhases = (
+				279AE8B7A3B931E7CE9128D5 /* [CP] Check Pods Manifest.lock */,
+				FFBB4A2A249B13FF0055CA66 /* Sources */,
+				FFBB4A2B249B13FF0055CA66 /* Frameworks */,
+				FFBB4A2C249B13FF0055CA66 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HappyCodableCommandLine;
+			productName = HappyCodable;
+			productReference = FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF891678247A5AFC0080665E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "庄黛淳华";
+				TargetAttributes = {
+					FF8916A5247A5F1A0080665E = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					FFBB4A2D249B13FF0055CA66 = {
+						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
+					};
+				};
+			};
+			buildConfigurationList = FF89167B247A5AFC0080665E /* Build configuration list for PBXProject "HappyCodableDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF891677247A5AFC0080665E;
+			productRefGroup = FF891681247A5AFC0080665E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF8916A5247A5F1A0080665E /* HappyCodableDemo */,
+				FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF8916A4247A5F1A0080665E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */,
+				FF8916B0247A5F1B0080665E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2635AF5171A7E14D993F0C8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HappyCodableDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		279AE8B7A3B931E7CE9128D5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HappyCodableCommandLine-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		56543EF39786838B90ADDDB0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFBB4A50249B27AF0055CA66 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"编译完的product目录\"\n${SYMROOT}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/HappyCodableCommandLine ${SRCROOT}/${PRODUCT_NAME} ${SRCROOT}/${PRODUCT_NAME}/HappyCodable.generated.swift\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF8916A2247A5F1A0080665E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFBB4A4C249B190A0055CA66 /* HappyCodable.generated.swift in Sources */,
+				FFA32FEA24A635BF009DBE2A /* Test.swift in Sources */,
+				FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */,
+				FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFBB4A2A249B13FF0055CA66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFBB4A4B249B14F90055CA66 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FFBB4A4F249B27A70055CA66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */;
+			targetProxy = FFBB4A4E249B27A70055CA66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF8916AE247A5F1B0080665E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF8916AF247A5F1B0080665E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF891685247A5AFC0080665E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF891686247A5AFC0080665E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		FF8916B4247A5F1B0080665E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13F3D776CCD091D3C2A40CCB /* Pods-HappyCodableDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = hAppyCodableDemo/hAppyCodableDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = hAppyCodableDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.hAppyCodableDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FF8916B5247A5F1B0080665E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2ADC64C83B367C31BA94F8B5 /* Pods-HappyCodableDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = hAppyCodableDemo/hAppyCodableDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = hAppyCodableDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.hAppyCodableDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		FFBB4A32249B13FF0055CA66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96C6A7EEAF11763A7573B758 /* Pods-HappyCodableCommandLine.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FFBB4A33249B13FF0055CA66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E3E6D938487EABD00D517E4 /* Pods-HappyCodableCommandLine.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF89167B247A5AFC0080665E /* Build configuration list for PBXProject "HappyCodableDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF891685247A5AFC0080665E /* Debug */,
+				FF891686247A5AFC0080665E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF8916B3247A5F1B0080665E /* Build configuration list for PBXNativeTarget "HappyCodableDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF8916B4247A5F1B0080665E /* Debug */,
+				FF8916B5247A5F1B0080665E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFBB4A34249B13FF0055CA66 /* Build configuration list for PBXNativeTarget "HappyCodableCommandLine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFBB4A32249B13FF0055CA66 /* Debug */,
+				FFBB4A33249B13FF0055CA66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF891678247A5AFC0080665E /* Project object */;
+}

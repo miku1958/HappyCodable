@@ -1,0 +1,37 @@
+PODS:
+  - CryptoSwift (1.3.1)
+  - HappyCodable/CommandLine (0.0.1):
+    - CryptoSwift
+    - SourceKittenFramework
+  - HappyCodable/Common (0.0.1)
+  - SourceKittenFramework (0.29.0):
+    - SWXMLHash (~> 5.0.1)
+    - Yams (~> 2.0)
+  - SWXMLHash (5.0.1)
+  - Yams (2.0.0)
+
+DEPENDENCIES:
+  - HappyCodable/CommandLine (from `../Source`)
+  - HappyCodable/Common (from `../Source`)
+
+SPEC REPOS:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+    - CryptoSwift
+    - SourceKittenFramework
+    - SWXMLHash
+    - Yams
+
+EXTERNAL SOURCES:
+  HappyCodable:
+    :path: "../Source"
+
+SPEC CHECKSUMS:
+  CryptoSwift: f12f037f6d0fcd6d48c96db0071b653de64e6c4d
+  HappyCodable: 6849760153240b3346cc430bce6c60176f01d6cd
+  SourceKittenFramework: 9ba1cdf386630b8e7f96ba26ea2cb4f849776d84
+  SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
+  Yams: cb96472112d99e4b368f8dae9ab62e8a3eb8a3f9
+
+PODFILE CHECKSUM: 22144645d834df7fd7f891e3e83f53e52a7be44a
+
+COCOAPODS: 1.9.3
