@@ -7,6 +7,7 @@ A happier codable by using SourceKittenFramework to automatically create code co
 2. Unsupport ignore specific coding key.
 3. Unsupport automatic synthesis for non-RawRepresentable enums, even if each element is codable.
 4. Difficulty debugging.
+5. Does not automatically use the default values in the definition.
 
 ## Usage
 
