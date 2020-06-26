@@ -33,7 +33,7 @@ struct Person: HappyCodable {
 	var age: String = "abc"
 	
 	@Happy.uncoding
-	var abc: String = "abc" // Build fail if coded, so we need to "uncode" it.
+	var abc: String = "abc" // Build fail if coded, in this case, we can "uncoding" it.
 }
 ```
 
