@@ -19,7 +19,8 @@ struct Person: HappyCodable {
 	@Happy.codingKeys("234", "age", "abc")
 	var age: String = "abc"
 	
-//	var abc: String = "abc" // build fail if added
+	@Happy.uncoding
+	var abc: String = "abc" // build fail if coded
 }
 
 struct Test {
