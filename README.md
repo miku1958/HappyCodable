@@ -1,11 +1,15 @@
 # HappyCodable
-A happier codable by using SourceKittenFramework to automatically create code codable relies on by using SourceKittenFramework.
+A happier Codable by using SourceKittenFramework to automatically create Codable related code.
 
 ## What's wrong with Codable ?
 
-1. unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys
-2. unsupport ignore specific coding key.
-3. unsupport automatic synthesis for non-RawRepresentable enums, even if each element is codable
+1. Unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys.
+2. Unsupported ignore specific coding key.
+3. Unsupported automatic synthesis for non-RawRepresentable enums, even if each element is codable.
+4. Unsupported multiple key mapping to one property
+5. Difficulty debugging.
+6. Does not automatically use the default values in the definition when missing corresponding key in json data.
+7. Unsupported 0/1 to false/true
 
 ## Usage
 
@@ -30,7 +34,7 @@ struct Person: HappyCodable {
 	var age: String = "abc"
 	
 	@Happy.uncoding
-	var abc: String = "abc" // build fail if coded, so we need to "uncode" it
+	var abc: String = "abc" // Build fail if coded, in this case, we can "uncoding" it.
 }
 ```
 
@@ -78,7 +82,7 @@ also support non-RawRepresentable enum:
 ```
 enum EnumTest: HappyCodableEnum {
 	case value(num: Int, name: String)
-//	case call(() -> Void) // build fail if added, due to (() -> Void) can't be codable
+//	case call(() -> Void) // Build fails if added, since (() -> Void) can't be codable
 	case name0(String)
 	case name1(String, last: String)
 	case name2(first: String, String)
