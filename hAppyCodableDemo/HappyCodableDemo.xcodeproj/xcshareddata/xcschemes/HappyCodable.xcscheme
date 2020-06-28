@@ -50,6 +50,16 @@
             ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/mikun/Desktop/HappyCodable/hAppyCodableDemo/HappyCodableDemo/"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/mikun/Desktop/HappyCodable/hAppyCodableDemo/HappyCodableDemo/HappyCodable.generated.swift "
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

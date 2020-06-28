@@ -26,7 +26,7 @@ struct Person: HappyCodable {
 	@Happy.codingKeys("🍉")
 	var numberOfTips2: String = "abc"
 	
-	@Happy.codingKeys("234", "age", "abc")
+	@Happy.codingKeys("234", "age", "abc") // the first key will be the coding key
 	var age: String = "abc"
 	
 	@Happy.uncoding
@@ -40,23 +40,21 @@ and HappyCodableCommandLine will create code automatically:
 extension Person {
 	enum CodingKeys: String, CodingKey {
 		case name1
-		case numberOfTips2_happy_auto_synthesized_🍉 = "🍉"
-		case age_happy_auto_synthesized_234 = "234"
-		case age = "age"
-		case age_happy_auto_synthesized_abc = "abc"
+		case numberOfTips2 = "🍉"
+		case age = "234"
 	}
 	mutating
 	func decode(happyFrom decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		
 		if Self.globalDecodeAllowOptional {
-			do { self.name1 = try container.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1) } catch { }
-			do { self.numberOfTips2 = try container.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2_happy_auto_synthesized_🍉) } catch { }
-			do { self.age = try container.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age_happy_auto_synthesized_234, .age, .age_happy_auto_synthesized_abc) } catch { }
+			do { self.name1 = try decoder.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1, alterKeys: [], from: container) } catch { }
+			do { self.numberOfTips2 = try decoder.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2, alterKeys: [], from: container) } catch { }
+			do { self.age = try decoder.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age, alterKeys: ["age", "abc"], from: container) } catch { }
 		} else {
-			self.name1 = try container.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1)
-			self.numberOfTips2 = try container.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2_happy_auto_synthesized_🍉)
-			self.age = try container.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age_happy_auto_synthesized_234, .age, .age_happy_auto_synthesized_abc)
+			self.name1 = try decoder.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1, alterKeys: [], from: container)
+			self.numberOfTips2 = try decoder.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2, alterKeys: [], from: container)
+			self.age = try decoder.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age, alterKeys: ["age", "abc"], from: container)
 		}
 		
 	}
@@ -64,11 +62,11 @@ extension Person {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		if Self.globalEncodeSafely {
 			do { try container.encodeIfPresent(self.name1, forKey: .name1) } catch { }
-			do { try container.encodeIfPresent(self.numberOfTips2, forKey: .numberOfTips2_happy_auto_synthesized_🍉) } catch { }
+			do { try container.encodeIfPresent(self.numberOfTips2, forKey: .numberOfTips2) } catch { }
 			do { try container.encodeIfPresent(self.age, forKey: .age) } catch { }
 		} else {
 			try container.encode(self.name1, forKey: .name1)
-			try container.encode(self.numberOfTips2, forKey: .numberOfTips2_happy_auto_synthesized_🍉)
+			try container.encode(self.numberOfTips2, forKey: .numberOfTips2)
 			try container.encode(self.age, forKey: .age)
 		}
 	}

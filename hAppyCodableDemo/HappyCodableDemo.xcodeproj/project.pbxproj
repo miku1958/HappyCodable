@@ -183,6 +183,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FFBB4A34249B13FF0055CA66 /* Build configuration list for PBXNativeTarget "HappyCodableCommandLine" */;
 			buildPhases = (
+				FF57765524A838FB00879B4A /* Create Extension File */,
 				279AE8B7A3B931E7CE9128D5 /* [CP] Check Pods Manifest.lock */,
 				FFBB4A2A249B13FF0055CA66 /* Sources */,
 				FFBB4A2B249B13FF0055CA66 /* Frameworks */,
@@ -306,6 +307,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		FF57765524A838FB00879B4A /* Create Extension File */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Create Extension File";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "frameworkPath=${SRCROOT%/*}/Source/CommandLine/\npath=${frameworkPath}ExtensionFileCreator.swift\necho \"create extension file\"\necho \"$(cat ${path})\" | DEVELOPER_DIR=\"$DEVELOPER_DIR\" xcrun --sdk macosx \"$TOOLCHAIN_DIR/usr/bin/\"swift -F \"${path}\" -\n\n";
 		};
 		FFBB4A50249B27AF0055CA66 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

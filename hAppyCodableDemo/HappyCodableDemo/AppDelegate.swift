@@ -14,10 +14,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		// Insert code here to initialize your application
-//		let path = "/Users/mikun/Desktop/HappyCodableDemo/HappyCodableDemo"
-//		
-//		
-//		HappyCodable.main(path: path, createdFilePath: "\(path)/HappyCodable.generated.swift")
+
+		
+		let json = #"{ "name1": "name1", "🍉": "🍉", "abc": "age"}"#.data(using: .utf8)!
+		let result = try! JSONDecoder().decode(Person.self, from: json)
 	}
 }
 

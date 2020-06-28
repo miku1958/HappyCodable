@@ -511,29 +511,23 @@ extension Object.Property.Attribute {
 	}
 }
 extension Object.Property {
-	var replacedKeys: [String] {
+	var replacedKey: String? {
 		for attribute in attributes {
 			if case let .codingKeys(keys) = attribute {
-				return keys
+				return keys.first
 			}
 		}
-		return []
+		return nil
 	}
-	
-	var codingKeys: [String] {
-		let replacedKeys = self.replacedKeys
-		if replacedKeys.isEmpty {
-			return [name]
-		} else {
-			return replacedKeys.map {
-				let replacedKey = $0.removingQuotes
-				if replacedKey == name {
-					return name
-				} else {
-					return "\(name)_happy_auto_synthesized_\(replacedKey)"
+	var alterKeys: [String] {
+		for attribute in attributes {
+			if case let .codingKeys(keys) = attribute, !keys.isEmpty {
+				return keys[1...].map {
+					$0.removingQuotes
 				}
 			}
 		}
+		return []
 	}
 	var isOptional: Bool{
 		for attribute in attributes {
@@ -619,53 +613,40 @@ extension Array where Element == Object {
 				}
 				
 				do {
-					if !property.replacedKeys.isEmpty {
-						codingKeyCases += zip(property.codingKeys, property.replacedKeys).map {
-							"\t\tcase \($0) = \($1)"
-						}.joined(separator: "\n")
+					if let replacingKey = property.replacedKey {
+						codingKeyCases += "case \(property.name) = \(replacingKey)"
 					} else {
-						codingKeyCases += "\t\tcase \(property.name)"
+						codingKeyCases += "case \(property.name)"
 					}
 					codingKeyCases += "\n"
 				}
 				if isConfirmToDecodable {
 					let decodeExpression =
 					"""
-					container.decode(defaultValue: self.\(property.name), verifyValue: self.\(property.name), forKey: \(property.codingKeys.map({
-							".\($0)"
-						}).joined(separator: ", ")))
+					decoder.decode(defaultValue: self.\(property.name), verifyValue: self.\(property.name), forKey: .\(property.name), alterKeys: \(property.alterKeys), from: container)
 					"""
 					
 					let decodeOnly = "self.\(property.name) = try \(decodeExpression)"
 					let decodeAllowOptional = "do { \(decodeOnly) } catch { }"
 					// 这里只能一个一个的do catch, 不能放到同一个do catch里, 不然一个出错后面都不执行了
-					decodingVariablesAllowOptional += "\t\t\t\(decodeAllowOptional)\n"
+					decodingVariablesAllowOptional += "\(decodeAllowOptional)\n"
 					if property.isOptional {
-						decodingVariablesWithThrow += "\t\t\t\(decodeAllowOptional)\n"
+						decodingVariablesWithThrow += "\(decodeAllowOptional)\n"
 					} else {
-						decodingVariablesWithThrow += "\t\t\t\(decodeOnly)\n"
+						decodingVariablesWithThrow += "\(decodeOnly)\n"
 					}
 				}
 				if isConfirmToEncodable {
-					if !property.replacedKeys.isEmpty {
-						
-					}
-					let key: String
-					if let index = property.codingKeys.firstIndex(of: property.name) {
-						key = property.codingKeys[index]
-					} else {
-						key = property.codingKeys[0]
-					}
-					let encodeParameters = "(self.\(property.name), forKey: .\(key))"
+					let encodeParameters = "(self.\(property.name), forKey: .\(property.name))"
 					
 					let encodeOnly = "try container.encode\(encodeParameters)"
 					let encodeSafely = "do { try container.encodeIfPresent\(encodeParameters) } catch { }"
 					
-					encodingVariablesSafely += "\t\t\t\(encodeSafely)\n"
+					encodingVariablesSafely += "\(encodeSafely)\n"
 					if property.isOptional {
-						encodingVariablesWithThrow += "\t\t\t\(encodeSafely)\n"
+						encodingVariablesWithThrow += "\(encodeSafely)\n"
 					} else {
-						encodingVariablesWithThrow += "\t\t\t\(encodeOnly)\n"
+						encodingVariablesWithThrow += "\(encodeOnly)\n"
 					}
 				}
 			}
@@ -673,39 +654,38 @@ extension Array where Element == Object {
 			
 			CodingKeys =
 			"""
-				enum CodingKeys: String, CodingKey {
-			
-			\(codingKeyCases)
-				}
+			enum CodingKeys: String, CodingKey {
+			\(indent: 1, codingKeyCases)
+			}
 			"""
 			
 			decode =
 			"""
-				\((!definitionObject.isClass).add("mutating"))
-				func decode(happyFrom decoder: Decoder) throws {
-					let container = try decoder.container(keyedBy: CodingKeys.self)
+			\((!definitionObject.isClass).add("mutating"))
+			func decode(happyFrom decoder: Decoder) throws {
+				let container = try decoder.container(keyedBy: CodingKeys.self)
 			
-					\(methodNames.contains("willStartMapping()").add("self.willStartMapping()"))
-					if Self.globalDecodeAllowOptional {
-			\(decodingVariablesAllowOptional)
-					} else {
-			\(decodingVariablesWithThrow)
-					}
-					\(methodNames.contains("didFinishMapping()").add("self.didFinishMapping()"))
+				\(methodNames.contains("willStartMapping()").add("self.willStartMapping()"))
+				if Self.globalDecodeAllowOptional {
+			\(indent: 2, decodingVariablesAllowOptional)
+				} else {
+			\(indent: 2, decodingVariablesWithThrow)
 				}
+				\(methodNames.contains("didFinishMapping()").add("self.didFinishMapping()"))
+			}
 			"""
 			
 			encode =
 			"""
-				func encode(happyTo encoder: Encoder) throws {
-					var container = encoder.container(keyedBy: CodingKeys.self)
+			func encode(happyTo encoder: Encoder) throws {
+				var container = encoder.container(keyedBy: CodingKeys.self)
 			
-					if Self.globalEncodeSafely {
-			\(encodingVariablesSafely)
-					} else {
-			\(encodingVariablesWithThrow)
-					}
+				if Self.globalEncodeSafely {
+			\(indent: 2, encodingVariablesSafely)
+				} else {
+			\(indent: 2, encodingVariablesWithThrow)
 				}
+			}
 			"""
 		}
 		func generatedEnum() {
@@ -727,8 +707,8 @@ extension Array where Element == Object {
 						if isConfirmToDecodable {
 							let code =
 							"""
-										case ".\(property.name)":
-											self = .\(property.name)
+							case ".\(property.name)":
+								self = .\(property.name)
 							"""
 							decodings.append(code)
 						}
@@ -736,8 +716,8 @@ extension Array where Element == Object {
 						if isConfirmToEncodable {
 							let code =
 							"""
-										case .\(property.name):
-											try container.encode([".\(property.name)": [String: String]()])
+							case .\(property.name):
+								try container.encode([".\(property.name)": [String: String]()])
 							"""
 							encodings.append(code)
 						}
@@ -746,8 +726,8 @@ extension Array where Element == Object {
 						if isConfirmToDecodable {
 							let code =
 							"""
-										case ".\(property.name)":
-											guard
+							case ".\(property.name)":
+								guard
 							\(function.parameters.enumerated().map({ (index, para) -> String in
 								let name: String
 								if let alterName = para.alterName, alterName != "_" {
@@ -758,21 +738,21 @@ extension Array where Element == Object {
 									name = "$\(index)"
 								}
 							return """
-												let _\(index) = content[name]?["\(name)"]?.data(using: .utf8)
+									let _\(index) = content[name]?["\(name)"]?.data(using: .utf8)
 							"""
 							}).joined(separator: ",\n"))
-											else {
-												throw error
-											}
-											
-											self = .\(shortName)(
+								else {
+									throw error
+								}
+								
+								self = .\(shortName)(
 							\(function.parameters.enumerated().map({ (index, para) -> String in
 								let name = para.alterName ?? para.name
 							return """
-												\((name != "_" && !name.isEmpty).add("\(name): "))try decoder.decode((\(para.type)).self, from: _\(index))
+									\((name != "_" && !name.isEmpty).add("\(name): "))try decoder.decode((\(para.type)).self, from: _\(index))
 							"""
 							}).joined(separator: ",\n"))
-											)
+								)
 							"""
 							decodings.append(code)
 						}
@@ -783,9 +763,9 @@ extension Array where Element == Object {
 							}).joined(separator: ", ")
 							let code =
 							"""
-										case let .\(shortName)(\(paras)):
-											try container.encode([
-												".\(property.name)": [
+							case let .\(shortName)(\(paras)):
+								try container.encode([
+									".\(property.name)": [
 							\(function.parameters.enumerated().map({ (index, para) -> String in
 								let name: String
 								if let alterName = para.alterName, alterName != "_" {
@@ -796,11 +776,11 @@ extension Array where Element == Object {
 									name = "$\(index)"
 								}
 							return """
-													"\(name)": String(data: try encoder.encode(_\(index)), encoding: .utf8)
+										"\(name)": String(data: try encoder.encode(_\(index)), encoding: .utf8)
 							"""
 							}).joined(separator: ",\n"))
-												]
-											])
+									]
+								])
 							"""
 							encodings.append(code)
 						}
@@ -809,44 +789,44 @@ extension Array where Element == Object {
 			}
 			decode =
 			"""
-				init(from decoder: Decoder) throws {
-					let container = try decoder.singleValueContainer()
-					let content = try container.decode([String: [String: String]].self)
-					let error = DecodingError.typeMismatch(\(definitionObject.name).self, DecodingError.Context(codingPath: [], debugDescription: ""))
-					guard let name = content.keys.first else {
-						throw error
-					}
-					let decoder = JSONDecoder()
-					switch name {
-			\(decodings.joined(separator: "\n"))
-					default:
-						throw error
-					}
+			init(from decoder: Decoder) throws {
+				let container = try decoder.singleValueContainer()
+				let content = try container.decode([String: [String: String]].self)
+				let error = DecodingError.typeMismatch(\(definitionObject.name).self, DecodingError.Context(codingPath: [], debugDescription: ""))
+				guard let name = content.keys.first else {
+					throw error
 				}
+				let decoder = JSONDecoder()
+				switch name {
+			\(indent: 2, decodings.joined(separator: "\n"))
+				default:
+					throw error
+				}
+			}
 			"""
 			
 			encode =
 			"""
-				func encode(to encoder: Encoder) throws {
-					var container = encoder.singleValueContainer()
-					let encoder = JSONEncoder()
-					switch self {
-			\(encodings.joined(separator: "\n"))
-					}
+			func encode(to encoder: Encoder) throws {
+				var container = encoder.singleValueContainer()
+				let encoder = JSONEncoder()
+				switch self {
+			\(indent: 2, encodings.joined(separator: "\n"))
 				}
+			}
 			"""
 		}
 		
 		func generatedEnumBaseRawValue() {
 			decode = """
-				// \(definitionObject.name) is base on RawRepresentable
-				// should not use HappyDecodableEnum
-				
+			// \(definitionObject.name) is base on RawRepresentable
+			// should not use HappyDecodableEnum
+			
 			"""
 			
 			encode =
 			"""
-				// \(definitionObject.name) is base on RawRepresentable
+			// \(definitionObject.name) is base on RawRepresentable
 			// should not use HappyEncodableEnum
 			"""
 		}
@@ -865,9 +845,9 @@ extension Array where Element == Object {
 		let code =
 		"""
 		extension \(definitionObject.name) {
-		\((customCodingKeys == nil).add(CodingKeys) )
-		\(isConfirmToDecodable.add(decode))
-		\(isConfirmToEncodable.add(encode))
+		\(indent: 1, (customCodingKeys == nil).add(CodingKeys) )
+		\(indent: 1, isConfirmToDecodable.add(decode))
+		\(indent: 1, isConfirmToEncodable.add(encode))
 		}
 		""".replacingOccurrences(of: "\n\n", with: "\n")
 

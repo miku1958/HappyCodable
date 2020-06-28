@@ -66,5 +66,15 @@ extension StringProtocol {
 		}
 		return string
 	}
+}
 
+extension String.StringInterpolation {
+	mutating func appendInterpolation<S>(indent count: Int, _ content: S) where S: StringProtocol {
+		var lines = content.split(separator: "\n").map(String.init(_:))
+		for index in 0..<lines.count {
+			lines[index] = String(Array(repeating: "\t", count: count)) + lines[index]
+		}
+		
+		appendLiteral(lines.joined(separator: "\n"))
+	}
 }
