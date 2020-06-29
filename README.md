@@ -21,7 +21,7 @@ A happier Codable by using SourceKittenFramework to automatically create Codable
 ${SRCROOT}/HappyCodableCommandLine ${SRCROOT}/Classes ${SRCROOT}/HappyCodable.generated.swift
 ```
 
-4. adding `HappyCodable` to a struce/class
+4. adding `HappyCodable` to a struct/class
 
 ```
 struct Person: HappyCodable {
