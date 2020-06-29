@@ -84,6 +84,11 @@ func createKeyedDecodingContainer() {
 					return try container.decode(\($0).self, forKey: key)
 				}
 			} catch {
+		\((!isGeneric && $0 != "String").add("""
+				if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = \($0)(value) {
+					return result
+				}
+		"""))
 				let alterKeys = alterKeys()
 				if !alterKeys.isEmpty {
 					let container = try self.container(keyedBy: StringCodingKey.self)
@@ -98,7 +103,11 @@ func createKeyedDecodingContainer() {
 								return try container.decode(\($0).self, forKey: key)
 							}
 						} catch {
-			
+		\((!isGeneric && $0 != "String").add("""
+							if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = \($0)(value) {
+								return result
+							}
+		"""))
 						}
 					}
 				}

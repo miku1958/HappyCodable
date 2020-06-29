@@ -41,7 +41,6 @@ extension Decoder {
 							return try container.decode(T.self, forKey: key)
 						}
 					} catch {
-		
 					}
 				}
 			}
@@ -68,6 +67,9 @@ extension Decoder {
 				return try container.decode(Bool.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -82,7 +84,9 @@ extension Decoder {
 							return try container.decode(Bool.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -132,7 +136,6 @@ extension Decoder {
 							return try container.decode(String.self, forKey: key)
 						}
 					} catch {
-		
 					}
 				}
 			}
@@ -159,6 +162,9 @@ extension Decoder {
 				return try container.decode(Double.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Double(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -173,7 +179,9 @@ extension Decoder {
 							return try container.decode(Double.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Double(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -200,6 +208,9 @@ extension Decoder {
 				return try container.decode(Float.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Float(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -214,7 +225,9 @@ extension Decoder {
 							return try container.decode(Float.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Float(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -241,6 +254,9 @@ extension Decoder {
 				return try container.decode(Int.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -255,7 +271,9 @@ extension Decoder {
 							return try container.decode(Int.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -282,6 +300,9 @@ extension Decoder {
 				return try container.decode(Int8.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int8(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -296,7 +317,9 @@ extension Decoder {
 							return try container.decode(Int8.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int8(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -323,6 +346,9 @@ extension Decoder {
 				return try container.decode(Int16.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int16(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -337,7 +363,9 @@ extension Decoder {
 							return try container.decode(Int16.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int16(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -364,6 +392,9 @@ extension Decoder {
 				return try container.decode(Int32.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int32(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -378,7 +409,9 @@ extension Decoder {
 							return try container.decode(Int32.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int32(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -405,6 +438,9 @@ extension Decoder {
 				return try container.decode(Int64.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -419,7 +455,9 @@ extension Decoder {
 							return try container.decode(Int64.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -446,6 +484,9 @@ extension Decoder {
 				return try container.decode(UInt.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -460,7 +501,9 @@ extension Decoder {
 							return try container.decode(UInt.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -487,6 +530,9 @@ extension Decoder {
 				return try container.decode(UInt8.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt8(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -501,7 +547,9 @@ extension Decoder {
 							return try container.decode(UInt8.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt8(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -528,6 +576,9 @@ extension Decoder {
 				return try container.decode(UInt16.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt16(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -542,7 +593,9 @@ extension Decoder {
 							return try container.decode(UInt16.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt16(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -569,6 +622,9 @@ extension Decoder {
 				return try container.decode(UInt32.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt32(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -583,7 +639,9 @@ extension Decoder {
 							return try container.decode(UInt32.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt32(value) {
+							return result
+						}
 					}
 				}
 			}
@@ -610,6 +668,9 @@ extension Decoder {
 				return try container.decode(UInt64.self, forKey: key)
 			}
 		} catch {
+			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
+				return result
+			}
 			let alterKeys = alterKeys()
 			if !alterKeys.isEmpty {
 				let container = try self.container(keyedBy: StringCodingKey.self)
@@ -624,7 +685,9 @@ extension Decoder {
 							return try container.decode(UInt64.self, forKey: key)
 						}
 					} catch {
-		
+						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
+							return result
+						}
 					}
 				}
 			}
