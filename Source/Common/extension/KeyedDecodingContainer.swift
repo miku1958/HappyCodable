@@ -7,692 +7,380 @@
 
 import Foundation
 
-extension Decoder {
-	@inline(__always)
-	public func decode<T, V, K>(defaultValue: T?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> T where T: Decodable {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(T.self, forKey: key) {
+// MARK: - Interfaces
+extension KeyedDecodingContainer where Key == StringCodingKey {
+	// MARK: - Decodable
+	@inlinable
+	public func decode<T>(default value: T?, key: String, alterKeys: @autoclosure () -> [String]) throws -> T where T: Decodable {
+		try decodeDecodable(mainKey: key, alterKeys: alterKeys, optional: false)
+	}
+	@inlinable
+	public func decode<T>(default value: T?, key: String, alterKeys: @autoclosure () -> [String]) throws -> T? where T: Decodable {
+		try decodeDecodable(mainKey: key, alterKeys: alterKeys, optional: true) as T
+	}
+	
+	// MARK: - Bool
+	@inlinable
+	public func decode(default value: Bool?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Bool? {
+		try decodeBool(mainKey: key, alterKeys: alterKeys, optional: true)
+	}
+	@inlinable
+	public func decode(default value: Bool?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Bool {
+		try decodeBool(mainKey: key, alterKeys: alterKeys, optional: false)
+	}
+	
+	// MARK: - String
+	@inlinable
+	public func decode(default value: String?, key: String, alterKeys: @autoclosure () -> [String]) throws -> String? {
+		try decodeString(mainKey: key, alterKeys: alterKeys, optional: true)
+	}
+	@inlinable
+	public func decode(default value: String?, key: String, alterKeys: @autoclosure () -> [String]) throws -> String {
+		try decodeString(mainKey: key, alterKeys: alterKeys, optional: false)
+	}
+	
+	// MARK: - Double
+	@inlinable
+	public func decode(default value: Double?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Double? {
+		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Double.self)
+	}
+	@inlinable
+	public func decode(default value: Double?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Double {
+		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Double.self)
+	}
+	
+	// MARK: - Float
+	@inlinable
+	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float? {
+		Float(try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Float.self))
+	}
+	@inlinable
+	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float {
+		Float(try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Float.self))
+	}
+	
+	// MARK: - Int
+	@inlinable
+	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int? {
+		Int(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int.self))
+	}
+	@inlinable
+	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int {
+		Int(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int.self))
+	}
+	
+	// MARK: - Int8
+	@inlinable
+	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8? {
+		Int8(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int8.self))
+	}
+	@inlinable
+	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8 {
+		Int8(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int8.self))
+	}
+	
+	// MARK: - Int16
+	@inlinable
+	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16? {
+		Int16(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int16.self))
+	}
+	@inlinable
+	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16 {
+		Int16(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int16.self))
+	}
+	
+	// MARK: - Int32
+	@inlinable
+	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32? {
+		Int32(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int32.self))
+	}
+	@inlinable
+	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32 {
+		Int32(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int32.self))
+	}
+	
+	// MARK: - Int64
+	@inlinable
+	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64? {
+		Int64(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int64.self))
+	}
+	@inlinable
+	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64 {
+		Int64(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int64.self))
+	}
+	
+	// MARK: - UInt
+	@inlinable
+	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt? {
+		UInt(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt.self))
+	}
+	@inlinable
+	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt {
+		UInt(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt.self))
+	}
+	
+	// MARK: - UInt8
+	@inlinable
+	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8? {
+		UInt8(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt8.self))
+	}
+	@inlinable
+	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8 {
+		UInt8(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt8.self))
+	}
+	
+	// MARK: - UInt16
+	@inlinable
+	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16? {
+		UInt16(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt16.self))
+	}
+	@inlinable
+	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16 {
+		UInt16(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt16.self))
+	}
+	
+	// MARK: - UInt32
+	@inlinable
+	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32? {
+		UInt32(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt32.self))
+	}
+	@inlinable
+	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32 {
+		UInt32(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt32.self))
+	}
+	
+	// MARK: - UInt64
+	@inlinable
+	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64? {
+		UInt64(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt64.self))
+	}
+	@inlinable
+	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64 {
+		UInt64(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt64.self))
+	}
+}
+
+// MARK: - Generic implementation
+extension KeyedDecodingContainer where Key == StringCodingKey {
+	// MARK: - Sub Interface
+	// MARK: - Decodable
+	@usableFromInline
+	func decodeDecodable<T>(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> T where T: Decodable {
+		func _decode(key: StringCodingKey) throws -> T {
+			if optional {
+				if let value = try decodeIfPresent(T.self, forKey: key) {
 					return value
 				} else {
-					throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected T value but found nothing."))
+					throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
 				}
 			} else {
-				return try container.decode(T.self, forKey: key)
+				return try decode(T.self, forKey: key)
 			}
+		}
+		do {
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(T.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(T.self, forKey: key)
-						}
-					} catch {
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Bool?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Bool {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Bool.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Bool.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Bool value but found nothing."))
-				}
-			} else {
-				return try container.decode(Bool.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Bool.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Bool.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
-							return result
-						}
+	// MARK: - Bool
+	@usableFromInline
+	func decodeBool(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> Bool {
+		func _decode(key: StringCodingKey) throws -> Bool {
+			do {
+				if optional {
+					if let value = try decodeIfPresent(Bool.self, forKey: key) {
+						return value
+					} else {
+						throw DecodingError.valueNotFound(Bool.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Bool value but found nothing."))
 					}
+				} else {
+					return try decode(Bool.self, forKey: key)
 				}
-			}
-			if case DecodingError.typeMismatch = error {
-				if V.self is HappyCodableOptional.Type {
-					if let value = try? container.decodeIfPresent(Int.self, forKey: key) {
+			} catch {
+				if case DecodingError.typeMismatch = error {
+					if let value = try? decodeIfPresent(Int.self, forKey: key) {
 						return value == 1
+					} else if let value = try? decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
+						return result
 					}
-				} else if let value = try? container.decode(Int.self, forKey: key) {
-					return value == 1
 				}
+				throw error
 			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: String?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> String {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
 		}
 		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(String.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(String.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected String value but found nothing."))
-				}
-			} else {
-				return try container.decode(String.self, forKey: key)
-			}
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(String.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(String.self, forKey: key)
-						}
-					} catch {
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Double?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Double {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
+	// MARK: - String
+	@usableFromInline
+	func decodeString(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> String {
+		func _decode(key: StringCodingKey) throws -> String {
+			do {
+				if optional {
+					if let value = try decodeIfPresent(String.self, forKey: key) {
+						return value
+					} else {
+						throw DecodingError.valueNotFound(String.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected String value but found nothing."))
+					}
+				} else {
+					return try decode(String.self, forKey: key)
+				}
+			} catch {
+				if case DecodingError.typeMismatch = error {
+					if let value = try? decodeIfPresent(Bool.self, forKey: key) {
+						return String(value)
+					}
+					if let value = try? decodeIfPresent(Double.self, forKey: key) {
+						return String(value)
+					}
+					if let value = try? decodeIfPresent(Int64.self, forKey: key) {
+						return String(value)
+					}
+					if let value = try? decodeIfPresent(UInt64.self, forKey: key) {
+						return String(value)
+					}
+				}
+				throw error
+			}
 		}
 		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Double.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Double.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Double value but found nothing."))
-				}
-			} else {
-				return try container.decode(Double.self, forKey: key)
-			}
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Double(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Double.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Double.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Double(value) {
-							return result
-						}
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Float?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Float {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
+	// MARK: - Double
+	@usableFromInline
+	func decodeDouble<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Double {
+		func _decode(key: StringCodingKey) throws -> Double {
+			do {
+				if optional {
+					if let value = try decodeIfPresent(Double.self, forKey: key) {
+						return value
+					} else {
+						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
+					}
+				} else {
+					return try decode(Double.self, forKey: key)
+				}
+			} catch {
+				if case DecodingError.typeMismatch = error {
+					if let value = try? decodeIfPresent(String.self, forKey: key), let result = Double(value) {
+						return result
+					}
+				}
+				throw error
+			}
 		}
 		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Float.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Float.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Float value but found nothing."))
-				}
-			} else {
-				return try container.decode(Float.self, forKey: key)
-			}
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Float(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Float.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Float.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Float(value) {
-							return result
-						}
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Int?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Int {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
+	
+	// MARK: - Int
+	@usableFromInline
+	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Int64 {
+		func _decode(key: StringCodingKey) throws -> Int64 {
+			do {
+				if optional {
+					if let value = try decodeIfPresent(Int64.self, forKey: key) {
+						return value
+					} else {
+						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
+					}
+				} else {
+					return try decode(Int64.self, forKey: key)
+				}
+			} catch {
+				if case DecodingError.typeMismatch = error {
+					if let value = try? decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
+						return result
+					}
+				}
+				throw error
+			}
 		}
 		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Int.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Int.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Int value but found nothing."))
-				}
-			} else {
-				return try container.decode(Int.self, forKey: key)
-			}
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Int.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Int.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int(value) {
-							return result
-						}
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Int8?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Int8 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
+	
+	// MARK: - UInt
+	@usableFromInline
+	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> UInt64 {
+		func _decode(key: StringCodingKey) throws -> UInt64 {
+			do {
+				if optional {
+					if let value = try decodeIfPresent(UInt64.self, forKey: key) {
+						return value
+					} else {
+						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
+					}
+				} else {
+					return try decode(UInt64.self, forKey: key)
+				}
+			} catch {
+				if case DecodingError.typeMismatch = error {
+					if let value = try? decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
+						return result
+					}
+				}
+				throw error
+			}
 		}
 		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Int8.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Int8.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Int8 value but found nothing."))
-				}
-			} else {
-				return try container.decode(Int8.self, forKey: key)
-			}
+			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int8(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Int8.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Int8.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int8(value) {
-							return result
-						}
-					}
+			for key in alterKeys() {
+				let key = StringCodingKey(key)
+				if let value = try? _decode(key: key) {
+					return value
 				}
 			}
+			
 			throw error
 		}
 	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Int16?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Int16 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Int16.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Int16.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Int16 value but found nothing."))
-				}
-			} else {
-				return try container.decode(Int16.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int16(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Int16.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Int16.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int16(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Int32?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Int32 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Int32.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Int32.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Int32 value but found nothing."))
-				}
-			} else {
-				return try container.decode(Int32.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int32(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Int32.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Int32.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int32(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: Int64?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> Int64 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(Int64.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(Int64.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected Int64 value but found nothing."))
-				}
-			} else {
-				return try container.decode(Int64.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(Int64.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(Int64.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: UInt?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> UInt {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(UInt.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(UInt.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected UInt value but found nothing."))
-				}
-			} else {
-				return try container.decode(UInt.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(UInt.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(UInt.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: UInt8?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> UInt8 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(UInt8.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(UInt8.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected UInt8 value but found nothing."))
-				}
-			} else {
-				return try container.decode(UInt8.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt8(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(UInt8.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(UInt8.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt8(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: UInt16?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> UInt16 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(UInt16.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(UInt16.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected UInt16 value but found nothing."))
-				}
-			} else {
-				return try container.decode(UInt16.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt16(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(UInt16.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(UInt16.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt16(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: UInt32?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> UInt32 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(UInt32.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(UInt32.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected UInt32 value but found nothing."))
-				}
-			} else {
-				return try container.decode(UInt32.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt32(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(UInt32.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(UInt32.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt32(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
-	@inline(__always)
-	public func decode<V, K>(defaultValue: UInt64?, verifyValue: V, forKey key: KeyedDecodingContainer<K>.Key, alterKeys: @autoclosure () -> [String], from: KeyedDecodingContainer<K>?) throws -> UInt64 {
-		let container: KeyedDecodingContainer<K>
-		if let from = from {
-			container = from
-		} else {
-			container = try self.container(keyedBy: K.self)
-		}
-		do {
-			if V.self is HappyCodableOptional.Type {
-				if let value = try container.decodeIfPresent(UInt64.self, forKey: key) {
-					return value
-				} else {
-					throw DecodingError.valueNotFound(UInt64.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected UInt64 value but found nothing."))
-				}
-			} else {
-				return try container.decode(UInt64.self, forKey: key)
-			}
-		} catch {
-			if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
-				return result
-			}
-			let alterKeys = alterKeys()
-			if !alterKeys.isEmpty {
-				let container = try self.container(keyedBy: StringCodingKey.self)
-				for keyStr in alterKeys {
-					let key = StringCodingKey(keyStr)
-					do {
-						if V.self is HappyCodableOptional.Type {
-							if let value = try container.decodeIfPresent(UInt64.self, forKey: key) {
-								return value
-							}
-						} else {
-							return try container.decode(UInt64.self, forKey: key)
-						}
-					} catch {
-						if let value = try? container.decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
-							return result
-						}
-					}
-				}
-			}
-			throw error
-		}
-	}
-			
 }

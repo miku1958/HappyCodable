@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - HappyCodableGenericTypeCodable
 
-protocol HappyCodableGenericTypeCodable: Codable {
+protocol HappyCodableGenericTypeCodable: Codable, CustomDebugStringConvertible, CustomStringConvertible {
 	associatedtype T: Codable
 	var wrappedValue: T { get set }
 	init(wrappedValue: T)
@@ -23,6 +23,16 @@ extension HappyCodableGenericTypeCodable {
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.singleValueContainer()
 		try container.encode(wrappedValue)
+	}
+}
+
+extension HappyCodableGenericTypeCodable {
+	public var debugDescription: String {
+		String(describing: wrappedValue)
+	}
+	
+	public var description: String {
+		String(describing: wrappedValue)
 	}
 }
 
@@ -59,11 +69,17 @@ public struct Happy {
 	
 	// MARK: - uncoding
 	@propertyWrapper
-	public struct uncoding<T> {
+	public struct uncoding<T>: CustomDebugStringConvertible, CustomStringConvertible {
 		public var wrappedValue: T
 		
 		public init(wrappedValue: T) {
 			self.wrappedValue = wrappedValue
+		}
+		public var debugDescription: String {
+			String(describing: wrappedValue)
+		}
+		public var description: String {
+			String(describing: wrappedValue)
 		}
 	}
 }

@@ -585,11 +585,9 @@ extension Array where Element == Object {
 		func generatedType() {
 			var codingKeyCases = ""
 			
-			var decodingVariablesAllowOptional = ""
-			var decodingVariablesWithThrow = ""
+			var decodingVariables = ""
 			
-			var encodingVariablesSafely = ""
-			var encodingVariablesWithThrow = ""
+			var encodingVariables = ""
 			
 			for property in propertys {
 				if !property.accessibilitys.contains(.set(accessible: true)) {
@@ -621,33 +619,28 @@ extension Array where Element == Object {
 					codingKeyCases += "\n"
 				}
 				if isConfirmToDecodable {
+					let key = property.replacedKey?.removingQuotes ?? property.name
+
 					let decodeExpression =
-					"""
-					decoder.decode(defaultValue: self.\(property.name), verifyValue: self.\(property.name), forKey: .\(property.name), alterKeys: \(property.alterKeys), from: container)
-					"""
+						"container.decode(default: self.\(property.name), key: \"\(key)\", alterKeys: \(property.alterKeys))"
 					
-					let decodeOnly = "self.\(property.name) = try \(decodeExpression)"
-					let decodeAllowOptional = "do { \(decodeOnly) } catch { }"
+					let decodeOnly =
+						"self.\(property.name) = try \(decodeExpression)"
+					
+					let decodeAllowOptional =
+						"do { \(decodeOnly) } catch { errors.append(error) }"
 					// 这里只能一个一个的do catch, 不能放到同一个do catch里, 不然一个出错后面都不执行了
-					decodingVariablesAllowOptional += "\(decodeAllowOptional)\n"
-					if property.isOptional {
-						decodingVariablesWithThrow += "\(decodeAllowOptional)\n"
-					} else {
-						decodingVariablesWithThrow += "\(decodeOnly)\n"
-					}
+					
+					decodingVariables += "\(decodeAllowOptional)\n"
 				}
 				if isConfirmToEncodable {
-					let encodeParameters = "(self.\(property.name), forKey: .\(property.name))"
+					let encodeParameters =
+						"(self.\(property.name), forKey: .\(property.name))"
 					
-					let encodeOnly = "try container.encode\(encodeParameters)"
-					let encodeSafely = "do { try container.encodeIfPresent\(encodeParameters) } catch { }"
+					let encodeSafely =
+						"do { try container.encodeIfPresent\(encodeParameters) } catch { errors.append(error) }"
 					
-					encodingVariablesSafely += "\(encodeSafely)\n"
-					if property.isOptional {
-						encodingVariablesWithThrow += "\(encodeSafely)\n"
-					} else {
-						encodingVariablesWithThrow += "\(encodeOnly)\n"
-					}
+					encodingVariables += "\(encodeSafely)\n"
 				}
 			}
 			guard !codingKeyCases.isEmpty else { return }
@@ -663,15 +656,18 @@ extension Array where Element == Object {
 			"""
 			\((!definitionObject.isClass).add("mutating"))
 			func decode(happyFrom decoder: Decoder) throws {
-				let container = try decoder.container(keyedBy: CodingKeys.self)
+				let container = try decoder.container(keyedBy: StringCodingKey.self)
+				var errors = [Error]()
 			
 				\(methodNames.contains("willStartMapping()").add("self.willStartMapping()"))
-				if Self.globalDecodeAllowOptional {
-			\(indent: 2, decodingVariablesAllowOptional)
-				} else {
-			\(indent: 2, decodingVariablesWithThrow)
-				}
+
+			\(indent: 1, decodingVariables)
+
 				\(methodNames.contains("didFinishMapping()").add("self.didFinishMapping()"))
+
+				if !Self.globalDecodeAllowOptional {
+					throw errors
+				}
 			}
 			"""
 			
@@ -679,11 +675,12 @@ extension Array where Element == Object {
 			"""
 			func encode(happyTo encoder: Encoder) throws {
 				var container = encoder.container(keyedBy: CodingKeys.self)
-			
-				if Self.globalEncodeSafely {
-			\(indent: 2, encodingVariablesSafely)
-				} else {
-			\(indent: 2, encodingVariablesWithThrow)
+				var errors = [Error]()
+
+			\(indent: 1, encodingVariables)
+
+				if !Self.globalEncodeSafely {
+					throw errors
 				}
 			}
 			"""

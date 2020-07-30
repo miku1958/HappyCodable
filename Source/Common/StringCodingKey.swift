@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct StringCodingKey: CodingKey {
-	var stringValue: String
-	var intValue: Int?
+public struct StringCodingKey: CodingKey {
+	public var stringValue: String
+	public var intValue: Int?
 	
 	init(_ string: String) {
 		stringValue = string
 	}
 	
-	init?(stringValue: String) {
+	public init?(stringValue: String) {
 		self.stringValue = stringValue
 	}
 	
-	init?(intValue: Int) {
+	public init?(intValue: Int) {
 		self.intValue = intValue
 		self.stringValue = String(intValue)
 	}

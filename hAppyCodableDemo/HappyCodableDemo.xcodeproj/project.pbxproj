@@ -16,6 +16,7 @@
 		FFA32FEA24A635BF009DBE2A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA32FE624A63541009DBE2A /* Test.swift */; };
 		FFBB4A4B249B14F90055CA66 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBB4A4A249B14F90055CA66 /* main.swift */; };
 		FFBB4A4C249B190A0055CA66 /* HappyCodable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF155F7E249A161B009A002B /* HappyCodable.generated.swift */; };
+		FFD1705A24D305C4002AF031 /* HappyCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1705924D305C4002AF031 /* HappyCodableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +26,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FFBB4A2D249B13FF0055CA66;
 			remoteInfo = HappyCodableCommandLine;
+		};
+		FFD1705C24D305C4002AF031 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF891678247A5AFC0080665E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF8916A5247A5F1A0080665E;
+			remoteInfo = HappyCodableDemo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -64,6 +72,9 @@
 		FFA32FE624A63541009DBE2A /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HappyCodableCommandLine; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFBB4A4A249B14F90055CA66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HappyCodableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFD1705924D305C4002AF031 /* HappyCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyCodableTests.swift; sourceTree = "<group>"; };
+		FFD1705B24D305C4002AF031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +91,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				06D2242856016397432F3F6A /* libPods-HappyCodableCommandLine.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFD1705424D305C4002AF031 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +135,7 @@
 			children = (
 				FF8916A7247A5F1A0080665E /* HappyCodableDemo */,
 				FFBB4A2F249B13FF0055CA66 /* HappyCodableCommandLine */,
+				FFD1705824D305C4002AF031 /* HappyCodableTests */,
 				FF891681247A5AFC0080665E /* Products */,
 				3B556B32BDA05E177458921B /* Pods */,
 				A79A9558D9C03727C0993E75 /* Frameworks */,
@@ -128,6 +147,7 @@
 			children = (
 				FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */,
 				FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */,
+				FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +173,15 @@
 				FFBB4A4A249B14F90055CA66 /* main.swift */,
 			);
 			path = HappyCodableCommandLine;
+			sourceTree = "<group>";
+		};
+		FFD1705824D305C4002AF031 /* HappyCodableTests */ = {
+			isa = PBXGroup;
+			children = (
+				FFD1705924D305C4002AF031 /* HappyCodableTests.swift */,
+				FFD1705B24D305C4002AF031 /* Info.plist */,
+			);
+			path = HappyCodableTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,7 +212,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FFBB4A34249B13FF0055CA66 /* Build configuration list for PBXNativeTarget "HappyCodableCommandLine" */;
 			buildPhases = (
-				FF57765524A838FB00879B4A /* Create Extension File */,
 				279AE8B7A3B931E7CE9128D5 /* [CP] Check Pods Manifest.lock */,
 				FFBB4A2A249B13FF0055CA66 /* Sources */,
 				FFBB4A2B249B13FF0055CA66 /* Frameworks */,
@@ -198,13 +226,31 @@
 			productReference = FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */;
 			productType = "com.apple.product-type.tool";
 		};
+		FFD1705624D305C4002AF031 /* HappyCodableTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFD1706024D305C4002AF031 /* Build configuration list for PBXNativeTarget "HappyCodableTests" */;
+			buildPhases = (
+				FFD1705324D305C4002AF031 /* Sources */,
+				FFD1705424D305C4002AF031 /* Frameworks */,
+				FFD1705524D305C4002AF031 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FFD1705D24D305C4002AF031 /* PBXTargetDependency */,
+			);
+			name = HappyCodableTests;
+			productName = HappyCodableTests;
+			productReference = FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		FF891678247A5AFC0080665E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "庄黛淳华";
 				TargetAttributes = {
@@ -214,6 +260,10 @@
 					FFBB4A2D249B13FF0055CA66 = {
 						CreatedOnToolsVersion = 11.5;
 						LastSwiftMigration = 1150;
+					};
+					FFD1705624D305C4002AF031 = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = FF8916A5247A5F1A0080665E;
 					};
 				};
 			};
@@ -232,6 +282,7 @@
 			targets = (
 				FF8916A5247A5F1A0080665E /* HappyCodableDemo */,
 				FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */,
+				FFD1705624D305C4002AF031 /* HappyCodableTests */,
 			);
 		};
 /* End PBXProject section */
@@ -243,6 +294,13 @@
 			files = (
 				FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */,
 				FF8916B0247A5F1B0080665E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFD1705524D305C4002AF031 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,24 +366,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF57765524A838FB00879B4A /* Create Extension File */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Create Extension File";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "frameworkPath=${SRCROOT%/*}/Source/CommandLine/\npath=${frameworkPath}ExtensionFileCreator.swift\necho \"create extension file\"\necho \"$(cat ${path})\" | DEVELOPER_DIR=\"$DEVELOPER_DIR\" xcrun --sdk macosx \"$TOOLCHAIN_DIR/usr/bin/\"swift -F \"${path}\" -\n\n";
-		};
 		FFBB4A50249B27AF0055CA66 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +405,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFD1705324D305C4002AF031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFD1705A24D305C4002AF031 /* HappyCodableTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -372,6 +420,11 @@
 			isa = PBXTargetDependency;
 			target = FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */;
 			targetProxy = FFBB4A4E249B27A70055CA66 /* PBXContainerItemProxy */;
+		};
+		FFD1705D24D305C4002AF031 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF8916A5247A5F1A0080665E /* HappyCodableDemo */;
+			targetProxy = FFD1705C24D305C4002AF031 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -579,6 +632,48 @@
 			};
 			name = Release;
 		};
+		FFD1705E24D305C4002AF031 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = HappyCodableTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.HappyCodableTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Debug;
+		};
+		FFD1705F24D305C4002AF031 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = HappyCodableTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.HappyCodableTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -605,6 +700,15 @@
 			buildConfigurations = (
 				FFBB4A32249B13FF0055CA66 /* Debug */,
 				FFBB4A33249B13FF0055CA66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFD1706024D305C4002AF031 /* Build configuration list for PBXNativeTarget "HappyCodableTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFD1705E24D305C4002AF031 /* Debug */,
+				FFD1705F24D305C4002AF031 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

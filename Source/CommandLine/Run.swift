@@ -84,6 +84,7 @@ func generateFilePrefix(filename: String) {
 	//
 	
 	import Foundation
+	import HappyCodable
 		
 	
 	"""

@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension Array {
-
+extension Array: Error where Element: Error {
+	
 }
