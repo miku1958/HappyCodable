@@ -522,7 +522,7 @@ extension Object.Property {
 	var alterKeys: [String] {
 		for attribute in attributes {
 			if case let .codingKeys(keys) = attribute, !keys.isEmpty {
-				return keys.map {
+				return keys[1...].map {
 					$0.removingQuotes
 				}
 			}
