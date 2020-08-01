@@ -97,8 +97,13 @@ extension Array where Element == Object {
 				mainKey = mainKey.removingQuotes.removingBackQuotes
 				
 				if isConfirmToDecodable {
-					let decodeExpression =
-						"container.decode(default: self.\(property.name), key: \"\(mainKey)\", alterKeys: \(property.alterKeys))"
+					let decodeExpression: String
+					if property.alterKeys.isEmpty {
+						decodeExpression = "container.decode(default: self.\(property.name), key: \"\(mainKey)\")"
+					} else {
+						decodeExpression =
+							"container.decode(default: self.\(property.name), key: \"\(mainKey)\", alterKeys: { \(property.alterKeys) })"
+					}
 					
 					let decodeOnly =
 						"self.\(property.name) = try \(decodeExpression)"

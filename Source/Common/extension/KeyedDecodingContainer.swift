@@ -11,151 +11,151 @@ import Foundation
 extension KeyedDecodingContainer where Key == StringCodingKey {
 	// MARK: - Decodable
 	@inlinable
-	public func decode<T>(default value: T?, key: String, alterKeys: @autoclosure () -> [String]) throws -> T where T: Decodable {
+	public func decode<T>(default value: T?, key: String, alterKeys: (() -> [String])? = nil) throws -> T where T: Decodable {
 		try decodeDecodable(mainKey: key, alterKeys: alterKeys, optional: false)
 	}
 	@inlinable
-	public func decode<T>(default value: T?, key: String, alterKeys: @autoclosure () -> [String]) throws -> T? where T: Decodable {
+	public func decode<T>(default value: T?, key: String, alterKeys: (() -> [String])? = nil) throws -> T? where T: Decodable {
 		try decodeDecodable(mainKey: key, alterKeys: alterKeys, optional: true) as T
 	}
 	
 	// MARK: - Bool
 	@inlinable
-	public func decode(default value: Bool?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Bool? {
+	public func decode(default value: Bool?, key: String, alterKeys: (() -> [String])? = nil) throws -> Bool? {
 		try decodeBool(mainKey: key, alterKeys: alterKeys, optional: true)
 	}
 	@inlinable
-	public func decode(default value: Bool?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Bool {
+	public func decode(default value: Bool?, key: String, alterKeys: (() -> [String])? = nil) throws -> Bool {
 		try decodeBool(mainKey: key, alterKeys: alterKeys, optional: false)
 	}
 	
 	// MARK: - String
 	@inlinable
-	public func decode(default value: String?, key: String, alterKeys: @autoclosure () -> [String]) throws -> String? {
+	public func decode(default value: String?, key: String, alterKeys: (() -> [String])? = nil) throws -> String? {
 		try decodeString(mainKey: key, alterKeys: alterKeys, optional: true)
 	}
 	@inlinable
-	public func decode(default value: String?, key: String, alterKeys: @autoclosure () -> [String]) throws -> String {
+	public func decode(default value: String?, key: String, alterKeys: (() -> [String])? = nil) throws -> String {
 		try decodeString(mainKey: key, alterKeys: alterKeys, optional: false)
 	}
 	
 	// MARK: - Double
 	@inlinable
-	public func decode(default value: Double?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Double? {
+	public func decode(default value: Double?, key: String, alterKeys: (() -> [String])? = nil) throws -> Double? {
 		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Double.self)
 	}
 	@inlinable
-	public func decode(default value: Double?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Double {
+	public func decode(default value: Double?, key: String, alterKeys: (() -> [String])? = nil) throws -> Double {
 		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Double.self)
 	}
 	
 	// MARK: - Float
 	@inlinable
-	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float? {
+	public func decode(default value: Float?, key: String, alterKeys: (() -> [String])? = nil) throws -> Float? {
 		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Float.self)
 	}
 	@inlinable
-	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float {
+	public func decode(default value: Float?, key: String, alterKeys: (() -> [String])? = nil) throws -> Float {
 		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Float.self)
 	}
 	
 	// MARK: - Int
 	@inlinable
-	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int? {
+	public func decode(default value: Int?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int? {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int.self)
 	}
 	@inlinable
-	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int {
+	public func decode(default value: Int?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int.self)
 	}
 	
 	// MARK: - Int8
 	@inlinable
-	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8? {
+	public func decode(default value: Int8?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int8? {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int8.self)
 	}
 	@inlinable
-	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8 {
+	public func decode(default value: Int8?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int8 {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int8.self)
 	}
 	
 	// MARK: - Int16
 	@inlinable
-	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16? {
+	public func decode(default value: Int16?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int16? {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int16.self)
 	}
 	@inlinable
-	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16 {
+	public func decode(default value: Int16?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int16 {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int16.self)
 	}
 	
 	// MARK: - Int32
 	@inlinable
-	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32? {
+	public func decode(default value: Int32?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int32? {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int32.self)
 	}
 	@inlinable
-	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32 {
+	public func decode(default value: Int32?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int32 {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int32.self)
 	}
 	
 	// MARK: - Int64
 	@inlinable
-	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64? {
+	public func decode(default value: Int64?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int64? {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int64.self)
 	}
 	@inlinable
-	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64 {
+	public func decode(default value: Int64?, key: String, alterKeys: (() -> [String])? = nil) throws -> Int64 {
 		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int64.self)
 	}
 	
 	// MARK: - UInt
 	@inlinable
-	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt? {
+	public func decode(default value: UInt?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt? {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt.self)
 	}
 	@inlinable
-	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt {
+	public func decode(default value: UInt?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt.self)
 	}
 	
 	// MARK: - UInt8
 	@inlinable
-	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8? {
+	public func decode(default value: UInt8?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt8? {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt8.self)
 	}
 	@inlinable
-	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8 {
+	public func decode(default value: UInt8?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt8 {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt8.self)
 	}
 	
 	// MARK: - UInt16
 	@inlinable
-	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16? {
+	public func decode(default value: UInt16?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt16? {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt16.self)
 	}
 	@inlinable
-	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16 {
+	public func decode(default value: UInt16?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt16 {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt16.self)
 	}
 	
 	// MARK: - UInt32
 	@inlinable
-	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32? {
+	public func decode(default value: UInt32?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt32? {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt32.self)
 	}
 	@inlinable
-	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32 {
+	public func decode(default value: UInt32?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt32 {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt32.self)
 	}
 	
 	// MARK: - UInt64
 	@inlinable
-	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64? {
+	public func decode(default value: UInt64?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt64? {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt64.self)
 	}
 	@inlinable
-	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64 {
+	public func decode(default value: UInt64?, key: String, alterKeys: (() -> [String])? = nil) throws -> UInt64 {
 		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt64.self)
 	}
 }
@@ -165,7 +165,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	// MARK: - Sub Interface
 	// MARK: - Decodable
 	@usableFromInline
-	func decodeDecodable<T>(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> T where T: Decodable {
+	func decodeDecodable<T>(mainKey: String, alterKeys: (() -> [String])? , optional: Bool) throws -> T where T: Decodable {
 		func _decode(key: StringCodingKey) throws -> T {
 			if optional {
 				if let value = try decodeIfPresent(T.self, forKey: key) {
@@ -180,10 +180,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
@@ -192,7 +194,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	}
 	// MARK: - Bool
 	@usableFromInline
-	func decodeBool(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> Bool {
+	func decodeBool(mainKey: String, alterKeys: (() -> [String])? , optional: Bool) throws -> Bool {
 		func _decode(key: StringCodingKey) throws -> Bool {
 			do {
 				if optional {
@@ -222,10 +224,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
@@ -234,7 +238,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	}
 	// MARK: - String
 	@usableFromInline
-	func decodeString(mainKey: String, alterKeys: () -> [String], optional: Bool) throws -> String {
+	func decodeString(mainKey: String, alterKeys: (() -> [String])? , optional: Bool) throws -> String {
 		func _decode(key: StringCodingKey) throws -> String {
 			do {
 				if optional {
@@ -267,10 +271,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
@@ -279,7 +285,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	}
 	// MARK: - Double
 	@usableFromInline
-	func decodeDouble<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: BinaryFloatingPoint {
+	func decodeDouble<T>(mainKey: String, alterKeys: (() -> [String])? , optional: Bool, targetType: T.Type) throws -> T where T: BinaryFloatingPoint {
 		func convert(_ value: Double) -> T {
 			value as? T ?? T(value)
 		}
@@ -306,10 +312,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
@@ -319,7 +327,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - Int
 	@usableFromInline
-	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
+	func decodeInt<T>(mainKey: String, alterKeys: (() -> [String])? , optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
 		func boundsCheck(value: Int64, for key: StringCodingKey) throws -> T {
 			guard value <= T.max, value >= T.min else {
 				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
@@ -349,10 +357,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
@@ -362,7 +372,7 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - UInt
 	@usableFromInline
-	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
+	func decodeUInt<T>(mainKey: String, alterKeys: (() -> [String])? , optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
 		func boundsCheck(value: UInt64, for key: StringCodingKey) throws -> T {
 			guard value <= T.max, value >= T.min else {
 				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
@@ -392,10 +402,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 		do {
 			return try _decode(key: StringCodingKey(mainKey))
 		} catch {
-			for key in alterKeys() {
-				let key = StringCodingKey(key)
-				if let value = try? _decode(key: key) {
-					return value
+			if let alterKeys = alterKeys?() {
+				for key in alterKeys {
+					let key = StringCodingKey(key)
+					if let value = try? _decode(key: key) {
+						return value
+					}
 				}
 			}
 			
