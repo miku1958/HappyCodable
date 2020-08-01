@@ -1,5 +1,5 @@
 # HappyCodable
-通过使用SourceKittenFramework去自动生成Codable代码, 使其使用起来让人更愉悦的Codable框架
+通过使用 SourceKittenFramework 去自动生成 Codable 代码, 让人更愉悦的使用 Codable
 
 ## Codable的问题 ?
 
