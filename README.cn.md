@@ -1,22 +1,19 @@
 # HappyCodable
+通过使用SourceKittenFramework去自动生成Codable代码, 使其使用起来让人更愉悦的Codable框架
 
-## [中文介绍](https://github.com/miku1958/HappyCodable/blob/master/README.cn.md)
+## Codable的问题 ?
 
-A happier Codable Framework that uses SourceKittenFramework to automatically generate Codable related code.
+1. 不支持自定义某个属性的coding key, 一旦你有这种需求, 要么把所有的coding key手动实现一遍然后修改想要的coding key, 要么就得在decode的时候去修改JSONDecoder的设置, 及其不方便
+2. 不支持忽略掉某些不能Codable的属性, 有这样的需求还是需要手动实现coding key才行
+3. 不支持自动合成非RawRepresentable的Enum, 即使该Enum中所有值的子类型都是Codable也不行
+4. decode的时候不支持多个coding key映射同一个属性
+5. 难以调试, 虽然Codable是throw-catch的, 但是由于代码都是由编译器生成, 数据有问题的时候无法更近一步定位问题
+6. 不能使用模型的默认值, 当decode 的数据缺失时无法使用定义里的默认值, 例如版本更新后, 服务端删掉了模型的某个过期字段, 这时候使用Codable只会throw数据缺失, 然后旧版本客户端都会陷入错误, 即使不用这个字段就版本客户端依旧是能正常工作的(只是显示的数据缺失而已), 这很明显是不合理的.
+7. 不支持简单的类型映射, 比如转换0/1到false/true, "123"到Int的123或者反过来
 
-## What's wrong with Codable ?
+### 而这些, 你全都可以用HappyCodable解决
 
-1. Unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys.
-2. Unsupported ignore specific coding key.
-3. Unsupported automatic synthesis for non-RawRepresentable enums, even if each element is codable.
-4. Unsupported multiple key mapping to one property when decoding.
-5. Difficulty debugging.
-6. Does not automatically use the default values in the definition when missing corresponding key in json data.
-7. Unsupported type mapping automatically, like converts 0/1 to false/true.
-
-### And all this, can be solved by using **HappyCodable**
-
-## Usage
+## 用法
 
 1. build the HappyCodable Command Line executable file
 2. bring  executable file and HappyCodable Common Source Code to your project
@@ -26,7 +23,7 @@ A happier Codable Framework that uses SourceKittenFramework to automatically gen
 ${SRCROOT}/HappyCodableCommandLine ${SRCROOT}/Classes ${SRCROOT}/HappyCodable.generated.swift
 ```
 
-4. adding `HappyCodable` to a struct/class
+4. 给struct/class添加HappyCodable, 然后编译一下:
 
 ```
 struct Person: HappyCodable {
@@ -43,7 +40,7 @@ struct Person: HappyCodable {
 }
 ```
 
-and HappyCodableCommandLine will create code automatically:
+HappyCodableCommandLine会自动生成以下代码:
 
 ```
 extension Person {
@@ -78,7 +75,7 @@ extension Person {
 }
 ```
 
-also support non-RawRepresentable Enum(you need to premise the parameter Type is Codable):
+还有非RawRepresentable Enum(你需要确保闭包里的类型都是Codable的):
 
 ```
 enum EnumTest: HappyCodableEnum {
@@ -91,7 +88,7 @@ enum EnumTest: HappyCodableEnum {
 }
 ```
 
-generated code: 
+生成的代码: 
 
 ```
 extension EnumTest {
@@ -209,9 +206,9 @@ extension EnumTest {
 }
 ```
 
-## Limitation
+## 局限性
 
-1. Because HappyCodable uses an extension file to generate Codable's functions, thus it can't be used for private Model Types, and it can't be used for models that are defined in function either:
+1. 因为HappyCodable是通过生成一个文件给所有需要的类型生成Codable方法的extension, 因此没法用于private的模型, 同理也没法用于定义在方法里的模型:
 
    ```
    func getNumber() {
@@ -221,5 +218,5 @@ extension EnumTest {
    }
    ```
 
-2. HappyCodable requires a `init()` to create a default object for the model(HappyCodableEnum not required), and then to change the property using Codable, so it requires that the coding properties are mutable. So it can't use for read only Model, for example, the above Package struct.
+2. HappyCodable要求实现一个 `init()` 方法创建一个默认的变量(HappyCodableEnum不需要), 然后再通过Codable给需要的属性编码, 所以它要求编码的属性都是mutable的, 像上面的Package这种只读模型就没法用了.
 
