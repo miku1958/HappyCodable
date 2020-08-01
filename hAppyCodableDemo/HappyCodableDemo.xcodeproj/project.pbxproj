@@ -12,6 +12,7 @@
 		83F4F6533A9B1850203D389A /* Pods_HappyCodableDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */; };
 		F0FA49FF8CA0A96331DBA379 /* Pods_CommonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB96569A4306CD0C0AD0FFE /* Pods_CommonTests.framework */; };
 		FF071AA524D50E4600A746FC /* TypeMismatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */; };
+		FF071AA924D53EB900A746FC /* ForSingleValueDecodingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF071AA824D53EB900A746FC /* ForSingleValueDecodingContainer.swift */; };
 		FF0C571C24D3B3A1001CAC0F /* CommandLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C571B24D3B3A1001CAC0F /* CommandLineTests.swift */; };
 		FF0C572A24D3B3BA001CAC0F /* CommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C572924D3B3BA001CAC0F /* CommonTests.swift */; };
 		FF0C573A24D3B5F3001CAC0F /* enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573824D3B4DD001CAC0F /* enum.swift */; };
@@ -87,6 +88,7 @@
 		C8D3D034011FDB23D762575E /* Pods-CommonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonTests.debug.xcconfig"; path = "Target Support Files/Pods-CommonTests/Pods-CommonTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F187321C51F5E31B907CA71C /* Pods-HappyCodable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodable.release.xcconfig"; path = "Target Support Files/Pods-HappyCodable/Pods-HappyCodable.release.xcconfig"; sourceTree = "<group>"; };
 		FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMismatchTests.swift; sourceTree = "<group>"; };
+		FF071AA824D53EB900A746FC /* ForSingleValueDecodingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForSingleValueDecodingContainer.swift; sourceTree = "<group>"; };
 		FF0C571924D3B3A1001CAC0F /* CommandLineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommandLineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF0C571B24D3B3A1001CAC0F /* CommandLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineTests.swift; sourceTree = "<group>"; };
 		FF0C571D24D3B3A1001CAC0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				FF0C573624D3B4D4001CAC0F /* struct.swift */,
 				FFC6298C24D467A200252AEE /* WithAttribute.swift */,
 				FFC6299224D4742F00252AEE /* ForKeyedDecodingContainer.swift */,
+				FF071AA824D53EB900A746FC /* ForSingleValueDecodingContainer.swift */,
 			);
 			path = TestObjects;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				FF0C573C24D3B5F3001CAC0F /* struct.swift in Sources */,
 				FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */,
 				FFC6298D24D467A200252AEE /* WithAttribute.swift in Sources */,
+				FF071AA924D53EB900A746FC /* ForSingleValueDecodingContainer.swift in Sources */,
 				FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

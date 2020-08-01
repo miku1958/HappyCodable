@@ -18,7 +18,7 @@ extension Array where Element == Object {
 	var generatedCode: String {
 		guard let definitionObject = self.first(where: { !$0.isExtension }), !definitionObject.accessLevel.isPrivate else { return "" }
 		#if DEBUG
-		if definitionObject.name.contains("SubEnumComplex") {
+		if definitionObject.name.contains("TestEnum") {
 			print(1)
 		}
 		#endif
@@ -298,12 +298,19 @@ extension Array where Element == Object {
 		}
 		
 		func generatedEnumBaseRawValue() {
+			var decodeContent = ""
+			
+			if !Set(definitionObject.inheritedtypes).intersection(rawRepresentableRawValues).isEmpty {
+				decodeContent = "let content: RawValue = try container.decodeSafe()"
+			} else {
+				decodeContent = "let content = try container.decode(RawValue.self)"
+			}
 			decode = """
 			\((definitionObject.accessLevel == .open).add("open"))
 			\((definitionObject.accessLevel == .public).add("public"))
 			init(from decoder: Decoder) throws {
 				let container = try decoder.singleValueContainer()
-				let content = try container.decode(RawValue.self)
+			\(indent: 1, decodeContent)
 				if let value = \(definitionObject.name)(rawValue: content) {
 					self = value
 				} else {

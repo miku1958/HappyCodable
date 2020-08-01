@@ -52,111 +52,111 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	// MARK: - Float
 	@inlinable
 	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float? {
-		Float(try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Float.self))
+		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Float.self)
 	}
 	@inlinable
 	public func decode(default value: Float?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Float {
-		Float(try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Float.self))
+		try decodeDouble(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Float.self)
 	}
 	
 	// MARK: - Int
 	@inlinable
 	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int? {
-		Int(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int.self)
 	}
 	@inlinable
 	public func decode(default value: Int?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int {
-		Int(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int.self)
 	}
 	
 	// MARK: - Int8
 	@inlinable
 	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8? {
-		Int8(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int8.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int8.self)
 	}
 	@inlinable
 	public func decode(default value: Int8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int8 {
-		Int8(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int8.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int8.self)
 	}
 	
 	// MARK: - Int16
 	@inlinable
 	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16? {
-		Int16(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int16.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int16.self)
 	}
 	@inlinable
 	public func decode(default value: Int16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int16 {
-		Int16(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int16.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int16.self)
 	}
 	
 	// MARK: - Int32
 	@inlinable
 	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32? {
-		Int32(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int32.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int32.self)
 	}
 	@inlinable
 	public func decode(default value: Int32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int32 {
-		Int32(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int32.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int32.self)
 	}
 	
 	// MARK: - Int64
 	@inlinable
 	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64? {
-		Int64(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int64.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: Int64.self)
 	}
 	@inlinable
 	public func decode(default value: Int64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> Int64 {
-		Int64(try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int64.self))
+		try decodeInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: Int64.self)
 	}
 	
 	// MARK: - UInt
 	@inlinable
 	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt? {
-		UInt(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt.self)
 	}
 	@inlinable
 	public func decode(default value: UInt?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt {
-		UInt(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt.self)
 	}
 	
 	// MARK: - UInt8
 	@inlinable
 	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8? {
-		UInt8(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt8.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt8.self)
 	}
 	@inlinable
 	public func decode(default value: UInt8?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt8 {
-		UInt8(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt8.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt8.self)
 	}
 	
 	// MARK: - UInt16
 	@inlinable
 	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16? {
-		UInt16(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt16.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt16.self)
 	}
 	@inlinable
 	public func decode(default value: UInt16?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt16 {
-		UInt16(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt16.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt16.self)
 	}
 	
 	// MARK: - UInt32
 	@inlinable
 	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32? {
-		UInt32(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt32.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt32.self)
 	}
 	@inlinable
 	public func decode(default value: UInt32?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt32 {
-		UInt32(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt32.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt32.self)
 	}
 	
 	// MARK: - UInt64
 	@inlinable
 	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64? {
-		UInt64(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt64.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: true, targetType: UInt64.self)
 	}
 	@inlinable
 	public func decode(default value: UInt64?, key: String, alterKeys: @autoclosure () -> [String]) throws -> UInt64 {
-		UInt64(try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt64.self))
+		try decodeUInt(mainKey: key, alterKeys: alterKeys, optional: false, targetType: UInt64.self)
 	}
 }
 
@@ -279,22 +279,25 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	}
 	// MARK: - Double
 	@usableFromInline
-	func decodeDouble<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Double {
-		func _decode(key: StringCodingKey) throws -> Double {
+	func decodeDouble<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: BinaryFloatingPoint {
+		func convert(_ value: Double) -> T {
+			value as? T ?? T(value)
+		}
+		func _decode(key: StringCodingKey) throws -> T {
 			do {
 				if optional {
 					if let value = try decodeIfPresent(Double.self, forKey: key) {
-						return value
+						return convert(value)
 					} else {
 						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
 					}
 				} else {
-					return try decode(Double.self, forKey: key)
+					return convert(try decode(Double.self, forKey: key))
 				}
 			} catch {
 				if case DecodingError.typeMismatch = error {
 					if let value = try? decodeIfPresent(String.self, forKey: key), let result = Double(value) {
-						return result
+						return convert(result)
 					}
 				}
 				throw error
@@ -316,14 +319,14 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - Int
 	@usableFromInline
-	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Int64 where T: FixedWidthInteger {
-		func boundsCheck(value: Int64, for key: StringCodingKey) throws -> Int64 {
+	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
+		func boundsCheck(value: Int64, for key: StringCodingKey) throws -> T {
 			guard value <= T.max, value >= T.min else {
 				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
 			}
-			return value
+			return T(value)
 		}
-		func _decode(key: StringCodingKey) throws -> Int64 {
+		func _decode(key: StringCodingKey) throws -> T {
 			do {
 				if optional {
 					if let value = try decodeIfPresent(Int64.self, forKey: key) {
@@ -359,14 +362,14 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - UInt
 	@usableFromInline
-	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> UInt64 where T: FixedWidthInteger {
-		func boundsCheck(value: UInt64, for key: StringCodingKey) throws -> UInt64 {
+	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> T where T: FixedWidthInteger {
+		func boundsCheck(value: UInt64, for key: StringCodingKey) throws -> T {
 			guard value <= T.max, value >= T.min else {
 				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
 			}
-			return value
+			return T(value)
 		}
-		func _decode(key: StringCodingKey) throws -> UInt64 {
+		func _decode(key: StringCodingKey) throws -> T {
 			do {
 				if optional {
 					if let value = try decodeIfPresent(UInt64.self, forKey: key) {

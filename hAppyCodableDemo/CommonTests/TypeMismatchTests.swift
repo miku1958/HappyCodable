@@ -11,7 +11,7 @@ import XCTest
 @testable import HappyCodableDemo
 
 class TypeMismatchTests: XCTestCase {
-	func test() throws {
+	func testBaseDataType() throws {
 		let fakeData_int = Int.random(in: 0...127)
 		let fakeData_double = Double(fakeData_int)/10
 		let fakeData_bool = Bool.random()
@@ -48,5 +48,13 @@ class TypeMismatchTests: XCTestCase {
 		assert(try TestStruct_ForKeyedDecodingContainer.decode(from: [
 			"UInt_2": "\(fakeData_int)",
 		]).UInt == fakeData_int)
+	}
+	func testEnum() throws {
+		let decoder = JSONDecoder()
+		assert(try decoder.decode(TestEnumInt.self, from: "\"\(TestEnumInt.one.rawValue)\"".data(using: .utf8)!) == .one)
+		assert(try decoder.decode(TestEnumDouble.self, from: "\"\(TestEnumDouble.pi.rawValue)\"".data(using: .utf8)!) == .pi)
+		assert(try decoder.decode(TestEnumString.self, from: "123".data(using: .utf8)!) == .int)
+		assert(try decoder.decode(TestEnumString.self, from: "3.14".data(using: .utf8)!) == .double)
+		assert(try decoder.decode(TestEnumString.self, from: "true".data(using: .utf8)!) == .true)
 	}
 }
