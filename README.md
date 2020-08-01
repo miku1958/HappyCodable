@@ -11,6 +11,8 @@ A happier Codable by using SourceKittenFramework to automatically create Codable
 6. Does not automatically use the default values in the definition when missing corresponding key in json data.
 7. Unsupported 0/1 to false/true
 
+### And all this, can be solved by using **HappyCodable**
+
 ## Usage
 
 1. build the HappyCodable Command Line executable file
@@ -25,16 +27,16 @@ ${SRCROOT}/HappyCodableCommandLine ${SRCROOT}/Classes ${SRCROOT}/HappyCodable.ge
 
 ```
 struct Person: HappyCodable {
-	var name1: String = "abc"
+	var name: String = "abc"
 	
-	@Happy.codingKeys("🍉")
-	var numberOfTips2: String = "abc"
+	@Happy.codingKeys("🆔")
+	var id: String = "abc"
 	
-	@Happy.codingKeys("234", "age", "abc") // the first key will be the coding key
-	var age: String = "abc"
+	@Happy.codingKeys("secret_number", "age") // the first key will be the coding key
+	var age: Int = 18
 	
 	@Happy.uncoding
-	var abc: String = "abc" // Build fail if coded, in this case, we can "uncoding" it.
+	var secret_number: String = "3.1415" // Build fail if coded, in this case, we can "uncoding" it.
 }
 ```
 
@@ -43,41 +45,37 @@ and HappyCodableCommandLine will create code automatically:
 ```
 extension Person {
 	enum CodingKeys: String, CodingKey {
-		case name1
-		case numberOfTips2 = "🍉"
-		case age = "234"
+		case name
+		case id = "🆔"
+		case age = "secret_number"
 	}
 	mutating
 	func decode(happyFrom decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: CodingKeys.self)
+		let container = try decoder.container(keyedBy: StringCodingKey.self)
+		var errors = [Error]()
 		
-		if Self.globalDecodeAllowOptional {
-			do { self.name1 = try decoder.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1, alterKeys: [], from: container) } catch { }
-			do { self.numberOfTips2 = try decoder.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2, alterKeys: [], from: container) } catch { }
-			do { self.age = try decoder.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age, alterKeys: ["age", "abc"], from: container) } catch { }
-		} else {
-			self.name1 = try decoder.decode(defaultValue: self.name1, verifyValue: self.name1, forKey: .name1, alterKeys: [], from: container)
-			self.numberOfTips2 = try decoder.decode(defaultValue: self.numberOfTips2, verifyValue: self.numberOfTips2, forKey: .numberOfTips2, alterKeys: [], from: container)
-			self.age = try decoder.decode(defaultValue: self.age, verifyValue: self.age, forKey: .age, alterKeys: ["age", "abc"], from: container)
+		do { self.name = try container.decode(default: self.name, key: "name", alterKeys: []) } catch { errors.append(error) }
+		do { self.id = try container.decode(default: self.id, key: "🆔", alterKeys: []) } catch { errors.append(error) }
+		do { self.age = try container.decode(default: self.age, key: "secret_number", alterKeys: ["age"]) } catch { errors.append(error) }
+		
+		if !Self.allowHappyDecodableSkipMissing, !errors.isEmpty {
+			throw errors
 		}
-		
 	}
 	func encode(happyTo encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		if Self.globalEncodeSafely {
-			do { try container.encodeIfPresent(self.name1, forKey: .name1) } catch { }
-			do { try container.encodeIfPresent(self.numberOfTips2, forKey: .numberOfTips2) } catch { }
-			do { try container.encodeIfPresent(self.age, forKey: .age) } catch { }
-		} else {
-			try container.encode(self.name1, forKey: .name1)
-			try container.encode(self.numberOfTips2, forKey: .numberOfTips2)
-			try container.encode(self.age, forKey: .age)
+		var errors = [Error]()
+		do { try container.encodeIfPresent(self.name, forKey: .name) } catch { errors.append(error) }
+		do { try container.encodeIfPresent(self.id, forKey: .id) } catch { errors.append(error) }
+		do { try container.encodeIfPresent(self.age, forKey: .age) } catch { errors.append(error) }
+		if !Self.allowHappyEncodableSafely, !errors.isEmpty {
+			throw errors
 		}
 	}
 }
 ```
 
-also support non-RawRepresentable enum:
+also support non-RawRepresentable enum(you need to premise the parameter Type is Codable):
 
 ```
 enum EnumTest: HappyCodableEnum {
@@ -208,5 +206,17 @@ extension EnumTest {
 }
 ```
 
+## Limitation
 
+1. Because HappyCodable uses an extension file to generate Codable's functions, thus it can't be used for private Model Types, and it can't be used for models that are defined in function either:
+
+   ```
+   func getNumber() {
+   	struct Package: Codable {
+   		let result: Int
+   	}
+   }
+   ```
+
+2. HappyCodable requires a `init()` to create a base for the model, and then to change the property using Codable, so it requires that the coding properties are mutable. So it can't use for read only Model, for example, the above Package struct.
 
