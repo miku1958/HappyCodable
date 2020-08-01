@@ -16,19 +16,34 @@ A happier Codable Framework that uses SourceKittenFramework to automatically gen
 
 ### And all this, can be solved by using **HappyCodable**
 
-## Usage
+## Installation
 
-1. build the HappyCodable Command Line executable file
-2. bring  executable file and HappyCodable Common Source Code to your project
-3. add a run script in `build phases` before `compile sources` like:
+### CocoaPods
+
+1. Add `pod 'HappyCodable'` to your Podfile and run pod install
+
+   After install, you may need to find the `YourProject/Pods/HappyCodable.CommandLine/HappyCodableCommandLine` and run `chmod +x HappyCodableCommandLine` to make it executable
+
+2. In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left
+
+3. Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script:
+
+   ```
+   tool="$PODS_ROOT/HappyCodable.CommandLine/HappyCodableCommandLine"
+   target="${SRCROOT}/{THE FOLDER YOU WANT TO ANALYSIS}"
+   generated="${SRCROOT}/HappyCodable.generated.swift"
+   
+   ${tool} ${target} ${generated}
+   ```
+
+4. Build your project, in Finder you will now see a `HappyCodable.generated.swift` in the $SRCROOT-folder, drag the  `HappyCodable.generated.swift`  files into your project and uncheck Copy items if needed
+
+   Tip: Add the *.generated.swift pattern to your .gitignore file to prevent unnecessary conflicts.
+
+5. Adding `HappyCodable` to a struct/class/enum like:
 
 ```
-${SRCROOT}/HappyCodableCommandLine ${SRCROOT}/Classes ${SRCROOT}/HappyCodable.generated.swift
-```
-
-4. adding `HappyCodable` to a struct/class
-
-```
+import HappyCodable
 struct Person: HappyCodable {
 	var name: String = "abc"
 	
@@ -57,9 +72,9 @@ extension Person {
 		let container = try decoder.container(keyedBy: StringCodingKey.self)
 		var errors = [Error]()
 		
-		do { self.name = try container.decode(default: self.name, key: "name", alterKeys: []) } catch { errors.append(error) }
-		do { self.id = try container.decode(default: self.id, key: "🆔", alterKeys: []) } catch { errors.append(error) }
-		do { self.age = try container.decode(default: self.age, key: "secret_number", alterKeys: ["age"]) } catch { errors.append(error) }
+		do { self.name = try container.decode(default: self.name, key: "name") } catch { errors.append(error) }
+		do { self.id = try container.decode(default: self.id, key: "🆔") } catch { errors.append(error) }
+		do { self.age = try container.decode(default: self.age, key: "secret_number", alterKeys: { ["age"] }) } catch { errors.append(error) }
 		
 		if !Self.allowHappyDecodableSkipMissing, !errors.isEmpty {
 			throw errors
@@ -81,6 +96,7 @@ extension Person {
 also support non-RawRepresentable Enum(you need to premise the parameter Type is Codable):
 
 ```
+import HappyCodable
 enum EnumTest: HappyCodableEnum {
 	case value(num: Int, name: String)
 //	case call(() -> Void) // Build fails if added, since (() -> Void) can't be codable
@@ -222,4 +238,34 @@ extension EnumTest {
    ```
 
 2. HappyCodable requires a `init()` to create a default object for the model(HappyCodableEnum not required), and then to change the property using Codable, so it requires that the coding properties are mutable. So it can't use for read only Model, for example, the above Package struct.
+
+## Q&A
+
+1. ### Why are you creating HappyCodable, and why don't I use HandyJSON
+
+   My project was using HandyJSON, but it's based on Swift's low-level data structure, and after Swift changed its structure several times that led to HandyJSON having issues, so I wrote HappyCodable
+
+   Maybe someone will say: just updating HandyJSON is fine, but you can't ensure that HandyJSON won't die after some Swift data structure change, or you APP won't suddenly stop developing, and then your users won't be able to use it anymore after updating iOS right?
+
+   For migrating to HappyCodable, the APIs are largely reference to HandyJSON,  I can actually write a guide about this(perhaps just about 100 words)
+
+2. ### My project is using another framework based on Codable(like WCDB.swift), is that working?
+
+   I tested WCDB.swift, if you achieve CodingKeys manually, HappyCodable will not generate CodingKeys. You can also extend your model's CodingKeys to implement WCDB.swift's protocols after HappyCodable finishes working; it's too much simpler: 
+
+   ```
+   extension LevelInfo.CodingKeys: WCDBSwift.CodingTableKey {
+   	typealias Root = LevelInfo
+   	static let objectRelationalMapping = TableBinding(Self.self)
+   	static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
+   		return [
+   			"MultiPrimaryConstraint": MultiPrimaryBinding(indexesBy: [subjectId, id])
+   		]
+   	}
+   }
+   ```
+
+3. ### There are a lot of limitations to your framework. You can either use private but also require propertys to be mutable
+
+   Because the code that Swift generates by itself is inserted into the definition directly at compile time, and then if the protocols of other Codable-based libraries are written in the same file, Swift requires you to implement the method of Codable in the definition. Then HappyCodable implements init(from decoder: Decoder) in the extension, Swift will not use the init(from decoder: Decoder) in the model extension...In short, after testing many methods, I finally chose such a troublesome The solution is to call another method in init (from decoder: Decoder) to assign a value to the properties, so the properties have to be mutable, and for data mapping like WCDB.swift, the properties are required to be mutable too
 
