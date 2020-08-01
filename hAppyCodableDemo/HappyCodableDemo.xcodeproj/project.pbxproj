@@ -8,7 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		06D2242856016397432F3F6A /* libPods-HappyCodableCommandLine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */; };
+		8194AC9BC1313645DEDD2C25 /* Pods_CommandLineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F88145ED1DE84C107F7CD57 /* Pods_CommandLineTests.framework */; };
 		83F4F6533A9B1850203D389A /* Pods_HappyCodableDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */; };
+		F0FA49FF8CA0A96331DBA379 /* Pods_CommonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB96569A4306CD0C0AD0FFE /* Pods_CommonTests.framework */; };
+		FF071AA524D50E4600A746FC /* TypeMismatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */; };
+		FF0C571C24D3B3A1001CAC0F /* CommandLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C571B24D3B3A1001CAC0F /* CommandLineTests.swift */; };
+		FF0C572A24D3B3BA001CAC0F /* CommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C572924D3B3BA001CAC0F /* CommonTests.swift */; };
+		FF0C573A24D3B5F3001CAC0F /* enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573824D3B4DD001CAC0F /* enum.swift */; };
+		FF0C573B24D3B5F3001CAC0F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573424D3B4CD001CAC0F /* Class.swift */; };
+		FF0C573C24D3B5F3001CAC0F /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573624D3B4D4001CAC0F /* struct.swift */; };
 		FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916A8247A5F1A0080665E /* AppDelegate.swift */; };
 		FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916AA247A5F1A0080665E /* ViewController.swift */; };
 		FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8916AC247A5F1B0080665E /* Assets.xcassets */; };
@@ -16,23 +24,33 @@
 		FFA32FEA24A635BF009DBE2A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA32FE624A63541009DBE2A /* Test.swift */; };
 		FFBB4A4B249B14F90055CA66 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBB4A4A249B14F90055CA66 /* main.swift */; };
 		FFBB4A4C249B190A0055CA66 /* HappyCodable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF155F7E249A161B009A002B /* HappyCodable.generated.swift */; };
-		FFD1705A24D305C4002AF031 /* HappyCodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1705924D305C4002AF031 /* HappyCodableTests.swift */; };
+		FFC6298B24D4602B00252AEE /* AttributesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC6298A24D4602B00252AEE /* AttributesTest.swift */; };
+		FFC6298D24D467A200252AEE /* WithAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC6298C24D467A200252AEE /* WithAttribute.swift */; };
+		FFC6298F24D4741400252AEE /* KeyedDecodingContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC6298E24D4741400252AEE /* KeyedDecodingContainerTests.swift */; };
+		FFC6299324D4742F00252AEE /* ForKeyedDecodingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC6299224D4742F00252AEE /* ForKeyedDecodingContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FF0C571E24D3B3A1001CAC0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF891678247A5AFC0080665E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF8916A5247A5F1A0080665E;
+			remoteInfo = HappyCodableDemo;
+		};
+		FF0C572C24D3B3BA001CAC0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF891678247A5AFC0080665E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF8916A5247A5F1A0080665E;
+			remoteInfo = HappyCodableDemo;
+		};
 		FFBB4A4E249B27A70055CA66 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF891678247A5AFC0080665E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FFBB4A2D249B13FF0055CA66;
 			remoteInfo = HappyCodableCommandLine;
-		};
-		FFD1705C24D305C4002AF031 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF891678247A5AFC0080665E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF8916A5247A5F1A0080665E;
-			remoteInfo = HappyCodableDemo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -49,16 +67,35 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		035E09BA3645FBE57F2697ED /* Pods-CommandLineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommandLineTests.release.xcconfig"; path = "Target Support Files/Pods-CommandLineTests/Pods-CommandLineTests.release.xcconfig"; sourceTree = "<group>"; };
 		13F3D776CCD091D3C2A40CCB /* Pods-HappyCodableDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableDemo.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		246C265DBADA789C01FC8986 /* Pods-HappyCodableTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableTests.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodableTests/Pods-HappyCodableTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2ADC64C83B367C31BA94F8B5 /* Pods-HappyCodableDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableDemo.release.xcconfig"; path = "Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo.release.xcconfig"; sourceTree = "<group>"; };
 		2FCBCE44B725E6E673731E69 /* Pods-HappyCodable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodable.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodable/Pods-HappyCodable.debug.xcconfig"; sourceTree = "<group>"; };
+		3FB96569A4306CD0C0AD0FFE /* Pods_CommonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4508BA3BFE4935613B4C79A5 /* Pods-CommonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonTests.release.xcconfig"; path = "Target Support Files/Pods-CommonTests/Pods-CommonTests.release.xcconfig"; sourceTree = "<group>"; };
 		450E0DF62299CEA5D8A97212 /* Pods-hAppyCodableDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hAppyCodableDemo.release.xcconfig"; path = "Target Support Files/Pods-hAppyCodableDemo/Pods-hAppyCodableDemo.release.xcconfig"; sourceTree = "<group>"; };
+		4A8EC4AAB379796166304299 /* Pods-HappyCodableTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableTests.release.xcconfig"; path = "Target Support Files/Pods-HappyCodableTests/Pods-HappyCodableTests.release.xcconfig"; sourceTree = "<group>"; };
 		5CB2DB2199EC23BED04A178A /* Pods-hAppyCodableDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hAppyCodableDemo.debug.xcconfig"; path = "Target Support Files/Pods-hAppyCodableDemo/Pods-hAppyCodableDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		6B10C468B7D105BAE1A1F9F1 /* Pods-CommandLineTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommandLineTests.debug.xcconfig"; path = "Target Support Files/Pods-CommandLineTests/Pods-CommandLineTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6E3E6D938487EABD00D517E4 /* Pods-HappyCodableCommandLine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableCommandLine.release.xcconfig"; path = "Target Support Files/Pods-HappyCodableCommandLine/Pods-HappyCodableCommandLine.release.xcconfig"; sourceTree = "<group>"; };
+		75D1B5E242489F0043B99519 /* Pods_HappyCodableTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyCodableTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyCodableDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C6A7EEAF11763A7573B758 /* Pods-HappyCodableCommandLine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodableCommandLine.debug.xcconfig"; path = "Target Support Files/Pods-HappyCodableCommandLine/Pods-HappyCodableCommandLine.debug.xcconfig"; sourceTree = "<group>"; };
+		9F88145ED1DE84C107F7CD57 /* Pods_CommandLineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommandLineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HappyCodableCommandLine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D3D034011FDB23D762575E /* Pods-CommonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonTests.debug.xcconfig"; path = "Target Support Files/Pods-CommonTests/Pods-CommonTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F187321C51F5E31B907CA71C /* Pods-HappyCodable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyCodable.release.xcconfig"; path = "Target Support Files/Pods-HappyCodable/Pods-HappyCodable.release.xcconfig"; sourceTree = "<group>"; };
+		FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMismatchTests.swift; sourceTree = "<group>"; };
+		FF0C571924D3B3A1001CAC0F /* CommandLineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommandLineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF0C571B24D3B3A1001CAC0F /* CommandLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineTests.swift; sourceTree = "<group>"; };
+		FF0C571D24D3B3A1001CAC0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF0C572724D3B3BA001CAC0F /* CommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF0C572924D3B3BA001CAC0F /* CommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTests.swift; sourceTree = "<group>"; };
+		FF0C572B24D3B3BA001CAC0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF0C573424D3B4CD001CAC0F /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		FF0C573624D3B4D4001CAC0F /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
+		FF0C573824D3B4DD001CAC0F /* enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enum.swift; sourceTree = "<group>"; };
 		FF155F7E249A161B009A002B /* HappyCodable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyCodable.generated.swift; sourceTree = "<group>"; };
 		FF89168D247A5D7D0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF89169D247A5DCF0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,12 +109,29 @@
 		FFA32FE624A63541009DBE2A /* Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HappyCodableCommandLine; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFBB4A4A249B14F90055CA66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HappyCodableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFD1705924D305C4002AF031 /* HappyCodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyCodableTests.swift; sourceTree = "<group>"; };
-		FFD1705B24D305C4002AF031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFC6298A24D4602B00252AEE /* AttributesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesTest.swift; sourceTree = "<group>"; };
+		FFC6298C24D467A200252AEE /* WithAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithAttribute.swift; sourceTree = "<group>"; };
+		FFC6298E24D4741400252AEE /* KeyedDecodingContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyedDecodingContainerTests.swift; sourceTree = "<group>"; };
+		FFC6299224D4742F00252AEE /* ForKeyedDecodingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForKeyedDecodingContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FF0C571624D3B3A1001CAC0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8194AC9BC1313645DEDD2C25 /* Pods_CommandLineTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0C572424D3B3BA001CAC0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0FA49FF8CA0A96331DBA379 /* Pods_CommonTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF8916A3247A5F1A0080665E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,13 +145,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				06D2242856016397432F3F6A /* libPods-HappyCodableCommandLine.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFD1705424D305C4002AF031 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +162,12 @@
 				F187321C51F5E31B907CA71C /* Pods-HappyCodable.release.xcconfig */,
 				96C6A7EEAF11763A7573B758 /* Pods-HappyCodableCommandLine.debug.xcconfig */,
 				6E3E6D938487EABD00D517E4 /* Pods-HappyCodableCommandLine.release.xcconfig */,
+				246C265DBADA789C01FC8986 /* Pods-HappyCodableTests.debug.xcconfig */,
+				4A8EC4AAB379796166304299 /* Pods-HappyCodableTests.release.xcconfig */,
+				6B10C468B7D105BAE1A1F9F1 /* Pods-CommandLineTests.debug.xcconfig */,
+				035E09BA3645FBE57F2697ED /* Pods-CommandLineTests.release.xcconfig */,
+				C8D3D034011FDB23D762575E /* Pods-CommonTests.debug.xcconfig */,
+				4508BA3BFE4935613B4C79A5 /* Pods-CommonTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -126,8 +179,44 @@
 				FF89168D247A5D7D0080665E /* SWXMLHash.framework */,
 				78892BC7A4AB51347AB9B0E7 /* Pods_HappyCodableDemo.framework */,
 				A7249D02A4BB4D22EC07777A /* libPods-HappyCodableCommandLine.a */,
+				75D1B5E242489F0043B99519 /* Pods_HappyCodableTests.framework */,
+				9F88145ED1DE84C107F7CD57 /* Pods_CommandLineTests.framework */,
+				3FB96569A4306CD0C0AD0FFE /* Pods_CommonTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF0C571A24D3B3A1001CAC0F /* CommandLineTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF0C571B24D3B3A1001CAC0F /* CommandLineTests.swift */,
+				FF0C571D24D3B3A1001CAC0F /* Info.plist */,
+			);
+			path = CommandLineTests;
+			sourceTree = "<group>";
+		};
+		FF0C572824D3B3BA001CAC0F /* CommonTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF0C572924D3B3BA001CAC0F /* CommonTests.swift */,
+				FFC6298A24D4602B00252AEE /* AttributesTest.swift */,
+				FFC6298E24D4741400252AEE /* KeyedDecodingContainerTests.swift */,
+				FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */,
+				FF0C572B24D3B3BA001CAC0F /* Info.plist */,
+			);
+			path = CommonTests;
+			sourceTree = "<group>";
+		};
+		FF0C573324D3B4B6001CAC0F /* TestObjects */ = {
+			isa = PBXGroup;
+			children = (
+				FF0C573424D3B4CD001CAC0F /* Class.swift */,
+				FF0C573824D3B4DD001CAC0F /* enum.swift */,
+				FF0C573624D3B4D4001CAC0F /* struct.swift */,
+				FFC6298C24D467A200252AEE /* WithAttribute.swift */,
+				FFC6299224D4742F00252AEE /* ForKeyedDecodingContainer.swift */,
+			);
+			path = TestObjects;
 			sourceTree = "<group>";
 		};
 		FF891677247A5AFC0080665E = {
@@ -135,7 +224,8 @@
 			children = (
 				FF8916A7247A5F1A0080665E /* HappyCodableDemo */,
 				FFBB4A2F249B13FF0055CA66 /* HappyCodableCommandLine */,
-				FFD1705824D305C4002AF031 /* HappyCodableTests */,
+				FF0C571A24D3B3A1001CAC0F /* CommandLineTests */,
+				FF0C572824D3B3BA001CAC0F /* CommonTests */,
 				FF891681247A5AFC0080665E /* Products */,
 				3B556B32BDA05E177458921B /* Pods */,
 				A79A9558D9C03727C0993E75 /* Frameworks */,
@@ -147,7 +237,8 @@
 			children = (
 				FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */,
 				FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */,
-				FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */,
+				FF0C571924D3B3A1001CAC0F /* CommandLineTests.xctest */,
+				FF0C572724D3B3BA001CAC0F /* CommonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,6 +246,7 @@
 		FF8916A7247A5F1A0080665E /* HappyCodableDemo */ = {
 			isa = PBXGroup;
 			children = (
+				FF0C573324D3B4B6001CAC0F /* TestObjects */,
 				FF155F7E249A161B009A002B /* HappyCodable.generated.swift */,
 				FFA32FE624A63541009DBE2A /* Test.swift */,
 				FF8916A8247A5F1A0080665E /* AppDelegate.swift */,
@@ -175,24 +267,55 @@
 			path = HappyCodableCommandLine;
 			sourceTree = "<group>";
 		};
-		FFD1705824D305C4002AF031 /* HappyCodableTests */ = {
-			isa = PBXGroup;
-			children = (
-				FFD1705924D305C4002AF031 /* HappyCodableTests.swift */,
-				FFD1705B24D305C4002AF031 /* Info.plist */,
-			);
-			path = HappyCodableTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FF0C571824D3B3A1001CAC0F /* CommandLineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0C572024D3B3A1001CAC0F /* Build configuration list for PBXNativeTarget "CommandLineTests" */;
+			buildPhases = (
+				690FC543DC101F7D47B926C1 /* [CP] Check Pods Manifest.lock */,
+				FF0C571524D3B3A1001CAC0F /* Sources */,
+				FF0C571624D3B3A1001CAC0F /* Frameworks */,
+				FF0C571724D3B3A1001CAC0F /* Resources */,
+				354E41BD1513CA236083479E /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF0C571F24D3B3A1001CAC0F /* PBXTargetDependency */,
+			);
+			name = CommandLineTests;
+			productName = CommandLineTests;
+			productReference = FF0C571924D3B3A1001CAC0F /* CommandLineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FF0C572624D3B3BA001CAC0F /* CommonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0C572E24D3B3BA001CAC0F /* Build configuration list for PBXNativeTarget "CommonTests" */;
+			buildPhases = (
+				B70FBC853060C52FD66913DF /* [CP] Check Pods Manifest.lock */,
+				FF0C572324D3B3BA001CAC0F /* Sources */,
+				FF0C572424D3B3BA001CAC0F /* Frameworks */,
+				FF0C572524D3B3BA001CAC0F /* Resources */,
+				DA832EA0E23F744824413456 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF0C572D24D3B3BA001CAC0F /* PBXTargetDependency */,
+			);
+			name = CommonTests;
+			productName = CommonTests;
+			productReference = FF0C572724D3B3BA001CAC0F /* CommonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FF8916A5247A5F1A0080665E /* HappyCodableDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF8916B3247A5F1B0080665E /* Build configuration list for PBXNativeTarget "HappyCodableDemo" */;
 			buildPhases = (
-				FFBB4A50249B27AF0055CA66 /* ShellScript */,
 				2635AF5171A7E14D993F0C8A /* [CP] Check Pods Manifest.lock */,
+				FFBB4A50249B27AF0055CA66 /* ShellScript */,
 				FF8916A2247A5F1A0080665E /* Sources */,
 				FF8916A3247A5F1A0080665E /* Frameworks */,
 				FF8916A4247A5F1A0080665E /* Resources */,
@@ -226,24 +349,6 @@
 			productReference = FFBB4A2E249B13FF0055CA66 /* HappyCodableCommandLine */;
 			productType = "com.apple.product-type.tool";
 		};
-		FFD1705624D305C4002AF031 /* HappyCodableTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FFD1706024D305C4002AF031 /* Build configuration list for PBXNativeTarget "HappyCodableTests" */;
-			buildPhases = (
-				FFD1705324D305C4002AF031 /* Sources */,
-				FFD1705424D305C4002AF031 /* Frameworks */,
-				FFD1705524D305C4002AF031 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FFD1705D24D305C4002AF031 /* PBXTargetDependency */,
-			);
-			name = HappyCodableTests;
-			productName = HappyCodableTests;
-			productReference = FFD1705724D305C4002AF031 /* HappyCodableTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -254,16 +359,20 @@
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "庄黛淳华";
 				TargetAttributes = {
+					FF0C571824D3B3A1001CAC0F = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = FF8916A5247A5F1A0080665E;
+					};
+					FF0C572624D3B3BA001CAC0F = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = FF8916A5247A5F1A0080665E;
+					};
 					FF8916A5247A5F1A0080665E = {
 						CreatedOnToolsVersion = 11.5;
 					};
 					FFBB4A2D249B13FF0055CA66 = {
 						CreatedOnToolsVersion = 11.5;
 						LastSwiftMigration = 1150;
-					};
-					FFD1705624D305C4002AF031 = {
-						CreatedOnToolsVersion = 12.0;
-						TestTargetID = FF8916A5247A5F1A0080665E;
 					};
 				};
 			};
@@ -282,25 +391,33 @@
 			targets = (
 				FF8916A5247A5F1A0080665E /* HappyCodableDemo */,
 				FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */,
-				FFD1705624D305C4002AF031 /* HappyCodableTests */,
+				FF0C571824D3B3A1001CAC0F /* CommandLineTests */,
+				FF0C572624D3B3BA001CAC0F /* CommonTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FF0C571724D3B3A1001CAC0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0C572524D3B3BA001CAC0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF8916A4247A5F1A0080665E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */,
 				FF8916B0247A5F1B0080665E /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FFD1705524D305C4002AF031 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +468,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		354E41BD1513CA236083479E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CommandLineTests/Pods-CommandLineTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		56543EF39786838B90ADDDB0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -364,6 +496,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HappyCodableDemo/Pods-HappyCodableDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		690FC543DC101F7D47B926C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CommandLineTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B70FBC853060C52FD66913DF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CommonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA832EA0E23F744824413456 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CommonTests/Pods-CommonTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FFBB4A50249B27AF0055CA66 /* ShellScript */ = {
@@ -386,13 +577,37 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FF0C571524D3B3A1001CAC0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF0C571C24D3B3A1001CAC0F /* CommandLineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0C572324D3B3BA001CAC0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFC6298B24D4602B00252AEE /* AttributesTest.swift in Sources */,
+				FF071AA524D50E4600A746FC /* TypeMismatchTests.swift in Sources */,
+				FFC6298F24D4741400252AEE /* KeyedDecodingContainerTests.swift in Sources */,
+				FF0C572A24D3B3BA001CAC0F /* CommonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF8916A2247A5F1A0080665E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0C573B24D3B5F3001CAC0F /* Class.swift in Sources */,
+				FFC6299324D4742F00252AEE /* ForKeyedDecodingContainer.swift in Sources */,
+				FF0C573A24D3B5F3001CAC0F /* enum.swift in Sources */,
 				FFBB4A4C249B190A0055CA66 /* HappyCodable.generated.swift in Sources */,
 				FFA32FEA24A635BF009DBE2A /* Test.swift in Sources */,
+				FF0C573C24D3B5F3001CAC0F /* struct.swift in Sources */,
 				FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */,
+				FFC6298D24D467A200252AEE /* WithAttribute.swift in Sources */,
 				FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,26 +620,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FFD1705324D305C4002AF031 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FFD1705A24D305C4002AF031 /* HappyCodableTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FF0C571F24D3B3A1001CAC0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF8916A5247A5F1A0080665E /* HappyCodableDemo */;
+			targetProxy = FF0C571E24D3B3A1001CAC0F /* PBXContainerItemProxy */;
+		};
+		FF0C572D24D3B3BA001CAC0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF8916A5247A5F1A0080665E /* HappyCodableDemo */;
+			targetProxy = FF0C572C24D3B3BA001CAC0F /* PBXContainerItemProxy */;
+		};
 		FFBB4A4F249B27A70055CA66 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FFBB4A2D249B13FF0055CA66 /* HappyCodableCommandLine */;
 			targetProxy = FFBB4A4E249B27A70055CA66 /* PBXContainerItemProxy */;
-		};
-		FFD1705D24D305C4002AF031 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FF8916A5247A5F1A0080665E /* HappyCodableDemo */;
-			targetProxy = FFD1705C24D305C4002AF031 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -440,6 +652,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FF0C572124D3B3A1001CAC0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B10C468B7D105BAE1A1F9F1 /* Pods-CommandLineTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = CommandLineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.CommandLineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Debug;
+		};
+		FF0C572224D3B3A1001CAC0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 035E09BA3645FBE57F2697ED /* Pods-CommandLineTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = CommandLineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.CommandLineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Release;
+		};
+		FF0C572F24D3B3BA001CAC0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8D3D034011FDB23D762575E /* Pods-CommonTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = CommonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.CommonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Debug;
+		};
+		FF0C573024D3B3BA001CAC0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4508BA3BFE4935613B4C79A5 /* Pods-CommonTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3AP6XM8L72;
+				INFOPLIST_FILE = CommonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mikun.CommonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
+			};
+			name = Release;
+		};
 		FF891685247A5AFC0080665E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -632,51 +932,27 @@
 			};
 			name = Release;
 		};
-		FFD1705E24D305C4002AF031 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 3AP6XM8L72;
-				INFOPLIST_FILE = HappyCodableTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = mikun.HappyCodableTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
-			};
-			name = Debug;
-		};
-		FFD1705F24D305C4002AF031 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 3AP6XM8L72;
-				INFOPLIST_FILE = HappyCodableTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = mikun.HappyCodableTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyCodableDemo.app/Contents/MacOS/HappyCodableDemo";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FF0C572024D3B3A1001CAC0F /* Build configuration list for PBXNativeTarget "CommandLineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0C572124D3B3A1001CAC0F /* Debug */,
+				FF0C572224D3B3A1001CAC0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0C572E24D3B3BA001CAC0F /* Build configuration list for PBXNativeTarget "CommonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0C572F24D3B3BA001CAC0F /* Debug */,
+				FF0C573024D3B3BA001CAC0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FF89167B247A5AFC0080665E /* Build configuration list for PBXProject "HappyCodableDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -700,15 +976,6 @@
 			buildConfigurations = (
 				FFBB4A32249B13FF0055CA66 /* Debug */,
 				FFBB4A33249B13FF0055CA66 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FFD1706024D305C4002AF031 /* Build configuration list for PBXNativeTarget "HappyCodableTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FFD1705E24D305C4002AF031 /* Debug */,
-				FFD1705F24D305C4002AF031 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

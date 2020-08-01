@@ -16,3 +16,16 @@ target 'HappyCodableCommandLine' do
 	pod 'HappyCodable/CommandLine', :path => '../Source'
 end
 
+target 'CommandLineTests' do
+	# Comment the next line if you don't want to use dynamic frameworks
+	use_frameworks!
+	
+	pod 'HappyCodable/CommandLine', :path => '../Source'
+end
+
+target 'CommonTests' do
+	# Comment the next line if you don't want to use dynamic frameworks
+	use_frameworks!
+	
+	pod 'HappyCodable/Common', :path => '../Source'
+end

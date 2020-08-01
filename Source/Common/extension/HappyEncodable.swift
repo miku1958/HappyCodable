@@ -40,7 +40,7 @@ public extension HappyCodableSerialization where Self: Encodable {
 public extension Collection where Iterator.Element: HappyCodableSerialization & Encodable {
 	
 	func toJSON() throws -> [[String: Any]] {
-		return try self.map {
+		try self.map {
 			try $0.toJSON()
 		}
 	}

@@ -9,12 +9,14 @@ import Foundation
 import SourceKittenFramework
 
 public struct Object: Codable {
+	var customCodingKeys: [String]?
+	var isExtension: Bool = false
+	let accessLevel: AccessLevel
 	let name: String
 	let type: Types?
 	let inheritedtypes: [String]
-	var isExtension: Bool = false
+	let subObjects: [Object]
 	let propertys: [Property]
-	var customCodingKeys: [String]?
 	
 	var isClass: Bool {
 		type == .class
@@ -35,6 +37,28 @@ public struct Object: Codable {
 		})
 	}
 	
+	enum AccessLevel: String, Codable, CaseIterable {
+		case `private`, `fileprivate`, `internal`, `public`, `open`
+		
+		var isPublic: Bool {
+			switch self {
+			case .fileprivate, .private, .internal:
+				return false
+			case .public, .open:
+				return true
+			}
+		}
+		
+		var isPrivate: Bool {
+			switch self {
+			case .fileprivate, .private:
+				return true
+			case .internal, .public, .open:
+				return false
+			}
+		}
+	}
+	
 	enum Types: Int, Codable {
 		case `class`
 		case `enum`
@@ -42,32 +66,57 @@ public struct Object: Codable {
 	}
 }
 
+extension Object.AccessLevel: Comparable {
+	static func < (lhs: Object.AccessLevel, rhs: Object.AccessLevel) -> Bool {
+		if lhs.isPublic, rhs.isPublic {
+			return false
+		}
+		return Object.AccessLevel.allCases.firstIndex(of: lhs)! < Object.AccessLevel.allCases.firstIndex(of: rhs)!
+	}
+}
+
 extension Object {
-	init?(_ source: [String: SourceKitRepresentable], file: File) {
+	init?(_ source: [String: SourceKitRepresentable], file: File, inheritedAccessLevel: AccessLevel?) {
 		guard
 			let name = source[SwiftDocKey.name]?.string
 		else { return nil }
+		
+		var accessLevel: Object.AccessLevel
+		if let value = source["key.accessibility"]?.string?.replacingOccurrences(of: "source.lang.swift.accessibility.", with: ""), let accessibility = Object.AccessLevel(rawValue: value) {
+			accessLevel = accessibility
+		} else {
+			accessLevel = .internal
+		}
+		if let inheritedAccessLevel = inheritedAccessLevel, accessLevel > inheritedAccessLevel {
+			accessLevel = inheritedAccessLevel
+		}
+		
 		#if DEBUG
-		if name == "HappyTest" {
+		if name == "SubEnumComplex" {
 			
 		}
 		#endif
-		let propertys: [Object.Property] = source[SwiftDocKey.substructure]?.dicArray?.flatMap({ property -> [Object.Property] in
-			guard
-				let kind = property[SwiftDocKey.kind]?.string.flatMap(SwiftDeclarationKind.init(rawValue:))
-			else { return [] }
-			
-			switch kind {
-			case .enumcase:
-				return Property.enumElements(property, file: file)
-			default:
-				if let property = Object.Property(property, file: file) {
-					return [property]
+		var propertys = [Object.Property]()
+		var subObjects = [Object]()
+		if let substructures = source[SwiftDocKey.substructure]?.dicArray {
+			for structure in substructures {
+				if let kind = structure[SwiftDocKey.kind]?.string.flatMap(SwiftDeclarationKind.init(rawValue:)) {
+					switch kind {
+					case .enumcase:
+						propertys += Property.enumElements(structure, file: file)
+					default:
+						if let property = Object.Property(structure, file: file) {
+							propertys.append(property)
+						} else if let object = Object(structure, file: file, inheritedAccessLevel: accessLevel) {
+							subObjects.append(object)
+						}
+					}
 				} else {
-					return []
+					
 				}
 			}
-		}) ?? []
+		}
+		
 		var type: Types?
 		if let kind = source[SwiftDocKey.kind]?.string.flatMap(SwiftDeclarationKind.init(rawValue:)) {
 			switch kind {
@@ -86,6 +135,7 @@ extension Object {
 				$0[SwiftDocKey.name]?.string
 			})
 		}
-		self.init(name: name, type: type, inheritedtypes: inheritedtypes, propertys: propertys)
+		
+		self.init(accessLevel: accessLevel, name: name, type: type, inheritedtypes: inheritedtypes, subObjects: subObjects, propertys: propertys)
 	}
 }

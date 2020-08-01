@@ -208,8 +208,12 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 				if case DecodingError.typeMismatch = error {
 					if let value = try? decodeIfPresent(Int.self, forKey: key) {
 						return value == 1
-					} else if let value = try? decodeIfPresent(String.self, forKey: key), let result = Bool(value) {
-						return result
+					} else if let value = try? decodeIfPresent(String.self, forKey: key) {
+						if let result = Bool(value) {
+							return result
+						} else if let result = Int(value) {
+							return result == 1
+						}
 					}
 				}
 				throw error
@@ -247,13 +251,13 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 					if let value = try? decodeIfPresent(Bool.self, forKey: key) {
 						return String(value)
 					}
-					if let value = try? decodeIfPresent(Double.self, forKey: key) {
-						return String(value)
-					}
 					if let value = try? decodeIfPresent(Int64.self, forKey: key) {
 						return String(value)
 					}
 					if let value = try? decodeIfPresent(UInt64.self, forKey: key) {
+						return String(value)
+					}
+					if let value = try? decodeIfPresent(Double.self, forKey: key) {
 						return String(value)
 					}
 				}
@@ -312,21 +316,27 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - Int
 	@usableFromInline
-	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Int64 {
+	func decodeInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> Int64 where T: FixedWidthInteger {
+		func boundsCheck(value: Int64, for key: StringCodingKey) throws -> Int64 {
+			guard value <= T.max, value >= T.min else {
+				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
+			}
+			return value
+		}
 		func _decode(key: StringCodingKey) throws -> Int64 {
 			do {
 				if optional {
 					if let value = try decodeIfPresent(Int64.self, forKey: key) {
-						return value
+						return try boundsCheck(value: value, for: key)
 					} else {
 						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
 					}
 				} else {
-					return try decode(Int64.self, forKey: key)
+					return try boundsCheck(value: try decode(Int64.self, forKey: key), for: key)
 				}
 			} catch {
 				if case DecodingError.typeMismatch = error {
-					if let value = try? decodeIfPresent(String.self, forKey: key), let result = Int64(value) {
+					if let value = try? decodeIfPresent(String.self, forKey: key), let int64 = Int64(value), let result = try? boundsCheck(value: int64, for: key) {
 						return result
 					}
 				}
@@ -349,21 +359,27 @@ extension KeyedDecodingContainer where Key == StringCodingKey {
 	
 	// MARK: - UInt
 	@usableFromInline
-	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> UInt64 {
+	func decodeUInt<T>(mainKey: String, alterKeys: () -> [String], optional: Bool, targetType: T.Type) throws -> UInt64 where T: FixedWidthInteger {
+		func boundsCheck(value: UInt64, for key: StringCodingKey) throws -> UInt64 {
+			guard value <= T.max, value >= T.min else {
+				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [key], debugDescription: "Parsed JSON number <\(value)> does not fit in \(T.self)."))
+			}
+			return value
+		}
 		func _decode(key: StringCodingKey) throws -> UInt64 {
 			do {
 				if optional {
 					if let value = try decodeIfPresent(UInt64.self, forKey: key) {
-						return value
+						return try boundsCheck(value: value, for: key)
 					} else {
 						throw DecodingError.valueNotFound(T.self, DecodingError.Context(codingPath: [key], debugDescription: "Expected \(T.self) value but found nothing."))
 					}
 				} else {
-					return try decode(UInt64.self, forKey: key)
+					return try boundsCheck(value: try decode(UInt64.self, forKey: key), for: key)
 				}
 			} catch {
 				if case DecodingError.typeMismatch = error {
-					if let value = try? decodeIfPresent(String.self, forKey: key), let result = UInt64(value) {
+					if let value = try? decodeIfPresent(String.self, forKey: key), let uint64 = UInt64(value), let result = try? boundsCheck(value: uint64, for: key) {
 						return result
 					}
 				}

@@ -7,9 +7,7 @@
 
 import Foundation
 
-enum HappyCodableAccessibility: String {
-	case `fileprivate`, `private`, `internal`, `public`
-}
+
 // MARK: - HappyCodableSerialization
 public protocol HappyCodableSerialization {
 	
@@ -18,24 +16,24 @@ public protocol HappyCodableSerialization {
 // MARK: - Type
 // MARK: - HappyEncodable
 public protocol HappyEncodable: Encodable, HappyCodableSerialization {
-	static var globalEncodeSafely: Bool { get }
+	static var allowHappyEncodableSafely: Bool { get }
 	func encode(happyTo encoder: Encoder) throws
 }
 
 extension HappyEncodable {
-	public static var globalEncodeSafely: Bool { true }
+	public static var allowHappyEncodableSafely: Bool { true }
 	public func encode(to encoder: Encoder) throws {
 		try encode(happyTo: encoder)
 	}
-	func encode(happyTo encoder: Encoder) throws {
-		
+	public func encode(happyTo encoder: Encoder) throws {
+		assertionFailure("HappyEncodable did not work, assuming it is applying HappyEncodable to a private Type? You should not do this.")
 	}
 }
 
 // MARK: - HappyDecodable
 public protocol HappyDecodable: Decodable, HappyCodableSerialization {
 	init()
-	static var globalDecodeAllowOptional: Bool { get }
+	static var allowHappyDecodableSkipMissing: Bool { get }
 	mutating func decode(happyFrom decoder: Decoder) throws
 	
 	mutating func willStartMapping()
@@ -43,19 +41,19 @@ public protocol HappyDecodable: Decodable, HappyCodableSerialization {
 }
 
 extension HappyDecodable {
-	public static var globalDecodeAllowOptional: Bool { true }
+	public static var allowHappyDecodableSkipMissing: Bool { true }
 	public init(from decoder: Decoder) throws {
 		self.init()
 		try self.decode(happyFrom: decoder)
 	}
-	mutating func decode(happyFrom decoder: Decoder) throws {
-		
+	public mutating func decode(happyFrom decoder: Decoder) throws {
+		assertionFailure("HappyDecodable did not work, assuming it is applying HappyDecodable to a private Type? You should not do this.")
 	}
 	
-	mutating public func willStartMapping() {
+	public mutating func willStartMapping() {
 		
 	}
-	mutating public func didFinishMapping() {
+	public mutating func didFinishMapping() {
 		
 	}
 }
@@ -66,15 +64,12 @@ public typealias HappyCodable = HappyEncodable & HappyDecodable
 // MARK: - Enum
 /// use for Enum which not base on RawRepresentable
 public protocol HappyEncodableEnum: Encodable, HappyCodableSerialization {
-	func encode(happyTo encoder: Encoder) throws
+	
 }
 
 extension HappyEncodableEnum {
 	public func encode(to encoder: Encoder) throws {
-		try encode(happyTo: encoder)
-	}
-	public func encode(happyTo encoder: Encoder) throws {
-		
+		assertionFailure("HappyEncodableEnum did not work, assuming it is applying HappyDecodable to a private Type? You should not do this.")
 	}
 }
 
@@ -82,15 +77,12 @@ extension HappyEncodableEnum {
 /// use for Enum which not base on RawRepresentable
 /// wraming: HappyDecodableEnum is
 public protocol HappyDecodableEnum: Decodable, HappyCodableSerialization {
-	init(happyFrom decoder: Decoder) throws
+	
 }
 
 extension HappyDecodableEnum {
 	public init(from decoder: Decoder) throws {
-		try self.init(happyFrom: decoder)
-	}
-	public init(happyFrom decoder: Decoder) throws {
-		fatalError()
+		fatalError("HappyDecodableEnum did not work, assuming it is applying HappyDecodableEnum to a private Enum? You should not do this.")
 	}
 }
 

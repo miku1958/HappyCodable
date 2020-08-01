@@ -26,15 +26,56 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "134DF979E2EE553D703271565C0921D9"
+            BuildableName = "HappyCodable.framework"
+            BlueprintName = "HappyCodable-Common"
+            ReferencedContainer = "container:Pods/Pods.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FFD1705624D305C4002AF031"
+               BlueprintIdentifier = "FF0C56F724D3B261001CAC0F"
                BuildableName = "HappyCodableTests.xctest"
                BlueprintName = "HappyCodableTests"
+               ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF0C570A24D3B383001CAC0F"
+               BuildableName = "HappyCodableCommonTests.xctest"
+               BlueprintName = "HappyCodableCommonTests"
+               ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF0C571824D3B3A1001CAC0F"
+               BuildableName = "CommandLineTests.xctest"
+               BlueprintName = "CommandLineTests"
+               ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF0C572624D3B3BA001CAC0F"
+               BuildableName = "CommonTests.xctest"
+               BlueprintName = "CommonTests"
                ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>

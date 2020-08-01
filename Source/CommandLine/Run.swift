@@ -124,7 +124,7 @@ func docs(for path: String) {
 	print("get cache from \(cachePath)")
 	do {
 		#if DEBUG
-		if file.path?.contains("/BookDetail.swift") ?? false {
+		if file.path?.contains("/Class.swift") ?? false {
 			print(1)
 		}
 		#endif
@@ -147,12 +147,12 @@ func docs(for path: String) {
 	
 	print("creating objects for \(path)")
 	var objectsInCurrentFile = [Object]()
-	func happySubstructures(from substructures: [[String: SourceKitRepresentable]], typePrefix: [String] = []) {
+	func happySubstructures(from substructures: [[String: SourceKitRepresentable]], typePrefix: [String] = [], inheritedAccessLevel: Object.AccessLevel?) {
 		for var substructure in substructures {
 			guard
 				let name = substructure[SwiftDocKey.name]?.string,
 				let kind = substructure[SwiftDocKey.kind]?.string.flatMap(SwiftDeclarationKind.init(rawValue:))
-			else { return }
+			else { continue }
 			
 			let isExtension: Bool
 			switch kind {
@@ -173,7 +173,7 @@ func docs(for path: String) {
 			}
 			substructure[SwiftDocKey.name] = fullName
 
-			guard var object = Object(substructure, file: file) else {
+			guard var object = Object(substructure, file: file, inheritedAccessLevel: inheritedAccessLevel) else {
 				continue
 			}
 			object.isExtension = isExtension
@@ -226,11 +226,11 @@ func docs(for path: String) {
 			}
 			
 			if let subSubstructure = subSubstructure {
-				happySubstructures(from: subSubstructure, typePrefix: typePrefix+[name])
+				happySubstructures(from: subSubstructure, typePrefix: typePrefix+[name], inheritedAccessLevel: object.accessLevel)
 			}
 		}
 	}
-	happySubstructures(from: substructures)
+	happySubstructures(from: substructures, inheritedAccessLevel: nil)
 	
 	fileLock.wait()
 	for object in objectsInCurrentFile {

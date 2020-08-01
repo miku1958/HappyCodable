@@ -45,10 +45,21 @@ public extension HappyCodableSerialization where Self: Decodable {
 		guard let data = json?.data(using: .utf8) else {
 			throw HappyDecodableError.inputEmpty
 		}
-		let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-		
-		return try decode(from: dict, designatedPath: designatedPath)
+		return try decode(from: data, designatedPath: designatedPath)
 	}
+	
+	/// Finds the internal JSON field in `data` as the `designatedPath` specified, and converts it to a Model
+	/// `designatedPath` is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer
+	@inline(__always)
+	static func decode(from data: Foundation.Data, designatedPath: String? = nil) throws -> Self {
+		if let designatedPath = designatedPath {
+			let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+			return try decode(from: dict, designatedPath: designatedPath)
+		} else {
+			return try JSONDecoder().decode(Self.self, from: data)
+		}
+	}
+
 	
 	/// Finds the internal dictionary in `dict` as the `designatedPath` specified, and converts it to a Model
 	/// `designatedPath` is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer
@@ -69,33 +80,40 @@ public extension Array where Element: HappyCodableSerialization & Decodable {
 	/// this method converts it to a Models array
 	@inline(__always)
 	static func decode(from json: String?, designatedPath: String? = nil) throws -> [Element] {
+		try decode(from: json?.data(using: .utf8))
+	}
+	
+	/// if the JSON field finded by `designatedPath` in `json` is representing a array, such as `[{...}, {...}, {...}]`,
+	/// this method converts it to a Models array
+	@inline(__always)
+	static func decode(from data: Foundation.Data?, designatedPath: String? = nil) throws -> [Element] {
 		guard
-			let data = json?.data(using: .utf8),
-			var dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+			let data = data
 		else {
 			throw HappyDecodableError.inputEmpty
 		}
-		let arr: [[String: Any]] = try dictionary(from: dict, designatedPath: designatedPath)
 		
-		return try decode(from: arr)
+		let json = try JSONSerialization.jsonObject(with: data, options: [])
+		if let dicts = json as? [[String: Any]] {
+			return try decode(from: dicts)
+		} else if let dict = json as? [String: Any] {
+			let arr: [[String: Any]] = try dictionary(from: dict, designatedPath: designatedPath)
+			return try decode(from: arr)
+		} else {
+			throw HappyDecodableError.TypeError
+		}
 	}
 	
 	/// deserialize model array from NSArray
 	@inline(__always)
 	static func decode(from array: NSArray?) throws -> [Element] {
-		guard let arr = array as? [[String: Any]] else {
-			throw HappyDecodableError.inputEmpty
-		}
-		return try decode(from: arr)
+		return try decode(from: array as? [[String: Any]])
 	}
 	
 	/// deserialize model array from array
 	@inline(__always)
 	static func decode(from array: [Any]?) throws -> [Element] {
-		guard let arr = array as? [[String: Any]] else {
-			throw HappyDecodableError.inputEmpty
-		}
-		return try decode(from: arr)
+		return try decode(from: array as? [[String: Any]])
 	}
 	
 	/// deserialize model array from array

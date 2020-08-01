@@ -48,12 +48,16 @@ public struct Happy {
 				_string = value
 			}
 		}
+		
 		public var wrappedValue: T
 		public init(wrappedValue: T, _ codingKeys: String...) {
 			self.wrappedValue = wrappedValue
 		}
 		public init(wrappedValue: T) {
 			self.wrappedValue = wrappedValue
+		}
+		public init<Wrapped>(_ codingKeys: String...) where T == Wrapped? {
+			self.wrappedValue = nil
 		}
 	}
 	
@@ -65,6 +69,9 @@ public struct Happy {
 		public init(wrappedValue: T) {
 			self.wrappedValue = wrappedValue
 		}
+		public init<Wrapped>() where T == Wrapped? {
+			self.wrappedValue = nil
+		}
 	}
 	
 	// MARK: - uncoding
@@ -74,6 +81,9 @@ public struct Happy {
 		
 		public init(wrappedValue: T) {
 			self.wrappedValue = wrappedValue
+		}
+		public init<Wrapped>() where T == Wrapped? {
+			self.wrappedValue = nil
 		}
 		public var debugDescription: String {
 			String(describing: wrappedValue)

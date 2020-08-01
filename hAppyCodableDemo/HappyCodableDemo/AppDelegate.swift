@@ -16,8 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		// Insert code here to initialize your application
 
 		
-		let json = #"{ "name1": "name1.value", "🍉": "🍉.value", "abc": "abc.value"}"#.data(using: .utf8)!
-		let result = try! JSONDecoder().decode(Person.self, from: json)
+//		let json = #"{ "name1": "name1.value", "🍉": "🍉.value", "abc": "abc.value"}"#.data(using: .utf8)!
+//		let result = try! JSONDecoder().decode(Person.self, from: json)
 	}
 }
 

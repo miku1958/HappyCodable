@@ -16,9 +16,9 @@ private extension Bool {
 
 extension Array where Element == Object {
 	var generatedCode: String {
-		guard let definitionObject = self.first(where: { !$0.isExtension }) else { return "" }
+		guard let definitionObject = self.first(where: { !$0.isExtension }), !definitionObject.accessLevel.isPrivate else { return "" }
 		#if DEBUG
-		if definitionObject.name == "BookDetail" {
+		if definitionObject.name.contains("SubEnumComplex") {
 			print(1)
 		}
 		#endif
@@ -96,11 +96,11 @@ extension Array where Element == Object {
 					let decodeOnly =
 						"self.\(property.name) = try \(decodeExpression)"
 					
-					let decodeAllowOptional =
-						"do { \(decodeOnly) } catch { errors.append(error) }"
+					let decode =
+						"do { \(decodeOnly) } catch { \((!property.isOptional).add("errors.append(error)")) }"
 					// 这里只能一个一个的do catch, 不能放到同一个do catch里, 不然一个出错后面都不执行了
 					
-					decodingVariables += "\(decodeAllowOptional)\n"
+					decodingVariables += "\(decode)\n"
 				}
 				if isConfirmToEncodable {
 					let encodeParameters =
@@ -112,19 +112,23 @@ extension Array where Element == Object {
 					encodingVariables += "\(encodeSafely)\n"
 				}
 			}
-			guard !codingKeyCases.isEmpty else { return }
-			
-			CodingKeys =
+			if !codingKeyCases.isEmpty {
+				CodingKeys =
+					"""
+				enum CodingKeys: String, CodingKey {
+				\(indent: 1, codingKeyCases)
+				}
 				"""
-			enum CodingKeys: String, CodingKey {
-			\(indent: 1, codingKeyCases)
 			}
-			"""
 			
 			decode =
 				"""
 			\((!definitionObject.isClass).add("mutating"))
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
 			func decode(happyFrom decoder: Decoder) throws {
+			\((!codingKeyCases.isEmpty).add(
+				"""
 				let container = try decoder.container(keyedBy: StringCodingKey.self)
 				var errors = [Error]()
 			
@@ -134,30 +138,36 @@ extension Array where Element == Object {
 
 				\(methodNames.contains("didFinishMapping()").add("self.didFinishMapping()"))
 
-				if !Self.globalDecodeAllowOptional {
+				if !Self.allowHappyDecodableSkipMissing, !errors.isEmpty {
 					throw errors
 				}
+			"""))
 			}
 			"""
 			
 			encode =
 				"""
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
 			func encode(happyTo encoder: Encoder) throws {
+			\((!codingKeyCases.isEmpty).add(
+				"""
 				var container = encoder.container(keyedBy: CodingKeys.self)
 				var errors = [Error]()
 
 			\(indent: 1, encodingVariables)
 
-				if !Self.globalEncodeSafely {
+				if !Self.allowHappyEncodableSafely, !errors.isEmpty {
 					throw errors
 				}
+			"""))
 			}
 			"""
 		}
 		func generatedEnum() {
 			var decodings = [String]()
 			var encodings = [String]()
-			for (index, property) in propertys.enumerated() {
+			for (_ /*index*/, property) in propertys.enumerated() {
 				switch property.type {
 				case .function:
 					continue
@@ -255,6 +265,8 @@ extension Array where Element == Object {
 			}
 			decode =
 				"""
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
 			init(from decoder: Decoder) throws {
 				let container = try decoder.singleValueContainer()
 				let content = try container.decode([String: [String: String]].self)
@@ -273,6 +285,8 @@ extension Array where Element == Object {
 			
 			encode =
 				"""
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
 			func encode(to encoder: Encoder) throws {
 				var container = encoder.singleValueContainer()
 				let encoder = JSONEncoder()
@@ -285,23 +299,43 @@ extension Array where Element == Object {
 		
 		func generatedEnumBaseRawValue() {
 			decode = """
-			// \(definitionObject.name) is base on RawRepresentable
-			// should not use HappyDecodableEnum
-			
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
+			init(from decoder: Decoder) throws {
+				let container = try decoder.singleValueContainer()
+				let content = try container.decode(RawValue.self)
+				if let value = \(definitionObject.name)(rawValue: content) {
+					self = value
+				} else {
+					throw DecodingError.typeMismatch(\(definitionObject.name).self, DecodingError.Context(codingPath: [], debugDescription: ""))
+				}
+			}
 			"""
 			
 			encode =
 				"""
-			// \(definitionObject.name) is base on RawRepresentable
-			// should not use HappyEncodableEnum
+			\((definitionObject.accessLevel == .open).add("open"))
+			\((definitionObject.accessLevel == .public).add("public"))
+			func encode(to encoder: Encoder) throws {
+				var container = encoder.singleValueContainer()
+				try container.encode(self.rawValue)
+			}
 			"""
 		}
 		
 		if definitionObject.type == .enum {
-			if Set(inheritedtypes).intersection(rawRepresentableRawValues).isEmpty {
-				generatedEnum()
-			} else {
+			let inheritedtypesSet = Set(inheritedtypes)
+			let isRawRepresentable = !inheritedtypesSet.intersection(rawRepresentableRawValues).isEmpty
+			let usingRawRepresentable = inheritedtypesSet.contains("RawRepresentable") && self.contains(where: {
+				$0.subObjects.contains {
+					$0.name == "RawValue"
+				}
+			})
+			
+			if isRawRepresentable || usingRawRepresentable {
 				generatedEnumBaseRawValue()
+			} else {
+				generatedEnum()
 			}
 		} else {
 			generatedType()

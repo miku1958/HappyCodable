@@ -1,14 +1,15 @@
 //
-//  HappyCodableTests.swift
-//  HappyCodableTests
+//  CommandLineTests.swift
+//  CommandLineTests
 //
-//  Created by 庄黛淳华 on 2020/7/30.
+//  Created by 庄黛淳华 on 2020/7/31.
 //  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import XCTest
+@testable import HappyCodableCommandLine
 
-class HappyCodableTests: XCTestCase {
+class CommandLineTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
