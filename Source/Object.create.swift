@@ -18,7 +18,7 @@ extension Array where Element == Object {
 	var generatedCode: String {
 		guard let definitionObject = self.first(where: { !$0.isExtension }), !definitionObject.accessLevel.isPrivate else { return "" }
 		#if DEBUG
-		if definitionObject.name.contains("TestEnum") {
+		if definitionObject.name.contains("CodingKeysExistStruct") {
 			print(1)
 		}
 		#endif
@@ -75,23 +75,30 @@ extension Array where Element == Object {
 				case .enumElement:
 					continue
 				}
-				if let customCodingKeys = customCodingKeys, !customCodingKeys.contains(property.name) {
+				let customCodingKey = customCodingKeys?.first(where: {
+					$0.property == property.name
+				})
+				if customCodingKeys != nil, customCodingKey == nil {
 					continue
 				}
-				
-				do {
+				var mainKey: String
+				if let customCodingKey = customCodingKey {
+					mainKey = customCodingKey.key
+				} else {
 					if let replacingKey = property.replacedKey {
+						mainKey = replacingKey
 						codingKeyCases += "case \(property.name) = \(replacingKey)"
 					} else {
+						mainKey = property.name
 						codingKeyCases += "case \(property.name)"
 					}
 					codingKeyCases += "\n"
 				}
+				mainKey = mainKey.removingQuotes.removingBackQuotes
+				
 				if isConfirmToDecodable {
-					let key = property.replacedKey?.removingQuotes ?? property.name
-					
 					let decodeExpression =
-						"container.decode(default: self.\(property.name), key: \"\(key)\", alterKeys: \(property.alterKeys))"
+						"container.decode(default: self.\(property.name), key: \"\(mainKey)\", alterKeys: \(property.alterKeys))"
 					
 					let decodeOnly =
 						"self.\(property.name) = try \(decodeExpression)"
@@ -122,12 +129,12 @@ extension Array where Element == Object {
 			}
 			
 			decode =
-				"""
+			"""
 			\((!definitionObject.isClass).add("mutating"))
 			\((definitionObject.accessLevel == .open).add("open"))
 			\((definitionObject.accessLevel == .public).add("public"))
 			func decode(happyFrom decoder: Decoder) throws {
-			\((!codingKeyCases.isEmpty).add(
+			\((!codingKeyCases.isEmpty || !(customCodingKeys?.isEmpty ?? true)).add(
 				"""
 				let container = try decoder.container(keyedBy: StringCodingKey.self)
 				var errors = [Error]()
@@ -150,7 +157,7 @@ extension Array where Element == Object {
 			\((definitionObject.accessLevel == .open).add("open"))
 			\((definitionObject.accessLevel == .public).add("public"))
 			func encode(happyTo encoder: Encoder) throws {
-			\((!codingKeyCases.isEmpty).add(
+			\((!codingKeyCases.isEmpty || !(customCodingKeys?.isEmpty ?? true)).add(
 				"""
 				var container = encoder.container(keyedBy: CodingKeys.self)
 				var errors = [Error]()
@@ -350,9 +357,9 @@ extension Array where Element == Object {
 		
 		
 		let code =
-			"""
+		"""
 		extension \(definitionObject.name) {
-		\(indent: 1, (customCodingKeys == nil).add(CodingKeys) )
+		\(indent: 1, CodingKeys)
 		\(indent: 1, isConfirmToDecodable.add(decode))
 		\(indent: 1, isConfirmToEncodable.add(encode))
 		}

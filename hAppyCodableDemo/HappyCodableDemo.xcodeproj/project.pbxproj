@@ -18,6 +18,8 @@
 		FF0C573A24D3B5F3001CAC0F /* enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573824D3B4DD001CAC0F /* enum.swift */; };
 		FF0C573B24D3B5F3001CAC0F /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573424D3B4CD001CAC0F /* Class.swift */; };
 		FF0C573C24D3B5F3001CAC0F /* struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0C573624D3B4D4001CAC0F /* struct.swift */; };
+		FF1EC1EB24D59F9700E78447 /* CodingKeysExist.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1EC1EA24D59F9700E78447 /* CodingKeysExist.swift */; };
+		FF1EC1ED24D5AE4100E78447 /* CodingKeysExistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1EC1EC24D5AE4100E78447 /* CodingKeysExistTests.swift */; };
 		FF8916A9247A5F1A0080665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916A8247A5F1A0080665E /* AppDelegate.swift */; };
 		FF8916AB247A5F1A0080665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8916AA247A5F1A0080665E /* ViewController.swift */; };
 		FF8916AD247A5F1B0080665E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF8916AC247A5F1B0080665E /* Assets.xcassets */; };
@@ -99,6 +101,8 @@
 		FF0C573624D3B4D4001CAC0F /* struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = struct.swift; sourceTree = "<group>"; };
 		FF0C573824D3B4DD001CAC0F /* enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enum.swift; sourceTree = "<group>"; };
 		FF155F7E249A161B009A002B /* HappyCodable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyCodable.generated.swift; sourceTree = "<group>"; };
+		FF1EC1EA24D59F9700E78447 /* CodingKeysExist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingKeysExist.swift; sourceTree = "<group>"; };
+		FF1EC1EC24D5AE4100E78447 /* CodingKeysExistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingKeysExistTests.swift; sourceTree = "<group>"; };
 		FF89168D247A5D7D0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF89169D247A5DCF0080665E /* SWXMLHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SWXMLHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF8916A6247A5F1A0080665E /* HappyCodableDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyCodableDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +208,7 @@
 				FFC6298A24D4602B00252AEE /* AttributesTest.swift */,
 				FFC6298E24D4741400252AEE /* KeyedDecodingContainerTests.swift */,
 				FF071AA424D50E4600A746FC /* TypeMismatchTests.swift */,
+				FF1EC1EC24D5AE4100E78447 /* CodingKeysExistTests.swift */,
 				FF0C572B24D3B3BA001CAC0F /* Info.plist */,
 			);
 			path = CommonTests;
@@ -218,6 +223,7 @@
 				FFC6298C24D467A200252AEE /* WithAttribute.swift */,
 				FFC6299224D4742F00252AEE /* ForKeyedDecodingContainer.swift */,
 				FF071AA824D53EB900A746FC /* ForSingleValueDecodingContainer.swift */,
+				FF1EC1EA24D59F9700E78447 /* CodingKeysExist.swift */,
 			);
 			path = TestObjects;
 			sourceTree = "<group>";
@@ -593,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFC6298B24D4602B00252AEE /* AttributesTest.swift in Sources */,
+				FF1EC1ED24D5AE4100E78447 /* CodingKeysExistTests.swift in Sources */,
 				FF071AA524D50E4600A746FC /* TypeMismatchTests.swift in Sources */,
 				FFC6298F24D4741400252AEE /* KeyedDecodingContainerTests.swift in Sources */,
 				FF0C572A24D3B3BA001CAC0F /* CommonTests.swift in Sources */,
@@ -603,6 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1EC1EB24D59F9700E78447 /* CodingKeysExist.swift in Sources */,
 				FF0C573B24D3B5F3001CAC0F /* Class.swift in Sources */,
 				FFC6299324D4742F00252AEE /* ForKeyedDecodingContainer.swift in Sources */,
 				FF0C573A24D3B5F3001CAC0F /* enum.swift in Sources */,

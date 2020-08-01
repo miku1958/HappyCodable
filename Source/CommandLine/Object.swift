@@ -9,7 +9,7 @@ import Foundation
 import SourceKittenFramework
 
 public struct Object: Codable {
-	var customCodingKeys: [String]?
+	var customCodingKeys: [CodingKey]?
 	var isExtension: Bool = false
 	let accessLevel: AccessLevel
 	let name: String
@@ -63,6 +63,15 @@ public struct Object: Codable {
 		case `class`
 		case `enum`
 		case `struct`
+	}
+	
+	struct CodingKey: Codable {
+		let property: String
+		let alter: String?
+		
+		var key: String {
+			alter ?? property
+		}
 	}
 }
 

@@ -200,17 +200,30 @@ func docs(for path: String) {
 				}) {
 			// then
 				#if DEBUG
-				if parentName == "BookDetail" {
+				if parentName == "CodingKeysExistStruct" {
 					print(1)
 				}
 				#endif
 				var object = objectsInCurrentFile[objectIndex]
-				let cases = subSubstructure.filter({
+				let cases: [Object.CodingKey] = subSubstructure.filter({
 					$0[SwiftDocKey.kind]?
 						.string
 						.map(SwiftDeclarationKind.init(rawValue:)) == .enumcase
 				}).compactMap({
-					$0[SwiftDocKey.substructure]?.dicArray?.first?[SwiftDocKey.name]?.string
+					guard
+						let dic = $0[SwiftDocKey.substructure]?.dicArray?.first,
+						let name = dic[SwiftDocKey.name]?.string
+					else { return nil }
+					if
+						let element = dic[SwiftDocKey.elements]?.dicArray?.first,
+						element[SwiftDocKey.kind]?.string == "source.lang.swift.structure.elem.init_expr",
+						let offset = element[SwiftDocKey.offset]?.int,
+						let length = element[SwiftDocKey.length]?.int,
+						let content = file.contents(from: offset)?.utf8,
+						let alterKey = String(content[..<content.index(content.startIndex, offsetBy: length)]){
+						return .init(property: name, alter: alterKey)
+					}
+					return .init(property: name, alter: nil)
 				})
 				
 				object.customCodingKeys = cases
