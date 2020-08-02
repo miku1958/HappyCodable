@@ -271,4 +271,3 @@ extension EnumTest {
    这是由于 Swift 生成 Codable 的代码是直接在编译时插入到定义里的, 同时如果和其他基于 Codable 的库的协议都写在同一个文件里, Swift 就要求你在定义里实现 Codable 的方法, 所以我需要在 HappyCodable 的 extension 里实现的 init(from decoder: Decoder), 但这又会会导致 Swift 不认 HappyCodable.generated.swift 里的 init 方法, 一直通过 HappyCodable extension 里的 init(from decoder: Decoder) 去创建模型.....
    
    总之在测试了很多方法后最后选择了这么麻烦的办法: 在 HappyCodable extension 里实现 init(from decoder: Decoder), 调用模型的 init() 创建一个空对象, 再调用另一个方法去给属性赋值, 所以需要属性是 mutable 的, 而且其实像 WCDB.swift 这种需要映射数据的, 也要求属性是 mutable 的, 如果有用到的应该也不需要改动多少
-   ``` 
