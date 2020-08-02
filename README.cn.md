@@ -47,11 +47,11 @@ struct Person: HappyCodable {
    @Happy.codingKeys("🆔")
    var id: String = "abc"
    
-   @Happy.codingKeys("secret_number", "age") // the first key will be the coding key
+   @Happy.codingKeys("secret_number", "age") // 第一个 key "secret_number" 将作为coding key
    var age: Int = 18
    
    @Happy.uncoding
-   var secret_number: String = "3.1415" // Build fail if coded, in this case, we can "uncoding" it.
+   var secret_number: String = "3.1415" // 因为重名了, 类型也不一样, 这时候需要标记为 uncoding, 否则再 decode 的时候会报错
 }
 ```
 
