@@ -39,7 +39,7 @@
 
 5. 把 `HappyCodable` 应用到你的struct/class/enum, 比如:
 
-```
+```swift
 import HappyCodable
 struct Person: HappyCodable {
    var name: String = "abc"
@@ -57,7 +57,7 @@ struct Person: HappyCodable {
 
 HappyCodableCommandLine 会自动生成以下代码:
 
-```
+```swift
 extension Person {
    enum CodingKeys: String, CodingKey {
       case name
@@ -92,7 +92,7 @@ extension Person {
 
 还有非 RawRepresentable 的 Enum(你需要确保子元素的类型都是 Codable 的):
 
-```
+```swift
 import HappyCodable
 enum EnumTest: HappyCodableEnum {
    case value(num: Int, name: String)
@@ -107,7 +107,7 @@ enum EnumTest: HappyCodableEnum {
 
 生成的代码: 
 
-```
+```swift
 extension EnumTest {
    init(from decoder: Decoder) throws {
       let container = try decoder.singleValueContainer()
@@ -227,7 +227,7 @@ extension EnumTest {
 
 1. 因为 HappyCodable 会给需要的类型生成 Codable 方法的 extension 到另外一个文件, 因此没法用于标记为 private 的模型, 同理也没法用于定义在方法里的类型, 例如:
 
-   ```
+   ```swift
    func getNumber() {
       struct Package: HappyCodable { 
       // ❌外部无法访问所以无法生成extension
@@ -254,7 +254,7 @@ extension EnumTest {
    
    但如果你是新建的模型, 不想手动写 WCDB.swift 的 CodingKeys, 可以在 HappyCodable 生成代码后, 给你的模型的 CodingKeys 添加一个分类去实现 WCDB.swift 的协议就行了, 比原来简单太多, 比如
 
-   ```
+   ```swift
    extension LevelInfo.CodingKeys: WCDBSwift.CodingTableKey {
       typealias Root = LevelInfo
       static let objectRelationalMapping = TableBinding(Self.self)
