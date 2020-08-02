@@ -250,7 +250,7 @@ extension EnumTest {
 
 2. ### 我的项目用了其他基于Codable的库(比如WCDB.swift), 能共存吗?
 
-   测试了 WCDB.swift, 如果手动实现了 CodingKeys, 那 HappyCodable 是不会生成 CodingKeys 的, 直接换上 HappyCodable 也能正常工作
+   我测试了 WCDB.swift, 如果手动实现了 CodingKeys, 那 HappyCodable 是不会生成 CodingKeys 的, 直接换上 HappyCodable 也能正常工作
    
    但如果你是新建的模型, 不想手动写 WCDB.swift 的 CodingKeys, 可以在 HappyCodable 生成代码后, 给你的模型的 CodingKeys 添加一个分类去实现 WCDB.swift 的协议就行了, 比原来简单太多, 比如
 
@@ -268,7 +268,7 @@ extension EnumTest {
 
 3. ### 你这库局限性也太大了吧, 既不能用private还要求属性是mutable的
 
-   没办法, Swift 生成 Codable 的代码是直接在编译时插入到定义里的, 然后如果和其他基于 Codable 的库的协议都写在同一个文件里, Swift 就要求你在定义里实现 Codable 的方法, 在 所以我需要HappyCodable 的 extension 里实现的 init(from decoder: Decoder), 但这又会会导致 Swift 不认 HappyCodable.generated.swift 里的 init 方法, 一直通过 HappyCodable extension 里的 init(from decoder: Decoder) 去创建模型.....
+   这是由于 Swift 生成 Codable 的代码是直接在编译时插入到定义里的, 同时如果和其他基于 Codable 的库的协议都写在同一个文件里, Swift 就要求你在定义里实现 Codable 的方法, 所以我需要在 HappyCodable 的 extension 里实现的 init(from decoder: Decoder), 但这又会会导致 Swift 不认 HappyCodable.generated.swift 里的 init 方法, 一直通过 HappyCodable extension 里的 init(from decoder: Decoder) 去创建模型.....
    
    总之在测试了很多方法后最后选择了这么麻烦的办法: 在 HappyCodable extension 里实现 init(from decoder: Decoder), 调用模型的 init() 创建一个空对象, 再调用另一个方法去给属性赋值, 所以需要属性是 mutable 的, 而且其实像 WCDB.swift 这种需要映射数据的, 也要求属性是 mutable 的, 如果有用到的应该也不需要改动多少
    ``` 
