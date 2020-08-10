@@ -69,9 +69,9 @@ extension Person {
       let container = try decoder.container(keyedBy: StringCodingKey.self)
       var errors = [Error]()
       
-      do { self.name = try container.decode(default: self.name, key: "name") } catch { errors.append(error) }
-      do { self.id = try container.decode(default: self.id, key: "🆔") } catch { errors.append(error) }
-      do { self.age = try container.decode(default: self.age, key: "secret_number", alterKeys: { ["age"] }) } catch { errors.append(error) }
+      do { self.name = try container.decode(key: "name") } catch { errors.append(error) }
+      do { self.id = try container.decode(key: "🆔") } catch { errors.append(error) }
+      do { self.age = try container.decode(key: "secret_number", alterKeys: { ["age"] }) } catch { errors.append(error) }
       
       if !Self.allowHappyDecodableSkipMissing, !errors.isEmpty {
          throw errors
