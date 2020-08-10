@@ -99,10 +99,10 @@ extension Array where Element == Object {
 				if isConfirmToDecodable {
 					let decodeExpression: String
 					if property.alterKeys.isEmpty {
-						decodeExpression = "container.decode(default: self.\(property.name), key: \"\(mainKey)\")"
+						decodeExpression = "container.decode(key: \"\(mainKey)\")"
 					} else {
 						decodeExpression =
-							"container.decode(default: self.\(property.name), key: \"\(mainKey)\", alterKeys: { \(property.alterKeys) })"
+							"container.decode(key: \"\(mainKey)\", alterKeys: { \(property.alterKeys) })"
 					}
 					
 					let decodeOnly =

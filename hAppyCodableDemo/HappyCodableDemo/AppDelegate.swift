@@ -9,6 +9,8 @@
 import Cocoa
 import HappyCodable
 
+// TODO:    修改缓存逻辑, 当没有产生变化时不去修改 HappyCodable.generated.swift 减少编译器的判断
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
