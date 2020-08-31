@@ -3,7 +3,7 @@
 
 ## Codable的问题 ?
 
-1. 不支持自定义某个属性的 coding key, 一旦你有这种需求, 要么把所有的 coding key 手动实现一遍去修改想要的 coding key, 要么就得在 decode 的时候去设置 Decoder , 及其不方便
+1. 不支持自定义某个属性的 coding key, 一旦你有这种需求, 要么把所有的 coding key 手动实现一遍去修改想要的 coding key, 要么就得在 decode 的时候去设置 Decoder , 极其不方便
 2. 不支持忽略掉某些不能 Codable 的属性, 还是需要手动实现 coding key 才行
 3. 不支持自动合成非 RawRepresentable 的 Enum, 即使该Enum中所有值的子元素都是 Codable 也不行
 4. decode 的时候不支持多个 coding key 映射同一个属性
