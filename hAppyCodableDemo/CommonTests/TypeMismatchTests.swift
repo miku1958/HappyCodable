@@ -13,7 +13,7 @@ import XCTest
 class TypeMismatchTests: XCTestCase {
 	func testBaseDataType() throws {
 		let fakeData_int = Int.random(in: 0...127)
-		let fakeData_double = Double(fakeData_int)/10
+		let fakeData_double: Double = Double(fakeData_int)/10 + 0.1 // 防止出现 4.0 这种情况被当初Int解析
 		let fakeData_bool = Bool.random()
 
 		assert(try TestStruct_ForKeyedDecodingContainer.decode(from: [
