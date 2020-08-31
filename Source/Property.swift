@@ -327,28 +327,22 @@ extension Object {
 
 extension Object.Property {
 	var replacedKey: String? {
-		for attribute in attributes {
-			if case let .codingKeys(keys) = attribute {
-				return keys.first
-			}
+		for case let .codingKeys(keys) in attributes {
+			return keys.first
 		}
 		return nil
 	}
 	var alterKeys: [String] {
-		for attribute in attributes {
-			if case let .codingKeys(keys) = attribute, !keys.isEmpty {
-				return keys[1...].map {
-					$0.removingQuotes
-				}
+		for case let .codingKeys(keys) in attributes where !keys.isEmpty {
+			return keys[1...].map {
+				$0.removingQuotes
 			}
 		}
 		return []
 	}
 	var isOptional: Bool{
-		for attribute in attributes {
-			if case  .optional = attribute {
-				return true
-			}
+		for case .optional in attributes {
+			return true
 		}
 		return false
 	}
