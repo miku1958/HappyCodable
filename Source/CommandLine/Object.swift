@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/6/17.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 import SourceKittenFramework
 
 public struct Object: Codable {

@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/5/23.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 
 
 // MARK: - HappyCodableSerialization

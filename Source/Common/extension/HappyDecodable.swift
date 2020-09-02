@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/6/18.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 
 public enum HappyDecodableError: String, Swift.Error {
 	case inputEmpty

@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/6/17.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 
 extension String {
 	func range(of: String? = nil, from: [String], to: [String], in searchRange: Range<Index>? = nil, options: CompareOptions = [], locale: Locale? = nil) -> Range<Index>? {

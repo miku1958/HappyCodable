@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/6/17.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 import SourceKittenFramework
 import CryptoSwift
 
@@ -83,7 +85,9 @@ func generateFilePrefix(filename: String) {
 	//  Copyright © 2020 庄黛淳华. All rights reserved.
 	//
 	
+	#if canImport(Foundation)
 	import Foundation
+	#endif
 	import HappyCodable
 		
 	

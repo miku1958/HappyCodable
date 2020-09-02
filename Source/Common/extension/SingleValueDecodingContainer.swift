@@ -5,7 +5,9 @@
 //  Created by 庄黛淳华 on 2020/8/1.
 //
 
+#if canImport(Foundation)
 import Foundation
+#endif
 
 extension SingleValueDecodingContainer {
 	public func decodeSafe() throws -> String {
