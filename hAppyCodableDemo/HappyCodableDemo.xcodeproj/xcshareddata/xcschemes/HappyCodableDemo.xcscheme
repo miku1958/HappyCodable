@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "134DF979E2EE553D703271565C0921D9"
-            BuildableName = "HappyCodable.framework"
+            BuildableName = "libHappyCodable-Common.a"
             BlueprintName = "HappyCodable-Common"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
          </BuildableReference>

@@ -23,19 +23,31 @@ It may seem a little cumbersome, but I guarantee it's worth it.
 You'll need to add these to your project:
 
 1. HappyCodable - provides the protocol and functionality you need
-2. HappyCodable/CommandLine, based on  SourceKitten, for generating the required code of Codable
+2. HappyCodable.CommandLine, based on  SourceKitten, for generating the required code of Codable
 
 ### Prepare
 
-Create host command line of HappyCodable/CommandLine, which named HappyCodableCommandLine here, and select Swift as the language:
+Create host command line of HappyCodable.CommandLine, which named HappyCodableCommandLine here, and select Swift as the language:
 
 ![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
+
+In Signing & Capabilities, change Signing Certificate to Sign to Run Locally
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.21.21.png?raw=true)
+
+Change the scheme of HappyCodableCommandLine to Release
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.22.32.png?raw=true)
+
+if you are using on  iOS project and your MacOS is runing on x86 CPU, you might need to check the build setting of your main target, is the VALID_ARCHS contain x86_64
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.24.33.png?raw=true)
 
 Replace main.swift created by Xcode of HappyCodableCommandLine: 
 
 ```swift
 import Foundation
-import HappyCodable
+import HappyCodable_CommandLine
 
 let path: String = CommandLine.arguments[1]
 
@@ -70,17 +82,18 @@ ${commandLine} ${scanPath} ${generatedPath}
 ### CocoaPods
 
 1. add `pod 'HappyCodable' to your Podfile' main target
-2. add `pod 'HappyCodable/CommandLine' to your Podfile' HappyCodableCommandLine target
+2. add `pod 'HappyCodable.CommandLine' to your Podfile' HappyCodableCommandLine target
 
-After finish:
+After finish will looks like:
 
 ```
-target 'HappyCodableDemo' do
+target 'Demo' do
 	pod 'HappyCodable'
 end
 
 target 'HappyCodableCommandLine' do
-	pod 'HappyCodable/CommandLine'
+	platform :macos, '10.14'
+	pod 'HappyCodable.CommandLine'
 end
 ```
 

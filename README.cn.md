@@ -20,19 +20,31 @@
 这里需要添加的有 :
 
 1. HappyCodable, 用于提供协议和方法
-2. HappyCodable/CommandLine, 基于 SourceKitten, 用于在 DEBUG 下生成 Codable 代码
+2. HappyCodable.CommandLine, 基于 SourceKitten, 用于在 DEBUG 下生成 Codable 代码
 
 ### 准备工作
 
-创建 HappyCodable/CommandLine 的宿主执行程序, 这里命名为HappyCodableCommandLine, 使用语言请使用 swift:
+创建 HappyCodable.CommandLine 的宿主执行程序, 这里命名为HappyCodableCommandLine, 使用语言请使用 swift:
 
 ![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
+
+在 Signing & Capabilities 里把Signing Certificate 改成 Sign to Run Locally
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.21.21.png?raw=true)
+
+把 HappyCodableCommandLine 的 scheme 改成Release
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.22.32.png?raw=true)
+
+如果你是在 iOS 项目中使用且MacOS运行在x86 CPU上, 可能需要注意一下 main target  的 build setting 里 VALID_ARCHS 有没有包含 x86_64
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.24.33.png?raw=true)
 
 替换 Xcode 创建的 HappyCodableCommandLine 的 main.swift: 
 
 ```swift
 import Foundation
-import HappyCodable
+import HappyCodable_CommandLine
 
 let path: String = CommandLine.arguments[1]
 
@@ -44,9 +56,9 @@ dispatchMain()
 
 在 Xcode, 你的 project 里打开你的 target, 点击 Build Phases
 
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
-
 打开 Dependencies, 把刚才创建的 HappyCodableCommandLine 添加到你的主项目
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
 
 在页面左上角点击➕添加 New Run Script Phase, 确保脚本是在 Compile Sources 之前执行: 
 
@@ -67,7 +79,7 @@ ${commandLine} ${scanPath} ${generatedPath}
 ### CocoaPods, 目前只支持这种方式
 
 1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件的主 project 中
-2. 添加 `pod 'HappyCodable/CommandLine' 到你的 Podfile 文件的 HappyCodableCommandLine project中
+2. 添加 `pod 'HappyCodable.CommandLine' 到你的 Podfile 文件的 HappyCodableCommandLine project中
 
 完成后如下:
 
@@ -77,7 +89,8 @@ target 'HappyCodableDemo' do
 end
 
 target 'HappyCodableCommandLine' do
-	pod 'HappyCodable/CommandLine'
+	platform :macos, '10.14'
+	pod 'HappyCodable.CommandLine'
 end
 ```
 
