@@ -6,10 +6,7 @@ install! 'cocoapods', :disable_input_output_paths => true
 source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 
 target 'HappyCodableDemo' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-
-	pod 'HappyCodable/Common', :path => '../Source'
+	pod 'HappyCodable', :path => '../Source'
 end
 
 target 'HappyCodableCommandLine' do
@@ -17,15 +14,9 @@ target 'HappyCodableCommandLine' do
 end
 
 target 'CommandLineTests' do
-	# Comment the next line if you don't want to use dynamic frameworks
-	use_frameworks!
-	
 	pod 'HappyCodable/CommandLine', :path => '../Source'
 end
 
 target 'CommonTests' do
-	# Comment the next line if you don't want to use dynamic frameworks
-	use_frameworks!
-	
 	pod 'HappyCodable/Common', :path => '../Source'
 end

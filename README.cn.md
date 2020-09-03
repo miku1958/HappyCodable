@@ -15,29 +15,83 @@
 
 ## 安装
 
-### CocoaPods
+有一点点麻烦, 但我保证一切都是值得的
 
-1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件和执行 pod install
+这里需要添加的有 :
 
-   安装后你可能需要找到 `你的项目/Pods/HappyCodable.CommandLine/HappyCodableCommandLine` ,执行 `chmod +x HappyCodableCommandLine` 把 install 的文件变为可执行文件
+1. HappyCodable, 用于提供协议和方法
+2. HappyCodable/CommandLine, 基于 SourceKitten, 用于在 DEBUG 下生成 Codable 代码
 
-2. 在 Xcode 里: 打开你的项目, 在你的 project 里打开你的 target, 点击 Build Phases, 在页面左上角点击➕添加 New Run Script Phase
+### 准备工作
 
-3. 找到新添加的脚本, 把它拉到 Compile Sources 上面确保编译前执行并且确保是在 Check Pods Manifest.lock 下面, 点开脚本把以下内容填入脚本(记得修改target里的路径):
+创建 HappyCodable/CommandLine 的宿主执行程序, 这里命名为HappyCodableCommandLine, 使用语言请使用 swift:
 
-   ```
-   tool="$PODS_ROOT/HappyCodable.CommandLine/HappyCodableCommandLine"
-   target="${SRCROOT}/{你的swift文件所在的根目录}"
-   generated="${SRCROOT}/HappyCodable.generated.swift"
-   
-   ${tool} ${target} ${generated}
-   ```
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
 
-4. 编译一次你的项目,  `HappyCodable.generated.swift` 应该就会在你的项目根目录出现了, 把 `HappyCodable.generated.swift` 拖进你的项目里(请确保去掉了勾选 Copy items if needed)
+替换 Xcode 创建的 HappyCodableCommandLine 的 main.swift: 
 
-   建议把 `*.generated.swift` 添加到你的.gitignore文件中
+```swift
+import Foundation
+import HappyCodable
 
-5. 把 `HappyCodable` 应用到你的struct/class/enum, 比如:
+let path: String = CommandLine.arguments[1]
+
+let createdFilePath: String = CommandLine.arguments[2]
+
+main(path: path, createdFilePath: createdFilePath)
+dispatchMain()
+```
+
+在 Xcode, 你的 project 里打开你的 target, 点击 Build Phases
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
+
+打开 Dependencies, 把刚才创建的 HappyCodableCommandLine 添加到你的主项目
+
+在页面左上角点击➕添加 New Run Script Phase, 确保脚本是在 Compile Sources 之前执行: 
+
+```
+# 编译完的 HappyCodableCommandLine 路径, 不用改
+commandLine="${SYMROOT}/${CONFIGURATION}/HappyCodableCommandLine"
+
+# 需要扫描的路径, ${SRCROOT}/${PRODUCT_NAME} 代表整个工程的默认目录, 需要根据需要修改
+scanPath="${SRCROOT}/${PRODUCT_NAME}"
+
+# 生成代码的保存文件目录, 需要根据需要修改
+generatedPath="${SRCROOT}/HappyCodable.generated.swift"
+
+echo "${commandLine} ${scanPath} ${generatedPath}"
+${commandLine} ${scanPath} ${generatedPath}
+```
+
+### CocoaPods, 目前只支持这种方式
+
+1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件的主 project 中
+2. 添加 `pod 'HappyCodable/CommandLine' 到你的 Podfile 文件的 HappyCodableCommandLine project中
+
+完成后如下:
+
+```
+target 'HappyCodableDemo' do
+	pod 'HappyCodable'
+end
+
+target 'HappyCodableCommandLine' do
+	pod 'HappyCodable/CommandLine'
+end
+```
+
+3. 执行 pod install
+
+### 在项目中使用
+
+1. 编译一次你的项目, 首次编译 需要先编译 HappyCodableCommandLine 可能会比较久, 之后除非 clean 或者 achieve 否则都不会增加这部分时间了, 完成后 `HappyCodable.generated.swift` 就会在你的指定目录出现
+
+2. 把 `HappyCodable.generated.swift` 拖进你的项目里(请确保去掉了勾选 Copy items if needed)
+
+   可以把 `*.generated.swift` 添加到你的.gitignore文件中, 请放心, 由于没有编译时类型检查, 外加启用了20条线程进行处理, 创建 `HappyCodable.generated.swift` 所需的时间不会太久
+
+3. 把 `HappyCodable` 应用到你的struct/class/enum, 比如:
 
 ```swift
 import HappyCodable

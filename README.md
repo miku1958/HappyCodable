@@ -18,29 +18,83 @@ A happier Codable Framework that uses SourceKittenFramework to automatically gen
 
 ## Installation
 
+It may seem a little cumbersome, but I guarantee it's worth it.
+
+You'll need to add these to your project:
+
+1. HappyCodable - provides the protocol and functionality you need
+2. HappyCodable/CommandLine, based on  SourceKitten, for generating the required code of Codable
+
+### Prepare
+
+Create host command line of HappyCodable/CommandLine, which named HappyCodableCommandLine here, and select Swift as the language:
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
+
+Replace main.swift created by Xcode of HappyCodableCommandLine: 
+
+```swift
+import Foundation
+import HappyCodable
+
+let path: String = CommandLine.arguments[1]
+
+let createdFilePath: String = CommandLine.arguments[2]
+
+main(path: path, createdFilePath: createdFilePath)
+dispatchMain()
+```
+
+Open the target of your project in Xcode, switch to the tab "Build Phases"
+
+![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
+
+Open Dependencies, then add HappyCodableCommandLine to your main target.
+
+Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left, drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: 
+
+```
+# The finish complied HappyCodableCommandLine path, no need to change
+commandLine="${SYMROOT}/${CONFIGURATION}/HappyCodableCommandLine"
+
+# The scan path, ${SRCROOT}/${PRODUCT_NAME} mean scan the whole project by default, change if you need
+scanPath="${SRCROOT}/${PRODUCT_NAME}"
+
+# The save path of grenerated code, change if you need
+generatedPath="${SRCROOT}/HappyCodable.generated.swift"
+
+echo "${commandLine} ${scanPath} ${generatedPath}"
+${commandLine} ${scanPath} ${generatedPath}
+```
+
 ### CocoaPods
 
-1. Add `pod 'HappyCodable'` to your Podfile and run pod install
+1. add `pod 'HappyCodable' to your Podfile' main target
+2. add `pod 'HappyCodable/CommandLine' to your Podfile' HappyCodableCommandLine target
 
-   After install, you may need to find the `YourProject/Pods/HappyCodable.CommandLine/HappyCodableCommandLine` and run `chmod +x HappyCodableCommandLine` to make it executable
+After finish:
 
-2. In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left
+```
+target 'HappyCodableDemo' do
+	pod 'HappyCodable'
+end
 
-3. Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script:
+target 'HappyCodableCommandLine' do
+	pod 'HappyCodable/CommandLine'
+end
+```
 
-   ```
-   tool="$PODS_ROOT/HappyCodable.CommandLine/HappyCodableCommandLine"
-   target="${SRCROOT}/{THE FOLDER YOU WANT TO ANALYSIS}"
-   generated="${SRCROOT}/HappyCodable.generated.swift"
-   
-   ${tool} ${target} ${generated}
-   ```
+3. run pod install
 
-4. Build your project, in Finder you will now see a `HappyCodable.generated.swift` in the $SRCROOT-folder, drag the  `HappyCodable.generated.swift`  files into your project and uncheck Copy items if needed
+### Use in your project
+
+1. Build first time it may take a while, because It need to complie the HappyCodableCommandLine, after finish, the `HappyCodable.generated.swift` should appear in your selected path
+
+2. drag the  `HappyCodable.generated.swift`  files into your project and uncheck Copy items if needed
 
    Tip: Add the *.generated.swift pattern to your .gitignore file to prevent unnecessary conflicts.
 
-5. Adding `HappyCodable` to a struct/class/enum like:
+3. Adding `HappyCodable` to a struct/class/enum like:
 
 ```
 import HappyCodable
