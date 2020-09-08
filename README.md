@@ -1,5 +1,7 @@
 # HappyCodable
 
+- [x] WCDB.swift supported
+
 ## [中文介绍](https://github.com/miku1958/HappyCodable/blob/master/README.cn.md)
 
 A happier Codable Framework that uses SourceKittenFramework to automatically generate Codable related code.
@@ -18,86 +20,37 @@ A happier Codable Framework that uses SourceKittenFramework to automatically gen
 
 ## Installation
 
-It may seem a little cumbersome, but I guarantee it's worth it.
-
-You'll need to add these to your project:
-
-1. HappyCodable - provides the protocol and functionality you need
-2. HappyCodable.CommandLine, based on  SourceKitten, for generating the required code of Codable
-
-### Prepare
-
-Create host command line of HappyCodable.CommandLine, which named HappyCodableCommandLine here, and select Swift as the language:
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
-
-In Signing & Capabilities, change Signing Certificate to Sign to Run Locally
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.21.21.png?raw=true)
-
-Change the scheme of HappyCodableCommandLine to Release
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.22.32.png?raw=true)
-
-if you are using on  iOS project and your MacOS is runing on x86 CPU, you might need to check the build setting of your main target, is the VALID_ARCHS contain x86_64
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.24.33.png?raw=true)
-
-Replace main.swift created by Xcode of HappyCodableCommandLine: 
-
-```swift
-import Foundation
-import HappyCodable_CommandLine
-
-let path: String = CommandLine.arguments[1]
-
-let createdFilePath: String = CommandLine.arguments[2]
-
-main(path: path, createdFilePath: createdFilePath)
-dispatchMain()
-```
-
-Open the target of your project in Xcode, switch to the tab "Build Phases"
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
-
-Open Dependencies, then add HappyCodableCommandLine to your main target.
-
-Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left, drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: 
-
-```
-# The finish complied HappyCodableCommandLine path, no need to change
-commandLine="${SYMROOT}/${CONFIGURATION}/HappyCodableCommandLine"
-
-# The scan path, ${SRCROOT}/${PRODUCT_NAME} mean scan the whole project by default, change if you need
-scanPath="${SRCROOT}/${PRODUCT_NAME}"
-
-# The save path of grenerated code, change if you need
-generatedPath="${SRCROOT}/HappyCodable.generated.swift"
-
-echo "${commandLine} ${scanPath} ${generatedPath}"
-${commandLine} ${scanPath} ${generatedPath}
-```
-
 ### CocoaPods
 
 1. add `pod 'HappyCodable' to your Podfile' main target
-2. add `pod 'HappyCodable.CommandLine' to your Podfile' HappyCodableCommandLine target
 
-After finish will looks like:
+   After finish will looks like:
 
 ```
 target 'Demo' do
 	pod 'HappyCodable'
 end
-
-target 'HappyCodableCommandLine' do
-	platform :macos, '10.14'
-	pod 'HappyCodable.CommandLine'
-end
 ```
 
-3. run pod install
+2. run pod install
+
+3. Open the target of your project in Xcode, switch to the tab "Build Phases", Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left, drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: 
+
+```shell
+code=$(cat <<EOF
+// The scan path, ${SRCROOT} mean scan the whole project by default, change if you need
+let scanPath = "${SRCROOT}"
+
+// The save path of grenerated code, change if you need
+let generatedPath = "${SRCROOT}/HappyCodable.generated.swift"
+
+import HappyCodable
+main(path: scanPath, createdFilePath: generatedPath)
+dispatchMain()
+EOF)
+
+echo "${code}" | DEVELOPER_DIR="$DEVELOPER_DIR" xcrun --sdk macosx "$TOOLCHAIN_DIR/usr/bin/"swift -F "${PODS_ROOT}/HappyCodable.CommandLine" -
+```
 
 ### Use in your project
 

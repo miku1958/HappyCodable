@@ -83,9 +83,7 @@ func generateFilePrefix(filename: String) {
 	//  Copyright © 2020 庄黛淳华. All rights reserved.
 	//
 	
-	#if canImport(Foundation)
 	import Foundation
-	#endif
 	import HappyCodable
 		
 	

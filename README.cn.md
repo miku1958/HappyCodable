@@ -1,4 +1,7 @@
 # HappyCodable
+
+- [x] 支持WCDB.swift
+
 通过使用 SourceKittenFramework 去自动生成 Codable 代码, 让人更愉悦的使用 Codable
 
 ## Codable的问题 ?
@@ -13,88 +16,39 @@
 
 ### 而这些, 你全都可以用HappyCodable解决
 
-## 安装, 由于我没有企业证书, achieve出来的执行文件不通用, 所以 1.0.4之后安装方式和之前不一样
-
-有一点点麻烦, 但我保证一切都是值得的
-
-这里需要添加的有 :
-
-1. HappyCodable, 用于提供协议和方法
-2. HappyCodable.CommandLine, 基于 SourceKitten, 用于在 DEBUG 下生成 Codable 代码
-
-### 准备工作
-
-创建 HappyCodable.CommandLine 的宿主执行程序, 这里命名为HappyCodableCommandLine, 使用语言请使用 swift:
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午2.15.23.png?raw=true)
-
-在 Signing & Capabilities 里把Signing Certificate 改成 Sign to Run Locally
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.21.21.png?raw=true)
-
-把 HappyCodableCommandLine 的 scheme 改成Release
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.22.32.png?raw=true)
-
-如果你是在 iOS 项目中使用且MacOS运行在x86 CPU上, 可能需要注意一下 main target  的 build setting 里 VALID_ARCHS 有没有包含 x86_64
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午11.24.33.png?raw=true)
-
-替换 Xcode 创建的 HappyCodableCommandLine 的 main.swift: 
-
-```swift
-import Foundation
-import HappyCodable_CommandLine
-
-let path: String = CommandLine.arguments[1]
-
-let createdFilePath: String = CommandLine.arguments[2]
-
-main(path: path, createdFilePath: createdFilePath)
-dispatchMain()
-```
-
-在 Xcode, 你的 project 里打开你的 target, 点击 Build Phases
-
-打开 Dependencies, 把刚才创建的 HappyCodableCommandLine 添加到你的主项目
-
-![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-09-03%20下午4.08.20.png?raw=true)
-
-在页面左上角点击➕添加 New Run Script Phase, 确保脚本是在 Compile Sources 之前执行: 
-
-```
-# 编译完的 HappyCodableCommandLine 路径, 不用改
-commandLine="${SYMROOT}/${CONFIGURATION}/HappyCodableCommandLine"
-
-# 需要扫描的路径, ${SRCROOT}/${PRODUCT_NAME} 代表整个工程的默认目录, 需要根据需要修改
-scanPath="${SRCROOT}/${PRODUCT_NAME}"
-
-# 生成代码的保存文件目录, 需要根据需要修改
-generatedPath="${SRCROOT}/HappyCodable.generated.swift"
-
-echo "${commandLine} ${scanPath} ${generatedPath}"
-${commandLine} ${scanPath} ${generatedPath}
-```
+## 安装
 
 ### CocoaPods, 目前只支持这种方式
 
-1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件的主 project 中
-2. 添加 `pod 'HappyCodable.CommandLine' 到你的 Podfile 文件的 HappyCodableCommandLine project中
+1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件中:
 
-完成后如下:
+完成后如下
 
 ```
 target 'HappyCodableDemo' do
 	pod 'HappyCodable'
 end
-
-target 'HappyCodableCommandLine' do
-	platform :macos, '10.14'
-	pod 'HappyCodable.CommandLine'
-end
 ```
 
-3. 执行 pod install
+2. 执行 pod install
+
+3. 在 Xcode, 你的 project 里打开你的 target, 点击 Build Phases, 在页面左上角点击➕添加 New Run Script Phase, 确保脚本是在 Compile Sources 之前执行: 
+
+```shell
+code=$(cat <<EOF
+// 需要扫描的路径, ${SRCROOT} 代表整个工程的默认目录, 需要根据需要修改
+let scanPath = "${SRCROOT}"
+
+// 生成代码的保存文件目录, 需要根据需要修改
+let generatedPath = "${SRCROOT}/HappyCodable.generated.swift"
+
+import HappyCodable
+main(path: scanPath, createdFilePath: generatedPath)
+dispatchMain()
+EOF)
+
+echo "${code}" | DEVELOPER_DIR="$DEVELOPER_DIR" xcrun --sdk macosx "$TOOLCHAIN_DIR/usr/bin/"swift -F "${PODS_ROOT}/HappyCodable.CommandLine" -
+```
 
 ### 在项目中使用
 
