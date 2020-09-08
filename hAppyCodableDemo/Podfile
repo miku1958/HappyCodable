@@ -24,10 +24,13 @@ end
 
 post_install do |installer|
 	installer.pods_project.targets.each do |target|
-		if target.name == "HappyCodable-CommandLine-framework"
+		if target.name.end_with? "-framework"
+#		if target.name == "HappyCodable-CommandLine-framework"
 			target.build_configurations.each do |config|
 				config.build_settings['SKIP_INSTALL'] = 'NO'
+#				config.build_settings['MACH_O_TYPE'] = 'staticlib'
 			end
+			target.build_phases
 		end
 	end
 end
