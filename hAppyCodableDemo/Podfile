@@ -14,9 +14,20 @@ target 'HappyCodableCommandLine' do
 end
 
 target 'CommandLineTests' do
+	use_frameworks!
 	pod 'HappyCodable/CommandLine', :path => '../Source'
 end
 
 target 'CommonTests' do
 	pod 'HappyCodable/Common', :path => '../Source'
+end
+
+post_install do |installer|
+	installer.pods_project.targets.each do |target|
+		if target.name == "HappyCodable-CommandLine-framework"
+			target.build_configurations.each do |config|
+				config.build_settings['SKIP_INSTALL'] = 'NO'
+			end
+		end
+	end
 end

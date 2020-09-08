@@ -5,9 +5,7 @@
 //  Created by 庄黛淳华 on 2020/6/28.
 //
 
-#if canImport(Foundation)
 import Foundation
-#endif
 
 public struct StringCodingKey: CodingKey {
 	public var stringValue: String

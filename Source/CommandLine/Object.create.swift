@@ -5,9 +5,7 @@
 //  Created by 庄黛淳华 on 2020/7/31.
 //
 
-#if canImport(Foundation)
 import Foundation
-#endif
 import SourceKittenFramework
 
 private extension Bool {
