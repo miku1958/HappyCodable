@@ -11,23 +11,11 @@ Pod::Spec.new do |spec|
 
 	spec.swift_version = '5.0'
 	
-	spec.default_subspec = 'Common'
-	
-	spec.subspec 'Common' do |spec|
-		spec.ios.deployment_target = "10.0"
-		spec.osx.deployment_target = "10.14"
-		spec.watchos.deployment_target = "2.0"
-		spec.tvos.deployment_target = "9.0"
-		spec.source_files = "Common/**/*.*"
-	end
-	
-	spec.subspec 'CommandLine' do |spec|
-		spec.platform = :macos, '10.14'
-		spec.source_files = "CommandLine/**/*.*"
-		
-		spec.dependency 'SourceKittenFramework'
-		spec.dependency 'CryptoSwift'
-	end
+	spec.ios.deployment_target = "10.0"
+	spec.osx.deployment_target = "10.14"
+	spec.watchos.deployment_target = "2.0"
+	spec.tvos.deployment_target = "9.0"
+	spec.source_files = "*/*.swift"
 end
 
 # ./Pods/Sourcery/bin/sourcery --sources ./  --templates ./Source/ --output ./CreatedCodable
