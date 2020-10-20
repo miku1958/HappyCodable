@@ -10,6 +10,7 @@ import Foundation
 /// 保存 HappyCodable 缓存的模型
 @usableFromInline
 struct ModelCache {
+	let modelType: Any.Type
 	/// 默认模型的JSON
 	var defaltDecodeJSON: [String: Any]!
 	/// 默认模型的JSON

@@ -8,7 +8,12 @@
 import Foundation
 
 final class ModelAttributeEncoder: Encoder {
-	var cachingModel = ModelCache()
+	let modelType: Any.Type
+	lazy var cachingModel = ModelCache(modelType: modelType)
+	
+	init(modelType: Any.Type) {
+		self.modelType = modelType
+	}
 
 	func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key : CodingKey {
 		KeyedEncodingContainer(Container(encoder: self))

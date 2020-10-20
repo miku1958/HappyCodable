@@ -141,7 +141,7 @@ class __JSONDecoder : Decoder {
 	func pushDealingModel(type: Any.Type) {
 		Thread.wait()
 		if Thread.allModelCache[type] == nil {
-			let encoder = ModelAttributeEncoder()
+			let encoder = ModelAttributeEncoder(modelType: type)
 			if let type = type as? HappyCodable.Type {
 				Thread.attributeEncoder = encoder
 				try? type.init().encode(to: encoder)
