@@ -528,14 +528,14 @@ extension KeyedEncodingContainer {
 		try encode(value.wrappedValue, forKey: key)
 	}
 	
-	public mutating func encode<T>(_ value: Happy.alterCodingKeys<T?>, forKey key: Key) throws where T : Encodable {
+	public mutating func encode<T>(_ value: Happy.alterCodingKeys<T?>, forKey key: Key) throws where T: Encodable {
 		if let encoder = Thread.attributeEncoder {
 			encoder.cachingModel.decodeAttributes[key.stringValue] = ModelCache.AlterCodingKeys(alterKeys: value.codingKeys, defaultValue: value.constructor)
 			return
 		}
 		try encodeIfPresent(value.wrappedValue, forKey: key)
 	}
-	public mutating func encode<T>(_ value: Happy.alterCodingKeys<T>, forKey key: Key) throws where T : Encodable {
+	public mutating func encode<T>(_ value: Happy.alterCodingKeys<T>, forKey key: Key) throws where T: Encodable {
 		if let encoder = Thread.attributeEncoder {
 			encoder.cachingModel.decodeAttributes[key.stringValue] = ModelCache.AlterCodingKeys(alterKeys: value.codingKeys, defaultValue: value.constructor)
 			return

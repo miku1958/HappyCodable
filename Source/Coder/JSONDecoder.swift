@@ -86,8 +86,8 @@ extension Dictionary : _JSONStringDictionaryDecodableMarker where Key == String,
 	static var elementType: Decodable.Type { return Value.self }
 }
 
-
-func _decode<T : HappyCodable>(_ type: T.Type, from data: Any) throws -> T {
+// patch begin
+func _decode<T: HappyCodable>(_ type: T.Type, from data: Any) throws -> T {
 	let decoder = __JSONDecoder(referencing: data, as: type)
 	guard var value = try decoder.unbox(as: type) else {
 		throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: [], debugDescription: "The given data did not contain a top-level value."))
@@ -95,6 +95,7 @@ func _decode<T : HappyCodable>(_ type: T.Type, from data: Any) throws -> T {
 	value.didFinishMapping()
 	return value
 }
+// patch end
 
 // MARK: - __JSONDecoder
 // NOTE: older overlays called this class _JSONDecoder. The two must
@@ -122,7 +123,7 @@ class __JSONDecoder : Decoder {
 	
 	// patch begin
 	/// Contextual user-provided information for use during encoding.
-	public var userInfo: [CodingUserInfoKey : Any] = [:]
+	public var userInfo: [CodingUserInfoKey: Any] = [:]
 	
 	// MARK: - Initialization
 	/// Initializes `self` with the given top-level container and options.
@@ -143,7 +144,7 @@ class __JSONDecoder : Decoder {
 			let encoder = ModelAttributeEncoder()
 			if let type = type as? HappyCodable.Type {
 				Thread.attributeEncoder = encoder
-				try! type.init().encode(to: encoder)
+				try? type.init().encode(to: encoder)
 				Thread.attributeEncoder = nil
 				encoder.cachingModel.defaltDecodeJSON = type.defaultModelEncodeJSON()
 			}
@@ -1067,7 +1068,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = Int64(value)  {
+		if let value = value as? String, let int64 = Int64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1088,7 +1089,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = Int64(value)  {
+		if let value = value as? String, let int64 = Int64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1109,7 +1110,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = Int64(value)  {
+		if let value = value as? String, let int64 = Int64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1130,7 +1131,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = Int64(value)  {
+		if let value = value as? String, let int64 = Int64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1151,7 +1152,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = Int64(value)  {
+		if let value = value as? String, let int64 = Int64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1172,7 +1173,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = UInt64(value)  {
+		if let value = value as? String, let int64 = UInt64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1193,7 +1194,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = UInt64(value)  {
+		if let value = value as? String, let int64 = UInt64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1214,7 +1215,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = UInt64(value)  {
+		if let value = value as? String, let int64 = UInt64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1235,7 +1236,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = UInt64(value)  {
+		if let value = value as? String, let int64 = UInt64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end
@@ -1256,7 +1257,7 @@ private extension __JSONDecoder {
 		guard !(value is NSNull) else { return nil }
 		
 		// patch begin
-		if let value = value as? String, let int64 = UInt64(value)  {
+		if let value = value as? String, let int64 = UInt64(value) {
 			return try boundsCheck(value: int64, errorPath: codingPath)
 		}
 		// patch end

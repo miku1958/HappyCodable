@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-
 // MARK: - HappyCodableSerialization
 public protocol HappyCodableSerialization {
 	

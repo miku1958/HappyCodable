@@ -74,7 +74,7 @@ extension KeyedDecodingContainer {
 }
 
 // MARK: - KeyedEncodingContainer
-extension KeyedEncodingContainer{
+extension KeyedEncodingContainer {
 	public mutating func encode<T>(_ value: Happy.uncoding<T>, forKey key: Key) throws {
 		if let encoder = Thread.attributeEncoder {
 			encoder.cachingModel.decodeAttributes[key.stringValue] = ModelCache.Uncoding(defaultValue: value.constructor)

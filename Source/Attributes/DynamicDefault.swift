@@ -26,7 +26,7 @@ extension Happy {
 			}
 		}
 
-		public init(wrappedValue constructor: @escaping @autoclosure () -> T)  {
+		public init(wrappedValue constructor: @escaping @autoclosure () -> T) {
 			self.constructor = constructor
 		}
 		
@@ -34,7 +34,7 @@ extension Happy {
 			self.storage = wrappedValue
 		}
 		
-		init(_ wrappedValue: (() -> T)?)  {
+		init(_ wrappedValue: (() -> T)?) {
 			self.constructor = wrappedValue
 		}
 	}

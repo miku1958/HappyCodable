@@ -56,8 +56,7 @@ final class ModelAttributeEncoder: Encoder {
 	}
 	
 	var codingPath: [CodingKey] { fatalError() }
-	var userInfo: [CodingUserInfoKey : Any]{ fatalError() }
+	var userInfo: [CodingUserInfoKey: Any] { fatalError() }
 	func unkeyedContainer() -> UnkeyedEncodingContainer { fatalError() }
 	func singleValueContainer() -> SingleValueEncodingContainer { fatalError() }
 }
-

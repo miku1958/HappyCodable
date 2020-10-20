@@ -27,13 +27,13 @@ extension Happy {
 				storage = newValue
 			}
 		}
-		public init(wrappedValue constructor: @escaping @autoclosure () -> Float, decode: Foundation.JSONDecoder.NonConformingFloatDecodingStrategy, encode: Foundation.JSONEncoder.NonConformingFloatEncodingStrategy)  {
+		public init(wrappedValue constructor: @escaping @autoclosure () -> Float, decode: Foundation.JSONDecoder.NonConformingFloatDecodingStrategy, encode: Foundation.JSONEncoder.NonConformingFloatEncodingStrategy) {
 			self.constructor = constructor
 			self.encodeStrategy = encode
 			self.decodeStrategy = decode
 		}
 		
-		init(value: Float?, attribute: ModelCache.NonConformingFloatStrategy<Float>?)  {
+		init(value: Float?, attribute: ModelCache.NonConformingFloatStrategy<Float>?) {
 			self.storage = value
 			self.constructor = attribute?.defaultValue
 			self.encodeStrategy = attribute?.encode ?? .throw
