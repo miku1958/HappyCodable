@@ -1,291 +1,90 @@
 # HappyCodable
 
-- [x] WCDB.swift supported
+通过自定义的 Decoder 配合 Property wrapper 实现优雅 JSON Codable
 
-## [中文介绍](https://github.com/miku1958/HappyCodable/blob/master/README.cn.md)
+## 2020.11.10 备注
 
-A happier Codable Framework that uses SourceKittenFramework to automatically generate Codable related code.
+目前 Swift 编译器存在缺陷, 当 Property wraper 使用 @escaping @autoclosure 闭包作为初始化参数时会编译出错, 9月份的 Swift Development Snapshot 已经修复这个问题, 但 Xcode 12.2 尚未包含该 patcher https://bugs.swift.org/browse/SR-13606 等到 Xcode 更新修复后我会发布本次 2.0 版本到 CocoaPods 和 Swift Package Manager
 
-## What's wrong with Codable ?
+## 与 1.x 的区别
 
-1. Unsupported changes to single coding key, once you change one coding key, you need to set up all the coding keys.
-2. Unsupported ignore specific coding key.
-3. Unsupported automatic synthesis for non-RawRepresentable enums, even if each element is codable.
-4. Unsupported multiple key mapping to one property when decoding.
-5. Difficulty debugging.
-6. Does not automatically use the default values in the definition when missing corresponding key in json data.
-7. Unsupported type mapping automatically, like converts 0/1 to false/true.
+移除了`基于 SourceKitten 生成代码的实现方式`, 改为`编译时`加`自定义的 Decoder` 的方式实现, 不再需要额外配置编译脚本和引入生成文件
 
-### And all this, can be solved by using **HappyCodable**
+​	和原生 Codable 一样支持任意访问权限的类型
 
-## Installation
+​	由于使用了编译器生成的`init(from:)`, 所以无法支持`willStartMapping()`, 只保留`didFinishMapping()`调用
+
+​	无法支持自动合成非 RawRepresentable 的 Enum
+
+​	无法自动合成默认 CodingKeys, 如果是用 WCDB.swift 需要手写一遍了, 同时`@Happy.uncoding`不再支持第三方(包括Foundation.JSONDecoder), 如果需要 “使用第三方 Codable 且使用 uncoding 的功能”, 则需要自己实现 CodingKeys 而不是使用`@Happy.uncoding`
+
+​	由于依赖于系统生成的 CodingKeys, 为了防止岐意, `@Happy.codingKeys`改名为`@Happy.alterCodingKeys`代表替代coding keys, 并且始终优先解析 CodingKeys 中定义的字段避免基于 Codable 的第三方库出错(例如 WCDB.swift)
+
+​	未来会进一步分离开放自定义的 Decoder 以方便接入其他数据类型的 Decoder (例如 XML, Protocol Buffers 等等)
+
+新增了新的 Property wrapper 替代原本 JSON Codable 的参数配置, 例如 @Happy.dateStrategy
+
+由于 decode 的时候需要 encode 一次作为默认值是用, 所以移除了 HappyEncodable, HappyCodable 需要同时实现 Decodable 和 Encodable, 为了防止使用运行时变量时 encode 的值不符合实际情况(`例如 var date = Date()`), 所有@Happy.propertyWrapper 都会使用 @autoclosure 的方式记录默认值, 如果有临时需要可以使用`@Happy.dynamicDefault`标示
+
+## 原生 JSON Codable 的问题 ?
+
+1. 不支持自定义某个属性的 coding key, 一旦你有这种需求, 要么把所有的 coding key 手动实现一遍去修改想要的 coding key, 要么就得在 decode 的时候去设置 Decoder , 极其不方便
+2. 不支持忽略掉某些不能 Codable 的属性, 还是需要手动实现 coding key 才行
+4. decode 的时候不支持多个 coding key 映射同一个属性
+6. 不能使用模型的默认值, 当 decode 的数据缺失时无法使用定义里的默认值而是 throw 数据缺失错误, 这个设计导致例如版本更新后, 服务端删掉了模型的某个过期字段, 然后旧版本 app 都会陷入错误, 即使不用这个字段旧版本客户端依旧是能正常工作的(只是无效的数据显示缺失而已), 这很明显是不合理的.
+7. 不支持简单的类型转换, 比如转换 0/1 到 false/true, "123" 到 Int的123 或者反过来, 谁又能确保服务端的人员不会失手修改了字段类型导致 app 端故障呢?
+
+而这些, 你全都可以用HappyCodable解决
+
+## 安装
 
 ### CocoaPods
 
-1. add `pod 'HappyCodable' to your Podfile' main target
+1. 添加 `pod 'HappyCodable' 到你的 Podfile 文件中:
 
-   After finish will looks like:
+完成后如下
 
 ```
-target 'Demo' do
-	pod 'HappyCodable'
+target 'HappyCodableDemo' do
+pod 'HappyCodable'
 end
 ```
 
-2. run pod install
+2. 执行 pod install
 
-3. Open the target of your project in Xcode, switch to the tab "Build Phases", Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left, drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: 
 
-```shell
-code=$(cat <<EOF
-// The scan path, ${SRCROOT} mean scan the whole project by default, change if you need
-let scanPath = "${SRCROOT}"
+### 在项目中使用
 
-// The save path of grenerated code, change if you need
-let generatedPath = "${SRCROOT}/HappyCodable.generated.swift"
+把 `HappyCodable` 应用到你的struct/class/enum, 比如:
 
-import HappyCodable
-main(path: scanPath, createdFilePath: generatedPath)
-dispatchMain()
-EOF)
-
-echo "${code}" | DEVELOPER_DIR="$DEVELOPER_DIR" xcrun --sdk macosx "$TOOLCHAIN_DIR/usr/bin/"swift -F "${PODS_ROOT}/HappyCodable.CommandLine" -
-```
-
-### Use in your project
-
-1. Build first time it may take a while, because It need to complie the HappyCodableCommandLine, after finish, the `HappyCodable.generated.swift` should appear in your selected path
-
-2. drag the  `HappyCodable.generated.swift`  files into your project and uncheck Copy items if needed
-
-   Tip: Add the *.generated.swift pattern to your .gitignore file to prevent unnecessary conflicts.
-
-3. Adding `HappyCodable` to a struct/class/enum like:
-
-```
+```swift
 import HappyCodable
 struct Person: HappyCodable {
-	var name: String = "abc"
-	
-	@Happy.codingKeys("🆔")
-	var id: String = "abc"
-	
-	@Happy.codingKeys("secret_number", "age") // the first key will be the coding key
-	var age: Int = 18
-	
-	@Happy.uncoding
-	var secret_number: String = "3.1415" // Build fail if coded, in this case, we can "uncoding" it.
+   var name: String = "abc"
+   
+   @Happy.alterCodingKeys("🆔")
+   var id: String = "abc"
+   
+   @Happy.alterCodingKeys("secret_number", "age")
+   var age: Int = 18
+   
+   @Happy.uncoding
+   var secret_number: String = "3.1415"
 }
 ```
 
-and HappyCodableCommandLine will create code automatically:
+## 答疑
 
-```
-extension Person {
-	enum CodingKeys: String, CodingKey {
-		case name
-		case id = "🆔"
-		case age = "secret_number"
-	}
-	mutating
-	func decode(happyFrom decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: StringCodingKey.self)
-		var errors = [Error]()
-		
-		do { self.name = try container.decode(key: "name") } catch { errors.append(error) }
-		do { self.id = try container.decode(key: "🆔") } catch { errors.append(error) }
-		do { self.age = try container.decode(key: "secret_number", alterKeys: { ["age"] }) } catch { errors.append(error) }
-		
-		if !Self.allowHappyDecodableSkipMissing, !errors.isEmpty {
-			throw errors
-		}
-	}
-	func encode(happyTo encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		var errors = [Error]()
-		do { try container.encodeIfPresent(self.name, forKey: .name) } catch { errors.append(error) }
-		do { try container.encodeIfPresent(self.id, forKey: .id) } catch { errors.append(error) }
-		do { try container.encodeIfPresent(self.age, forKey: .age) } catch { errors.append(error) }
-		if !Self.allowHappyEncodableSafely, !errors.isEmpty {
-			throw errors
-		}
-	}
-}
-```
+1. ### 你为什么会写这个库, 我为什么不用 HandyJSON
 
-also support non-RawRepresentable Enum(you need to premise the parameter Type is Codable):
+   我之前项目是用 HandyJSON 的, 但由于 HandyJSON 是基于操作 Swift 底层数据结构实现的, 已经好几次 Swift 版本迭代后, 由于数据结构的改变 HandyJSON 都会出问题, 由于我不想手动解析模型, 促使了我写这个库, 配上足够多的测试用例总比手动安全一些
 
-```
-import HappyCodable
-enum EnumTest: HappyCodableEnum {
-	case value(num: Int, name: String)
-//	case call(() -> Void) // Build fails if added, since (() -> Void) can't be codable
-	case name0(String)
-	case name1(String, last: String)
-	case name2(first: String, String)
-	case name3(_ first: String, _ last: String)
-}
-```
+   可能有人会说更新 HandyJSON 不就好了, 但是你既不能确保以后 Swift 不会更新底层数据结构后, 直接导致HandyJSON 死亡, 也不能确保你所开发的 APP 突然被迫停止开发后, 你的用户更新系统就不能用了对吧
 
-generated code: 
+   为了迁移到 HappyCodable, HappyCodable 的 API 很大程度参考了 HandyJSON
 
-```
-extension EnumTest {
-	init(from decoder: Decoder) throws {
-		let container = try decoder.singleValueContainer()
-		let content = try container.decode([String: [String: String]].self)
-		let error = DecodingError.typeMismatch(EnumTest.self, DecodingError.Context(codingPath: [], debugDescription: ""))
-		guard let name = content.keys.first else {
-			throw error
-		}
-		let decoder = JSONDecoder()
-		switch name {
-			case ".value(num:name:)":
-				guard
-					let _0 = content[name]?["num"]?.data(using: .utf8),
-					let _1 = content[name]?["name"]?.data(using: .utf8)
-				else {
-					throw error
-				}
-				
-				self = .value(
-					num: try decoder.decode((Int).self, from: _0),
-					name: try decoder.decode((String).self, from: _1)
-				)
-			case ".name0(_:)":
-				guard
-					let _0 = content[name]?["$0"]?.data(using: .utf8)
-				else {
-					throw error
-				}
-				
-				self = .name0(
-					try decoder.decode((String).self, from: _0)
-				)
-			case ".name1(_:last:)":
-				guard
-					let _0 = content[name]?["$0"]?.data(using: .utf8),
-					let _1 = content[name]?["last"]?.data(using: .utf8)
-				else {
-					throw error
-				}
-				
-				self = .name1(
-					try decoder.decode((String).self, from: _0),
-					last: try decoder.decode((String).self, from: _1)
-				)
-			case ".name2(first:_:)":
-				guard
-					let _0 = content[name]?["first"]?.data(using: .utf8),
-					let _1 = content[name]?["$1"]?.data(using: .utf8)
-				else {
-					throw error
-				}
-				
-				self = .name2(
-					first: try decoder.decode((String).self, from: _0),
-					try decoder.decode((String).self, from: _1)
-				)
-			case ".name3(_:_:)":
-				guard
-					let _0 = content[name]?["first"]?.data(using: .utf8),
-					let _1 = content[name]?["last"]?.data(using: .utf8)
-				else {
-					throw error
-				}
-				
-				self = .name3(
-					try decoder.decode((String).self, from: _0),
-					try decoder.decode((String).self, from: _1)
-				)
-		default:
-			throw error
-		}
-	}
-	func encode(to encoder: Encoder) throws {
-		var container = encoder.singleValueContainer()
-		let encoder = JSONEncoder()
-		switch self {
-			case let .value(_0, _1):
-				try container.encode([
-					".value(num:name:)": [
-						"num": String(data: try encoder.encode(_0), encoding: .utf8),
-						"name": String(data: try encoder.encode(_1), encoding: .utf8)
-					]
-				])
-			case let .name0(_0):
-				try container.encode([
-					".name0(_:)": [
-						"$0": String(data: try encoder.encode(_0), encoding: .utf8)
-					]
-				])
-			case let .name1(_0, _1):
-				try container.encode([
-					".name1(_:last:)": [
-						"$0": String(data: try encoder.encode(_0), encoding: .utf8),
-						"last": String(data: try encoder.encode(_1), encoding: .utf8)
-					]
-				])
-			case let .name2(_0, _1):
-				try container.encode([
-					".name2(first:_:)": [
-						"first": String(data: try encoder.encode(_0), encoding: .utf8),
-						"$1": String(data: try encoder.encode(_1), encoding: .utf8)
-					]
-				])
-			case let .name3(_0, _1):
-				try container.encode([
-					".name3(_:_:)": [
-						"first": String(data: try encoder.encode(_0), encoding: .utf8),
-						"last": String(data: try encoder.encode(_1), encoding: .utf8)
-					]
-				])
-		}
-	}
-}
-```
+2. ### 我的项目用了其他基于Codable的库(比如WCDB.swift), 能共存吗?
 
-## Limitation
+   可以, 但还是得手动实现 CodingKeys
 
-1. Because HappyCodable uses an extension file to generate Codable's functions, thus it can't be used for private Model Types, and it can't be used for models that are defined in function either:
-
-   ```
-   func getNumber() {
-   	struct Package: Codable {
-   		let result: Int
-   	}
-   }
-   ```
-
-2. HappyCodable requires a `init()` to create a default object for the model(HappyCodableEnum not required), and then to change the property using Codable, so it requires that the coding properties are mutable. So it can't use for read only Model, for example, the above Package struct.
-
-## Q&A
-
-1. ### Why are you creating HappyCodable, and why don't I use HandyJSON
-
-   My project was using HandyJSON, but it's based on Swift's low-level data structure, and after Swift changed its structure several times that led to HandyJSON having issues, so I wrote HappyCodable
-
-   Maybe someone will say: just updating HandyJSON is fine, but you can't ensure that HandyJSON won't die after some Swift data structure change, or you APP won't suddenly stop developing, and then your users won't be able to use it anymore after updating iOS right?
-
-   For migrating to HappyCodable, the APIs are largely reference to HandyJSON,  I can actually write a guide about this(perhaps just about 100 words)
-
-2. ### My project is using another framework based on Codable(like WCDB.swift), is that working?
-
-   I tested WCDB.swift, if you achieve CodingKeys manually, HappyCodable will not generate CodingKeys. You can also extend your model's CodingKeys to implement WCDB.swift's protocols after HappyCodable finishes working; it's too much simpler: 
-
-   ```
-   extension LevelInfo.CodingKeys: WCDBSwift.CodingTableKey {
-   	typealias Root = LevelInfo
-   	static let objectRelationalMapping = TableBinding(Self.self)
-   	static var tableConstraintBindings: [TableConstraintBinding.Name: TableConstraintBinding]? {
-   		return [
-   			"MultiPrimaryConstraint": MultiPrimaryBinding(indexesBy: [subjectId, id])
-   		]
-   	}
-   }
-   ```
-
-3. ### There are a lot of limitations to your framework. You can either use private but also require propertys to be mutable
-
-   Because the code that Swift generates by itself is inserted into the definition directly at compile time, and then if the protocols of other Codable-based libraries are written in the same file, Swift requires you to implement the method of Codable in the definition. Then HappyCodable implements init(from decoder: Decoder) in the extension, Swift will not use the init(from decoder: Decoder) in the model extension...In short, after testing many methods, I finally chose such a troublesome The solution is to call another method in init (from decoder: Decoder) to assign a value to the properties, so the properties have to be mutable, and for data mapping like WCDB.swift, the properties are required to be mutable too
-
+3. 待补充...
