@@ -2,7 +2,7 @@
 
 通过自定义的 Decoder 配合 Property wrapper 实现优雅 JSON Codable
 
-## 2020.11.10 备注
+## 2020.10.10 备注
 
 目前 Swift 编译器存在缺陷, 当 Property wraper 使用 @escaping @autoclosure 闭包作为初始化参数时会编译出错, 9月份的 Swift Development Snapshot 已经修复这个问题, 但 Xcode 12.2 尚未包含该 patcher https://bugs.swift.org/browse/SR-13606 等到 Xcode 更新修复后我会发布本次 2.0 版本到 CocoaPods 和 Swift Package Manager
 
