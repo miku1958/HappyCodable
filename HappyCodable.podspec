@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
 		:git => "https://github.com/miku1958/HappyCodable.git", 
 		:tag => spec.version
 	}
-	spec.source_files          = "Source/Common/**/*.swift"
+	spec.source_files          = "Source/**/*.swift"
 
 	spec.requires_arc          = true
 	spec.swift_version         = "5.1"
