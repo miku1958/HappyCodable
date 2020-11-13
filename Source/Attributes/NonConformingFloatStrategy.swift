@@ -27,7 +27,7 @@ extension Happy {
 				storage = newValue
 			}
 		}
-		public init(wrappedValue constructor: @escaping @autoclosure () -> Float, decode: Foundation.JSONDecoder.NonConformingFloatDecodingStrategy, encode: Foundation.JSONEncoder.NonConformingFloatEncodingStrategy) {
+		public init(wrappedValue constructor: @escaping @autoclosure () -> Float, decode: Foundation.JSONDecoder.NonConformingFloatDecodingStrategy = .throw, encode: Foundation.JSONEncoder.NonConformingFloatEncodingStrategy = .throw) {
 			self.constructor = constructor
 			self.encodeStrategy = encode
 			self.decodeStrategy = decode

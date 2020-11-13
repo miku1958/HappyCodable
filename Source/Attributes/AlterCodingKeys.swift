@@ -44,6 +44,13 @@ extension Happy {
 			self.codingKeys = codingKeys
 		}
 		
+		public init(wrappedValue creater: @escaping @autoclosure () -> T) {
+			(T.self as? CodingKeysFilter.Type)?.precondition()
+			
+			self.constructor = creater
+			self.codingKeys = []
+		}
+		
 		public init<Wrapped>(_ codingKeys: String...) where T == Wrapped? {
 			(T.self as? CodingKeysFilter.Type)?.precondition()
 			
