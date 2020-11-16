@@ -139,8 +139,7 @@ class __JSONDecoder : Decoder {
 		Thread.decoder = nil
 	}
 	func pushDealingModel(type: Any.Type) {
-		Thread.wait()
-		if Thread.allModelCache[type] == nil {
+		if Thread.AllModelCache[type] == nil {
 			let encoder = ModelAttributeEncoder(modelType: type)
 			if let type = type as? HappyCodable.Type {
 				Thread.attributeEncoder = encoder
@@ -148,10 +147,9 @@ class __JSONDecoder : Decoder {
 				Thread.attributeEncoder = nil
 				encoder.cachingModel.defaltDecodeJSON = type.defaultModelEncodeJSON()
 			}
-			Thread.allModelCache[type] = encoder.cachingModel
+			Thread.AllModelCache[type] = encoder.cachingModel
 		}
-		self.dealingModels.append(Thread.allModelCache[type]!)
-		Thread.signal()
+		self.dealingModels.append(Thread.AllModelCache[type]!)
 	}
 	func popDealingModel() {
 		self.dealingModels.removeLast()

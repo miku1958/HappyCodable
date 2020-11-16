@@ -34,27 +34,27 @@ extension Thread {
 		}
 	}
 	/// 根据类型保存所有 alterCodingKeys, 操作时需要保证线程安全
-	@usableFromInline
-	static var allModelCache = [ObjectIdentifier: ModelCache]()
 	
-	/// 操作 allModelCache 用到的递归锁
-	
-	private static var cacheLock: pthread_mutex_t = {
-		var lock = pthread_mutex_t()
-		var attr = pthread_mutexattr_t()
-		pthread_mutexattr_init(&attr)
-		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE)
-		pthread_mutex_init(&lock, &attr)
-		return lock
-	}()
-	
-	@inline(__always)
-	static func wait() {
-		pthread_mutex_lock(&cacheLock)
+	struct AllModelCache {
+		private static var _allModelCache = [ObjectIdentifier: ModelCache]()
+		/// 操作 allModelCache 用到的锁
+		private static var cacheLock = DispatchSemaphore(value: 1)
+		static subscript(_ key: Any.Type) -> ModelCache? {
+			get {
+				cacheLock.wait()
+				defer {
+					cacheLock.signal()
+				}
+				return _allModelCache[.init(key)]
+			}
+			set {
+				cacheLock.wait()
+				defer {
+					cacheLock.signal()
+				}
+				_allModelCache[.init(key)] = newValue
+			}
+		}
 	}
 	
-	@inline(__always)
-	static func signal() {
-		pthread_mutex_unlock(&cacheLock)
-	}
 }
