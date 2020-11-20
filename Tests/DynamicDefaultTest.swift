@@ -21,7 +21,7 @@ class DynamicDefaultTest: XCTestCase {
 		
 		assert(try TestStruct_dynamicDefault.decode(from: json).toJSON() as NSDictionary == json)
 		
-		// 这个目前过不了Swift 有bug, 转换property wrapper的时候会把@autoclosure给调用后再传值
+        
 		assert((try TestStruct_dynamicDefault.decode(from: [:])).intDynamic != (try TestStruct_dynamicDefault.decode(from: [:])).intDynamic)
 		
 		assert((try TestStruct_dynamicDefault.decode(from: [:])).intStatic == (try TestStruct_dynamicDefault.decode(from: [:])).intStatic)

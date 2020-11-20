@@ -57,14 +57,3 @@ extension ModelCache {
 		let defaultValue: (() -> T)?
 	}
 }
-
-extension Dictionary where Key == ObjectIdentifier {
-	subscript(_ type: Any.Type) -> Value? {
-		get {
-			return self[.init(type)]
-		}
-		set {
-			self[.init(type)] = newValue
-		}
-	}
-}

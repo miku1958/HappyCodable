@@ -10,6 +10,15 @@ import XCTest
 @testable import HappyCodable
 @testable import Demo
 
+func assert(_ condition: @autoclosure () throws -> Bool) {
+    do {
+        let result = try condition()
+        XCTAssert(result)
+    } catch {
+        XCTAssert(false)
+    }
+}
+
 class AttributesTest: XCTestCase {
     func test() throws {
 		// MARK: - optional

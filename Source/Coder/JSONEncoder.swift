@@ -7,7 +7,7 @@
 
 import Foundation
 
-#if DEBUG
+#if DEBUG_forceDisable
 // for test
 
 #if arch(i386) || arch(arm)

@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../Source"
 
 SPEC CHECKSUMS:
-  HappyCodable: 455296814d8c0260b393683e2b22ecb46f7a4e1c
+  HappyCodable: 65de4f22fbc373c3c98db171b85bbab16670711c
 
 PODFILE CHECKSUM: 25decf1bc861df4ec664c973a0ba25e05131f40d
 

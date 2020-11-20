@@ -16,10 +16,10 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FFD58B5025205594001CA10D"
-            BuildableName = "Demo.app"
-            BlueprintName = "Demo"
-            ReferencedContainer = "container:HappyCodableDemo.xcodeproj">
+            BlueprintIdentifier = "954587BEF7979FA1C81CE3AFE99341B7"
+            BuildableName = "HappyCodable.framework"
+            BlueprintName = "HappyCodable"
+            ReferencedContainer = "container:Pods/Pods.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
