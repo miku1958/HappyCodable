@@ -8,7 +8,18 @@
 
 import Cocoa
 import SwiftUI
-
+import HappyCodable
+extension HappyCodable {
+    public static var decodeOption: HappyCodableDecodeOption {
+        #if DEBUG1
+        return .init { (error) in
+            print(error)
+        }
+        #else
+        return .init()
+        #endif
+    }
+}
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

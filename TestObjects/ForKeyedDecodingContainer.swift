@@ -48,3 +48,7 @@ struct TestStruct_ForKeyedDecodingContainer: HappyCodable {
 		var data = 0
 	}
 }
+
+struct TestStruct_TypeMismatch: HappyCodable {
+    var Int = 0
+}

@@ -88,7 +88,7 @@ extension Dictionary : _JSONStringDictionaryDecodableMarker where Key == String,
 
 // patch begin
 func _decode<T: HappyCodable>(_ type: T.Type, from data: Any) throws -> T {
-	let decoder = __JSONDecoder(referencing: data, as: type)
+	let decoder = __JSONDecoder(referencing: data, as: type, decodeOption: T.decodeOption)
 	guard var value = try decoder.unbox(as: type) else {
 		throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: [], debugDescription: "The given data did not contain a top-level value."))
 	}
@@ -117,6 +117,9 @@ class __JSONDecoder : Decoder {
 	/// Options set on the top-level decoder.
 	let options: JSONDecoder.Options
 	patch end */
+	// patch begin
+	let options: HappyCodableDecodeOption
+	// patch end
 	
 	/// The path to the current point in encoding.
 	fileprivate(set) public var codingPath: [CodingKey] = []
@@ -127,10 +130,11 @@ class __JSONDecoder : Decoder {
 	
 	// MARK: - Initialization
 	/// Initializes `self` with the given top-level container and options.
-	init(referencing container: Any, as type: Any.Type, at codingPath: [CodingKey] = []) {
+	init(referencing container: Any, as type: Any.Type, at codingPath: [CodingKey] = [], decodeOption: HappyCodableDecodeOption) {
 		self.storage = _JSONDecodingStorage()
 		self.storage.push(container: container)
 		self.codingPath = codingPath
+		self.options = decodeOption
 		
 		pushDealingModel(type: type)
 		Thread.decoder = { [weak self] in self }
@@ -299,11 +303,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Bool.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Bool.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Bool?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Bool
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Int.Type, forKey key: Key) throws -> Int {
@@ -314,11 +335,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Int.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Int.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Int?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Int8.Type, forKey key: Key) throws -> Int8 {
@@ -329,11 +367,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Int8.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Int8.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Int8?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int8
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Int16.Type, forKey key: Key) throws -> Int16 {
@@ -344,11 +399,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Int16.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Int16.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Int16?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int16
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Int32.Type, forKey key: Key) throws -> Int32 {
@@ -359,11 +431,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Int32.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Int32.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Int32?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int32
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Int64.Type, forKey key: Key) throws -> Int64 {
@@ -374,11 +463,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Int64.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Int64.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Int64?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int64
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: UInt.Type, forKey key: Key) throws -> UInt {
@@ -389,11 +495,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: UInt.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: UInt.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: UInt?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: UInt8.Type, forKey key: Key) throws -> UInt8 {
@@ -404,11 +527,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: UInt8.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: UInt8.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: UInt8?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt8
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: UInt16.Type, forKey key: Key) throws -> UInt16 {
@@ -419,11 +559,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: UInt16.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: UInt16.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: UInt16?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt16
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: UInt32.Type, forKey key: Key) throws -> UInt32 {
@@ -434,11 +591,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: UInt32.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: UInt32.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: UInt32?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt32
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: UInt64.Type, forKey key: Key) throws -> UInt64 {
@@ -449,11 +623,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: UInt64.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: UInt64.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: UInt64?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt64
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Float.Type, forKey key: Key) throws -> Float {
@@ -464,11 +655,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Float.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Float.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Float?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Float
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: Double.Type, forKey key: Key) throws -> Double {
@@ -479,11 +687,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: Double.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: Double.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: Double?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Double
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode(_ type: String.Type, forKey key: Key) throws -> String {
@@ -494,11 +719,28 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 		self.decoder.codingPath.append(key)
 		defer { self.decoder.codingPath.removeLast() }
 		
-		guard let value = try self.decoder.unbox(entry, as: String.self) else {
-			throw DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+		// patch begin
+		var _error: Error?
+		do {
+			if let value = try self.decoder.unbox(entry, as: String.self) {
+				return value
+			}
+		} catch {
+			_error = error
 		}
 		
-		return value
+        var value: String?
+        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? String
+        }
+		if decoder.options.errorsCatcher == nil, value != nil {
+			return value!
+		} else {
+			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
+			decoder.options.errorsCatcher?(error)
+			throw error
+		}
+		//path end
 	}
 	
 	public func decode<T : Decodable>(_ type: T.Type, forKey key: Key) throws -> T {
@@ -910,13 +1152,13 @@ private struct _JSONUnkeyedDecodingContainer : UnkeyedDecodingContainer {
 		fatalError("not working yet")
 //		self.decoder.codingPath.append(_JSONKey(index: self.currentIndex))
 //		defer { self.decoder.codingPath.removeLast() }
-//		
+//
 //		guard !self.isAtEnd else {
 //			throw DecodingError.valueNotFound(Decoder.self,
 //											  DecodingError.Context(codingPath: self.codingPath,
 //																	debugDescription: "Cannot get superDecoder() -- unkeyed container is at end."))
 //		}
-//		
+//
 //		let value = self.container[self.currentIndex]
 //		self.currentIndex += 1
 //		return __JSONDecoder(referencing: value, at: self.decoder.codingPath, options: self.decoder.options)
@@ -1043,7 +1285,7 @@ private extension __JSONDecoder {
 			return bool
 			*/
 			
-		// patch begin
+			// patch begin
 			if number.intValue == 0 {
 				return false
 			} else {

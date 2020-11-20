@@ -52,4 +52,9 @@ class TypeMismatchTests: XCTestCase {
 			"UInt_2": "\(fakeData_int)",
 		]).UInt == fakeData_int)
 	}
+    func testBaseTypeWithoutPropertyWrapper() {
+        assert(try TestStruct_TypeMismatch.decode(from: [
+            "Int": Date().description,
+        ]).Int == TestStruct_TypeMismatch().Int)
+    }
 }
