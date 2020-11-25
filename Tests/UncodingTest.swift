@@ -11,7 +11,7 @@ import XCTest
 @testable import Demo
 
 class UncodingTest: XCTestCase {
-	func test() throws {
+	func test() {
 		let fakeData_Int = Int.random(in: 0...1000000000)
 		let json: NSDictionary = [
 			"uncoing": fakeData_Int,
@@ -19,7 +19,7 @@ class UncodingTest: XCTestCase {
 				"int": fakeData_Int
 			]
 		]
-		let object = try TestStruct_uncoding.decode(from: json)
+		let object = try! TestStruct_uncoding.decode(from: json)
 		assert(object.uncoingOptional == nil)
 		
 		assert(object.uncoing == TestStruct_uncoding().uncoing)

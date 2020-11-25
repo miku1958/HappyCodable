@@ -11,17 +11,19 @@ import HappyCodable
 
 struct TestStruct_dataStrategy: HappyCodable, Equatable {
 	@Happy.dataStrategy(decode: .deferredToData, encode: .deferredToData)
-	var date_deferredToDate: Data = Data()
+	var date_deferredToDate: Data = Self.defaultData
 
 	@Happy.dataStrategy(decode: .base64, encode: .base64)
-	var date_base64: Data = Data()
+	var date_base64: Data = Self.defaultData
 	
-	@Happy.dataStrategy(decode: .custom({ _ in
-		Self.customData
+	@Happy.dataStrategy(decode: .custom({
+		_ = try $0.singleValueContainer().decode(Data.self)
+		return Self.customData
 	}), encode: .custom({ data, encoder in
 		try Self.customData.encode(to: encoder)
 	}))
-	var date_custom: Data = Data()
+	var date_custom: Data = Self.defaultData
 	
 	static let customData = "\(Int.random(in: 0...1000))".data(using: .utf8)!
+	static let defaultData = "\(Int.random(in: 0...1000))".data(using: .utf8)!
 }

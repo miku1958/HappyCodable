@@ -11,7 +11,7 @@ import XCTest
 @testable import Demo
 
 class CodingKeysExistTests: XCTestCase {
-    func test() throws {
+    func test() {
 		let fakeData_int = Int.random(in: 0...1000)
 		let fakeData_bool = Bool.random()
 		let fakeData_string = "\(fakeData_int)\(fakeData_bool)"

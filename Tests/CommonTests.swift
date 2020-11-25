@@ -13,7 +13,7 @@ import XCTest
 class CommonTests: XCTestCase {
 	// 空的类型decode会直接报错所以不测了
 	// Top-level TestClass_empty did not encode any values.
-	func testClass() throws {
+	func testClass() {
 		let fakeData_object_int = Int.random(in: (0 ... 10000))
 		
 		let fakeData_object_class_int = Int.random(in: (0 ... 10000))
@@ -33,8 +33,8 @@ class CommonTests: XCTestCase {
 		object.objectNil?.int = fakeData_object_struct_int
 		object.objectNil?.string = fakeData_object_struct_string
 		
-		let json = try object.toJSON() as NSDictionary
-		let jsonString = try object.toJSONString(prettyPrint: false)
+		let json = try! object.toJSON() as NSDictionary
+		let jsonString = try! object.toJSONString(prettyPrint: false)
 		
 		struct Package<Object>: Codable where Object: Codable {
 			let data: Package
@@ -64,8 +64,8 @@ class CommonTests: XCTestCase {
 		])
 		assert(jsonString == "{\"object\":{\"int\":\(fakeData_object_class_int),\"string\":\"\(fakeData_object_class_string)\"},\"string\":\"\",\"int\":\(fakeData_object_int),\"objectNil\":{\"int\":\(fakeData_object_struct_int),\"string\":\"\(fakeData_object_struct_string)\"}}")
 		assert(try object.toJSONString(prettyPrint: true) == "{\n  \"object\" : {\n    \"int\" : \(fakeData_object_class_int),\n    \"string\" : \"\(fakeData_object_class_string)\"\n  },\n  \"string\" : \"\",\n  \"int\" : \(fakeData_object_int),\n  \"objectNil\" : {\n    \"int\" : \(fakeData_object_struct_int),\n    \"string\" : \"\(fakeData_object_struct_string)\"\n  }\n}")
-		let fromJSON = try TestClass_notEmpty.decode(from: json)
-		let fromString = try TestClass_notEmpty.decode(from: jsonString)
+		let fromJSON = try! TestClass_notEmpty.decode(from: json)
+		let fromString = try! TestClass_notEmpty.decode(from: jsonString)
 		
 		assert(fromJSON.int == fakeData_object_int)
 		assert(fromJSON.object.int == fakeData_object_class_int)
@@ -82,7 +82,7 @@ class CommonTests: XCTestCase {
 		assert(fromString.objectNil?.string == fakeData_object_struct_string)
 	}
 
-	func testStruct() throws {
+	func testStruct() {
 		let fakeData_object_int = Int.random(in: (0 ... 10000))
 		
 		let fakeData_object_class_int = Int.random(in: (0 ... 10000))
@@ -102,8 +102,8 @@ class CommonTests: XCTestCase {
 		object.objectNil?.int = fakeData_object_struct_int
 		object.objectNil?.string = fakeData_object_struct_string
 		
-		let json = try object.toJSON() as NSDictionary
-		let jsonString = try object.toJSONString(prettyPrint: false)
+		let json = try! object.toJSON() as NSDictionary
+		let jsonString = try! object.toJSONString(prettyPrint: false)
 		
 		assert(json == [
 			"int": fakeData_object_int,
@@ -119,8 +119,8 @@ class CommonTests: XCTestCase {
 		])
 		assert(jsonString == "{\"object\":{\"int\":\(fakeData_object_class_int),\"string\":\"\(fakeData_object_class_string)\"},\"string\":\"\",\"int\":\(fakeData_object_int),\"objectNil\":{\"int\":\(fakeData_object_struct_int),\"string\":\"\(fakeData_object_struct_string)\"}}")
 		assert(try object.toJSONString(prettyPrint: true) == "{\n  \"object\" : {\n    \"int\" : \(fakeData_object_class_int),\n    \"string\" : \"\(fakeData_object_class_string)\"\n  },\n  \"string\" : \"\",\n  \"int\" : \(fakeData_object_int),\n  \"objectNil\" : {\n    \"int\" : \(fakeData_object_struct_int),\n    \"string\" : \"\(fakeData_object_struct_string)\"\n  }\n}")
-		let fromJSON = try TestStruct_notEmpty.decode(from: json)
-		let fromString = try TestStruct_notEmpty.decode(from: jsonString)
+		let fromJSON = try! TestStruct_notEmpty.decode(from: json)
+		let fromString = try! TestStruct_notEmpty.decode(from: jsonString)
 		
 		assert(fromJSON.int == fakeData_object_int)
 		assert(fromJSON.object.int == fakeData_object_class_int)

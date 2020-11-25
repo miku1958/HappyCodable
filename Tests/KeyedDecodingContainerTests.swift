@@ -11,7 +11,7 @@ import XCTest
 @testable import Demo
 
 class KeyedDecodingContainerTests: XCTestCase {
-    func test() throws {
+    func test() {
 		// 到127是为了防止Int8转不了
 		let fakeData_int = Int.random(in: 0...127)
 		let fakeData_bool = Bool.random()
@@ -46,7 +46,7 @@ class KeyedDecodingContainerTests: XCTestCase {
 			"UInt32_optional_2": fakeData_int,
 			"UInt64_optional_2": fakeData_int,
 		]
-		let object = try TestStruct_ForKeyedDecodingContainer.decode(from: json)
+		let object = try! TestStruct_ForKeyedDecodingContainer.decode(from: json)
 		assert(object.Bool == fakeData_bool)
 		assert(object.String == "\(fakeData_int)\(fakeData_bool)")
 		assert(object.Double == .init(fakeData_int))

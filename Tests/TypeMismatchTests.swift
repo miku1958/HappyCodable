@@ -11,7 +11,7 @@ import XCTest
 @testable import Demo
 
 class TypeMismatchTests: XCTestCase {
-	func testBaseDataType() throws {
+	func testBaseDataType() {
 		let fakeData_int = Int.random(in: 0...127)
 		let fakeData_double: Double = Double(fakeData_int)/100
 		let fakeData_String: String = NSNumber(value: fakeData_double).stringValue

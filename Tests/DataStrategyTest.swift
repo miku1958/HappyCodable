@@ -11,7 +11,7 @@ import XCTest
 @testable import Demo
 
 class DataCodingStrategyTest: XCTestCase {
-	func test() throws {
+	func test() {
 		let fakeData_string = "\(Int.random(in: 0...1000000000))"
 		let fakeData_data = fakeData_string.data(using: .utf8)!
 		
@@ -23,11 +23,27 @@ class DataCodingStrategyTest: XCTestCase {
 		
 			"date_custom": Array(fakeData_data)
 		]
-		let object = try TestStruct_dataStrategy.decode(from: json)
+		let object = try! TestStruct_dataStrategy.decode(from: json)
 		
 		assert(try object.toJSON() as NSDictionary != json)
 		json["date_custom"] = Array(TestStruct_dataStrategy.customData)
 		assert(try object.toJSON() as NSDictionary == json)
+	}
+	func testNull() {
+		let json: NSMutableDictionary = [
+			
+			"date_deferredToDate": NSNull(),
 		
+			"date_base64": NSNull(),
+		
+			"date_custom": NSNull()
+		]
+		let object = try! TestStruct_dataStrategy.decode(from: json)
+		
+		assert(try object.toJSON() as NSDictionary != json)
+		
+		assert(object.date_deferredToDate == TestStruct_dataStrategy.defaultData)
+		assert(object.date_base64 == TestStruct_dataStrategy.defaultData)
+		assert(object.date_custom == TestStruct_dataStrategy.defaultData)
 	}
 }

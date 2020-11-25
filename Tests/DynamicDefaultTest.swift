@@ -12,7 +12,7 @@ import XCTest
 
 class DynamicDefaultTest: XCTestCase {
 
-	func test() throws {
+	func test() {
 		let fakeData_Int = Int.random(in: 0...1000000000)
 		let json: NSDictionary = [
 			"intDynamic": fakeData_Int,

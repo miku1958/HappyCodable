@@ -12,7 +12,7 @@ import XCTest
 
 class NonConformingFloatDecodingStrategyTest: XCTestCase {
 
-	func test() throws {
+	func test() {
 		let fakeData_Double = Double(Int.random(in: 0...10000))
 		var json: NSDictionary = [
 			"doubleConvertFromString": fakeData_Double,
@@ -29,15 +29,6 @@ class NonConformingFloatDecodingStrategyTest: XCTestCase {
 		} catch {
 			assertionFailure()
 		}
-		
-		
-		json = [
-			"doubleThrow": TestStruct_nonConformingFloatStrategy.Data.nan
-		]
-		do {
-			_ = try TestStruct_nonConformingFloatStrategy.decode(from: json)
-			assertionFailure()
-		} catch {}
 		
 		json = [
 			"doubleConvertFromString": TestStruct_nonConformingFloatStrategy.Data.nan

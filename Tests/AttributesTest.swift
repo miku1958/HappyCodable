@@ -20,7 +20,7 @@ func assert(_ condition: @autoclosure () throws -> Bool) {
 }
 
 class AttributesTest: XCTestCase {
-    func test() throws {
+    func test() {
 		// MARK: - optional
 		let fakeData_optional = Int.random(in: 0..<10000)
 		
