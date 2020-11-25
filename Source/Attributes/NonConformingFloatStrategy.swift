@@ -88,34 +88,37 @@ extension KeyedDecodingContainer {
 		else {
 			return .init(value: Float(try decode(Double.self, forKey: key)), attribute: nil)
 		}
-		
-		switch attribute.decode {
-		case .throw:
-			if contains(key) {
-				return .init(value: Float(try decode(Double.self, forKey: key)), attribute: attribute)
-			} else {
-				return .init(value: nil, attribute: attribute)
+		do {
+			switch attribute.decode {
+			case .throw:
+				if contains(key) {
+					return .init(value: Float(try decode(Double.self, forKey: key)), attribute: attribute)
+				} else {
+					return .init(value: nil, attribute: attribute)
+				}
+			case let .convertFromString(posInfString, negInfString, nanString):
+				var float: Float?
+				if let string = try? decode(String.self, forKey: key) {
+					if string == posInfString {
+						float = Float.infinity
+					}
+					if string == negInfString {
+						float = -Float.infinity
+					}
+					if string == nanString {
+						float = Float.nan
+					}
+					if let _float = Float(string) {
+						float = _float
+					}
+				}
+				if float == nil, let _float = try? decode(Double.self, forKey: key) {
+					float = Float(_float)
+				}
+				return .init(value: float, attribute: attribute)
 			}
-		case let .convertFromString(posInfString, negInfString, nanString):
-			var float: Float?
-			if let string = try? decode(String.self, forKey: key) {
-				if string == posInfString {
-					float = Float.infinity
-				}
-				if string == negInfString {
-					float = -Float.infinity
-				}
-				if string == nanString {
-					float = Float.nan
-				}
-				if let _float = Float(string) {
-					float = _float
-				}
-			}
-			if float == nil, let _float = try? decode(Double.self, forKey: key) {
-				float = Float(_float)
-			}
-			return .init(value: float, attribute: attribute)
+		} catch {
+			return .init(value: attribute.defaultValue!(), attribute: attribute)
 		}
 	}
 }
