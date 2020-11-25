@@ -82,16 +82,22 @@ extension KeyedDecodingContainer {
 				return .init(try decode(Data.self, forKey: key), decode: .deferredToData, encode: .deferredToData)
 		}
 		let data: Data
-		switch attribute.decode {
-		case .deferredToData:
-			data = try decode(Data.self, forKey: key)
-		case .base64:
-			guard let _data = Data(base64Encoded: try decode(String.self, forKey: key)) else {
-				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Encountered Data is not valid Base64."))
+		do {
+			switch attribute.decode {
+			case .deferredToData:
+				data = try decode(Data.self, forKey: key)
+			case .base64:
+				guard let _data = Data(base64Encoded: try decode(String.self, forKey: key)) else {
+					throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Encountered Data is not valid Base64."))
+				}
+				data = _data
+			case .custom(let closure):
+				let sentinel = decoder.pushStorage(key.stringValue)
+				defer { decoder.popStorage(sentinel) }
+				data = try closure(decoder)
 			}
-			data = _data
-		case .custom(let closure):
-			data = try closure(decoder)
+		} catch {
+			data = attribute.defaultValue!()
 		}
 		return .init(data, decode: attribute.decode, encode: attribute.encode)
 	}
