@@ -93,34 +93,40 @@ extension KeyedDecodingContainer {
 				return .init(try decode(Date.self, forKey: key), decode: .deferredToDate, encode: .deferredToDate)
 		}
 		let date: Date
-		switch attribute.decode {
-		case .deferredToDate:
-			date = try decode(Date.self, forKey: key)
-		case .secondsSince1970:
-			date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key))
-		case .millisecondsSince1970:
-			date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key) / 1000.0)
-		case .iso8601:
-			if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
+		do {
+			switch attribute.decode {
+			case .deferredToDate:
+				date = try decode(Date.self, forKey: key)
+			case .secondsSince1970:
+				date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key))
+			case .millisecondsSince1970:
+				date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key) / 1000.0)
+			case .iso8601:
+				if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
+					let string = try decode(String.self, forKey: key)
+					guard let _date = _iso8601Formatter.date(from: string) else {
+						throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected date string to be ISO8601-formatted."))
+					}
+					
+					date = _date
+				} else {
+					fatalError("ISO8601DateFormatter is unavailable on this platform.")
+				}
+			case .formatted(let formatter):
 				let string = try decode(String.self, forKey: key)
-				guard let _date = _iso8601Formatter.date(from: string) else {
-					throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected date string to be ISO8601-formatted."))
+				guard let _date = formatter.date(from: string) else {
+					throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Date string does not match format expected by formatter."))
 				}
 				
 				date = _date
-			} else {
-				fatalError("ISO8601DateFormatter is unavailable on this platform.")
+				
+			case .custom(let closure):
+				let sentinel = decoder.pushStorage(key.stringValue)
+				defer { decoder.popStorage(sentinel) }
+				date = try closure(decoder)
 			}
-		case .formatted(let formatter):
-			let string = try decode(String.self, forKey: key)
-			guard let _date = formatter.date(from: string) else {
-				throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Date string does not match format expected by formatter."))
-			}
-			
-			date = _date
-			
-		case .custom(let closure):
-			date = try closure(decoder)
+		} catch {
+			date = attribute.defaultValue!()
 		}
 		return .init(date, decode: attribute.decode, encode: attribute.encode)
 	}
