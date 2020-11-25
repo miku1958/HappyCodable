@@ -11,15 +11,16 @@ import Darwin
 extension Thread {
 	private struct ThreadDictionaryKey {
 		static let decoder: String = "HappyCodable.codingKeys.decoder.key"
+		static let encoder: String = "HappyCodable.codingKeys.encoder.key"
 		static let attributeEncoder: String = "HappyCodable.codingKeys.attributeEncoder.key"
 	}
 	
 	static var attributeEncoder: ModelAttributeEncoder? {
 		get {
-			current.threadDictionary[ThreadDictionaryKey.decoder] as? ModelAttributeEncoder
+			current.threadDictionary[ThreadDictionaryKey.encoder] as? ModelAttributeEncoder
 		}
 		set {
-			current.threadDictionary[ThreadDictionaryKey.decoder] = newValue
+			current.threadDictionary[ThreadDictionaryKey.encoder] = newValue
 		}
 	}
 	
