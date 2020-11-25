@@ -317,11 +317,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Bool
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -349,11 +349,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -381,11 +381,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int8
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -413,11 +413,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int16
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -445,11 +445,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int32
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -477,11 +477,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int64
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -509,11 +509,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -541,11 +541,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt8
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -573,11 +573,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt16
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -605,11 +605,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt32
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -637,11 +637,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt64
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -669,11 +669,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Float
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -701,11 +701,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Double
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
@@ -733,11 +733,11 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
         if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
             value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? String
         }
-		if decoder.options.errorsCatcher == nil, value != nil {
+		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
 			let error = _error ?? DecodingError.valueNotFound(type, DecodingError.Context(codingPath: self.decoder.codingPath, debugDescription: "Expected \(type) value but found null instead."))
-			decoder.options.errorsCatcher?(error)
+			decoder.options.errorsReporter?(error)
 			throw error
 		}
 		//path end
