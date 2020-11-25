@@ -139,9 +139,11 @@ class __JSONDecoder : Decoder {
 		pushDealingModel(type: type)
 		Thread.decoder = { [weak self] in self }
 	}
+	
 	deinit {
 		Thread.decoder = nil
 	}
+	
 	func pushDealingModel(type: Any.Type) {
 		if Thread.AllModelCache[type] == nil {
 			let encoder = ModelAttributeEncoder(modelType: type)
@@ -155,8 +157,26 @@ class __JSONDecoder : Decoder {
 		}
 		self.dealingModels.append(Thread.AllModelCache[type]!)
 	}
+	
+	@inline(__always)
 	func popDealingModel() {
 		self.dealingModels.removeLast()
+	}
+	
+	@inline(__always)
+	func pushStorage(_ key: String) -> Any? {
+		if let value = (self.storage.topContainer as? NSDictionary)?[key] {
+			self.storage.push(container: value)
+			return 1
+		}
+		return nil
+	}
+	
+	@inline(__always)
+	func popStorage(_ sentinel: Any?) {
+		if sentinel != nil {
+			self.storage.popContainer()
+		}
 	}
 
 	// patch end
@@ -217,10 +237,12 @@ private struct _JSONDecodingStorage {
 		return self.containers.last!
 	}
 	
+	@inline(__always)
 	mutating func push(container: __owned Any) {
 		self.containers.append(container)
 	}
 	
+	@inline(__always)
 	mutating func popContainer() {
 		precondition(!self.containers.isEmpty, "Empty container stack.")
 		self.containers.removeLast()
