@@ -2,11 +2,39 @@
 
 通过自定义的 Decoder 配合 Property wrapper 实现优雅 JSON Codable
 
-## 2020.10.10 备注
+## 与 2.0 的区别
+protocol HappyCodable多了一个 decodeOption, 目前只有 errorsReporter 一个 option
 
-目前 Swift 编译器存在缺陷, 当 Property wraper 使用 @escaping @autoclosure 闭包作为初始化参数时会编译出错, 9月份的 Swift Development Snapshot 已经修复这个问题, 但 Xcode 12.2 尚未包含该 patcher https://bugs.swift.org/browse/SR-13606 等到 Xcode 更新修复后我会发布本次 2.0 版本到 CocoaPods 和 Swift Package Manager
+目前这个 reporter 只会在 key 存在但是转换失败时触发(转换失败还是会使用默认值的)
+
+```
+public protocol HappyCodable: Encodable, Decodable {
+	static var decodeOption: HappyCodableDecodeOption { get }
+}
+public struct HappyCodableDecodeOption {
+	let errorsReporter: ((Error) -> Void)?
+}
+```
+
+建议单独对 HappyCodable 进行分类:
+
+```
+extension HappyCodable {
+	public static var decodeOption: HappyCodableDecodeOption {
+		#if DEBUG
+		return .init { (error) in
+			print("HappyCodable Error occurred: \(error)")
+		}
+		#else
+		return .init()
+		#endif
+	}
+}
+```
 
 ## 与 1.x 的区别
+
+由于1.x版本不再可行, 相关 tag/release 已删除
 
 移除了`基于 SourceKitten 生成代码的实现方式`, 改为`编译时`加`自定义的 Decoder` 的方式实现, 不再需要额外配置编译脚本和引入生成文件
 
@@ -45,12 +73,22 @@
 完成后如下
 
 ```
-target 'HappyCodableDemo' do
+target 'Your-Target-Name' do
 pod 'HappyCodable'
 end
 ```
 
 2. 执行 pod install
+
+### Swift Package Manager
+
+1. 在 Xcode project中添加: https://github.com/miku1958/HappyCodable
+
+   ![](https://raw.githubusercontent.com/miku1958/Large-size-picture-warehouse/master/截屏2020-11-27%20下午3.55.30.png)
+
+2.  使用默认Version 或者改成 master Branch
+
+   ![](https://github.com/miku1958/Large-size-picture-warehouse/blob/master/截屏2020-11-27%20下午4.02.22.png?raw=true)
 
 
 ### 在项目中使用
