@@ -14,7 +14,7 @@ final class ModelAttributeEncoder: Encoder {
 	init(modelType: Any.Type) {
 		self.modelType = modelType
 	}
-
+	
 	func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key : CodingKey {
 		KeyedEncodingContainer(Container(encoder: self))
 	}

@@ -7,13 +7,13 @@
 
 import Foundation
 public struct HappyCodableDecodeOption {
-    let errorsReporter: ((Error) -> Void)?
-    
-    /// initializer
-    /// - Parameter errorsCatcher: 用于捕获转码时出现的 error, 如果为 nil 则强制使用默认值
-    public init(errorsReporter: ((Error) -> Void)? = nil) {
-        self.errorsReporter = errorsReporter
-    }
+	let errorsReporter: ((Error) -> Void)?
+	
+	/// initializer
+	/// - Parameter errorsCatcher: 用于捕获转码时出现的 error, 如果为 nil 则强制使用默认值
+	public init(errorsReporter: ((Error) -> Void)? = nil) {
+		self.errorsReporter = errorsReporter
+	}
 }
 // MARK: - HappyCodableSerialization
 public protocol HappyCodableSerialization {
@@ -25,7 +25,7 @@ public protocol HappyCodableSerialization {
 public protocol HappyCodable: Encodable, Decodable {
 	init()
 	mutating func didFinishMapping()
-    static var decodeOption: HappyCodableDecodeOption { get }
+	static var decodeOption: HappyCodableDecodeOption { get }
 }
 
 extension HappyCodable {

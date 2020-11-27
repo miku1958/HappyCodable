@@ -25,7 +25,7 @@ extension Happy {
 				storage = newValue
 			}
 		}
-
+		
 		public init(wrappedValue constructor: @escaping @autoclosure () -> T) {
 			self.constructor = constructor
 		}
@@ -75,8 +75,8 @@ extension KeyedDecodingContainer {
 			guard
 				let decoder = Thread.decoder?(),
 				let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.DynamicDefault<T>
-				else {
-					throw error
+			else {
+				throw error
 			}
 			return .init(attribute.defaultValue)
 		}

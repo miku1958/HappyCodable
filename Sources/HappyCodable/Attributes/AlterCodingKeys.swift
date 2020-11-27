@@ -36,7 +36,7 @@ extension Happy {
 				storage = newValue
 			}
 		}
-
+		
 		public init(wrappedValue creater: @escaping @autoclosure () -> T, _ codingKeys: String...) {
 			(T.self as? CodingKeysFilter.Type)?.precondition()
 			
@@ -106,8 +106,8 @@ extension KeyedDecodingContainer {
 			guard
 				let decoder = Thread.decoder?(),
 				let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.AlterCodingKeys<T>
-				else {
-					throw error
+			else {
+				throw error
 			}
 			return .init(attribute.defaultValue)
 		}

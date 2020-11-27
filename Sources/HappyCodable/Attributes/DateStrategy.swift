@@ -42,7 +42,7 @@ extension Happy {
 }
 
 extension Happy.dateStrategy: GenericTypeAttribute {
-
+	
 }
 extension Happy.dateStrategy: Hashable {
 	public static func == (lhs: Happy.dateStrategy, rhs: Happy.dateStrategy) -> Bool {
@@ -58,7 +58,7 @@ extension Happy.dateStrategy: Codable {
 	public convenience init(from decoder: Decoder) throws {
 		fatalError()
 	}
-
+	
 	public func encode(to encoder: Encoder) throws {
 		switch encodeStrategy {
 		case .deferredToDate:
@@ -89,8 +89,8 @@ extension KeyedDecodingContainer {
 		guard
 			let decoder = Thread.decoder?(),
 			let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.DateStrategy
-			else {
-				return .init(try decode(Date.self, forKey: key), decode: .deferredToDate, encode: .deferredToDate)
+		else {
+			return .init(try decode(Date.self, forKey: key), decode: .deferredToDate, encode: .deferredToDate)
 		}
 		let date: Date
 		do {

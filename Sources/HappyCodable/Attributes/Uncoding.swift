@@ -25,7 +25,7 @@ extension Happy {
 				storage = newValue
 			}
 		}
-
+		
 		init(constructor: @escaping () -> T) {
 			self.constructor = constructor
 		}

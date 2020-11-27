@@ -335,10 +335,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Bool?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Bool
-        }
+		var value: Bool?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Bool
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -367,10 +367,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Int?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int
-        }
+		var value: Int?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -399,10 +399,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Int8?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int8
-        }
+		var value: Int8?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int8
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -431,10 +431,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Int16?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int16
-        }
+		var value: Int16?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int16
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -463,10 +463,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Int32?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int32
-        }
+		var value: Int32?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int32
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -495,10 +495,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Int64?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int64
-        }
+		var value: Int64?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Int64
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -527,10 +527,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: UInt?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt
-        }
+		var value: UInt?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -559,10 +559,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: UInt8?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt8
-        }
+		var value: UInt8?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt8
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -591,10 +591,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: UInt16?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt16
-        }
+		var value: UInt16?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt16
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -623,10 +623,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: UInt32?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt32
-        }
+		var value: UInt32?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt32
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -655,10 +655,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: UInt64?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt64
-        }
+		var value: UInt64?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? UInt64
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -687,10 +687,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Float?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Float
-        }
+		var value: Float?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Float
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -719,10 +719,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: Double?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Double
-        }
+		var value: Double?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? Double
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {
@@ -751,10 +751,10 @@ private struct _JSONKeyedDecodingContainer<K : CodingKey> : KeyedDecodingContain
 			_error = error
 		}
 		
-        var value: String?
-        if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
-            value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? String
-        }
+		var value: String?
+		if decoder.dealingModel.decodeAttributes[key.stringValue] == nil {
+			value = decoder.dealingModel.defaltDecodeJSON[key.stringValue] as? String
+		}
 		if decoder.options.errorsReporter == nil, value != nil {
 			return value!
 		} else {

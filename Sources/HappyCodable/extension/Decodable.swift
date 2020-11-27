@@ -60,7 +60,6 @@ public extension HappyCodable {
 			throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: error))
 		}
 	}
-
 	
 	/// Finds the internal dictionary in `dict` as the `designatedPath` specified, and converts it to a Model
 	/// `designatedPath` is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer

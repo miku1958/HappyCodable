@@ -78,8 +78,8 @@ extension KeyedDecodingContainer {
 		guard
 			let decoder = Thread.decoder?(),
 			let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.DataStrategy
-			else {
-				return .init(try decode(Data.self, forKey: key), decode: .deferredToData, encode: .deferredToData)
+		else {
+			return .init(try decode(Data.self, forKey: key), decode: .deferredToData, encode: .deferredToData)
 		}
 		let data: Data
 		do {
