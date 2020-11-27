@@ -49,7 +49,7 @@ extension HappyCodable {
 
 现在 decode 的时候需要 encode 一次作为默认值使用, 因此 HappyCodable 需要同时实现 Decodable 和 Encodable, 所以移除了 HappyEncodable
 
-- 为了防止使用运行时变量时 encode 的值不符合实际情况(`例如 var date = Date()`), 所有 @Happy.propertyWrapper 都会使用 @autoclosure 的方式记录默认值, 如果有特殊需要可以使用`@Happy.dynamicDefault`标示
+- 为了防止使用运行时变量时 encode 的值不符合实际情况(`例如 var date = Date()`), 所有 @Happy.propertyWrapper 都会使用 @autoclosure 的方式记录默认值, 如果有特殊需要可以使用`@Happy.dynamicDefault`标示, 因为 Xcode 11 使用的Swift编译器有 bug, 如果 propertyWrapper 的初始化使用了 @autoclosure 会不生效, 除此之外其他功能在 Xcode 11上是正常的
 
 ## 原生 JSON Codable 的问题 ?
 
