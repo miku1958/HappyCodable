@@ -1,6 +1,6 @@
 # HappyCodable
 
-通过自定义的 Decoder 配合 Property wrapper 实现优雅 JSON Codable
+通过自定义的 Decoder 配合 Property wrapper 实现优雅 Codable (目前仅支持 JSON)
 
 ## 与 2.0 的区别
 protocol HappyCodable多了一个 decodeOption, 目前只有 errorsReporter 一个 option
@@ -36,23 +36,20 @@ extension HappyCodable {
 
 由于1.x版本不再可行, 相关 tag/release 已删除
 
-移除了`基于 SourceKitten 生成代码的实现方式`, 改为`编译时`加`自定义的 Decoder` 的方式实现, 不再需要额外配置编译脚本和引入生成文件
+移除了`基于 SourceKitten 生成代码的实现方式`, 改为`编译时`加`自定义的 Decoder` 的方式实现, 不再需要额外配置编译脚本和引入生成文件, 由此产生以下变动: 
 
-​	和原生 Codable 一样支持任意访问权限的类型
-
-​	由于使用了编译器生成的`init(from:)`, 所以无法支持`willStartMapping()`, 只保留`didFinishMapping()`调用
-
-​	无法支持自动合成非 RawRepresentable 的 Enum
-
-​	无法自动合成默认 CodingKeys, 如果是用 WCDB.swift 需要手写一遍了, 同时`@Happy.uncoding`不再支持第三方(包括Foundation.JSONDecoder), 如果需要 “使用第三方 Codable 且使用 uncoding 的功能”, 则需要自己实现 CodingKeys 而不是使用`@Happy.uncoding`
-
-​	由于依赖于系统生成的 CodingKeys, 为了防止岐意, `@Happy.codingKeys`改名为`@Happy.alterCodingKeys`代表替代coding keys, 并且始终优先解析 CodingKeys 中定义的字段避免基于 Codable 的第三方库出错(例如 WCDB.swift)
-
-​	未来会进一步分离开放自定义的 Decoder 以方便接入其他数据类型的 Decoder (例如 XML, Protocol Buffers 等等)
+- 和原生 Codable 一样支持任意访问权限的类型
+- 由于使用了编译器生成的`init(from:)`, 所以无法支持`willStartMapping()`, 只保留`didFinishMapping()`调用
+- 无法支持自动合成非 RawRepresentable 的 Enum
+- 无法自动合成默认 CodingKeys, 如果是用 WCDB.swift 需要手写一遍了, 同时`@Happy.uncoding`不再支持其他Decoder (包括Foundation.JSONDecoder), 如果需要 “使用第三方 Codable 且使用 uncoding 的功能”, 请手动实现 CodingKeys 而不是使用`@Happy.uncoding`
+- 由于依赖于系统生成的 CodingKeys, 为了防止岐意, `@Happy.codingKeys`改名为`@Happy.alterCodingKeys`代表替代coding keys, 并且始终优先解析 CodingKeys 中定义的字段避免基于 Codable 的第三方库出错(例如 WCDB.swift)
+- 未来会进一步分离相关代码, 实现自定义的 Decoder 功能, 供接入其他数据类型的 Decoder (例如 XML, Protocol Buffers 等等)
 
 新增了新的 Property wrapper 替代原本 JSON Codable 的参数配置, 例如 @Happy.dateStrategy
 
-由于 decode 的时候需要 encode 一次作为默认值是用, 所以移除了 HappyEncodable, HappyCodable 需要同时实现 Decodable 和 Encodable, 为了防止使用运行时变量时 encode 的值不符合实际情况(`例如 var date = Date()`), 所有@Happy.propertyWrapper 都会使用 @autoclosure 的方式记录默认值, 如果有临时需要可以使用`@Happy.dynamicDefault`标示
+现在 decode 的时候需要 encode 一次作为默认值使用, 因此 HappyCodable 需要同时实现 Decodable 和 Encodable, 所以移除了 HappyEncodable
+
+- 为了防止使用运行时变量时 encode 的值不符合实际情况(`例如 var date = Date()`), 所有 @Happy.propertyWrapper 都会使用 @autoclosure 的方式记录默认值, 如果有特殊需要可以使用`@Happy.dynamicDefault`标示
 
 ## 原生 JSON Codable 的问题 ?
 
@@ -62,7 +59,7 @@ extension HappyCodable {
 6. 不能使用模型的默认值, 当 decode 的数据缺失时无法使用定义里的默认值而是 throw 数据缺失错误, 这个设计导致例如版本更新后, 服务端删掉了模型的某个过期字段, 然后旧版本 app 都会陷入错误, 即使不用这个字段旧版本客户端依旧是能正常工作的(只是无效的数据显示缺失而已), 这很明显是不合理的.
 7. 不支持简单的类型转换, 比如转换 0/1 到 false/true, "123" 到 Int的123 或者反过来, 谁又能确保服务端的人员不会失手修改了字段类型导致 app 端故障呢?
 
-而这些, 你全都可以用HappyCodable解决
+而这些, 你全都可以用 HappyCodable 解决
 
 ## 安装
 
