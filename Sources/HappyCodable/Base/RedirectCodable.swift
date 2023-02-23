@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct RedirectCodable<T: Codable>: Codable {
+struct RedirectCodable<T> {
 	let direct: T
-	
-	init(direct: T) {
-		self.direct = direct
-	}
-	
-	@inline(__always)
-	init(from decoder: Decoder) throws {
-		direct = try T.init(from: decoder)
-	}
-	
+}
+
+extension RedirectCodable: Encodable where T: Encodable {
 	@inline(__always)
 	func encode(to encoder: Encoder) throws {
 		try direct.encode(to: encoder)
+	}
+}
+
+extension RedirectCodable: Decodable where T: Decodable {
+	@inline(__always)
+	init(from decoder: Decoder) throws {
+		direct = try T.init(from: decoder)
 	}
 }
