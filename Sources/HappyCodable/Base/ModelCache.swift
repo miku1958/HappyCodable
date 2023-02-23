@@ -12,7 +12,7 @@ import Foundation
 struct ModelCache {
 	let modelType: Any.Type
 	/// 默认模型的JSON
-	var defaltDecodeJSON: [String: Any]!
+	var defaltDecodeJSON: [String: Any]?
 	/// 默认模型的JSON
 	var decodeAttributes = [String: Any]()
 }
@@ -54,6 +54,10 @@ extension ModelCache {
 	}
 	
 	struct DynamicDefault<T> {
+		let defaultValue: (() -> T)?
+	}
+
+	struct ElementNullable<T> {
 		let defaultValue: (() -> T)?
 	}
 }
