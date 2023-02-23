@@ -42,9 +42,6 @@ extension Happy {
 	}
 }
 
-extension Happy.nonConformingFloatStrategy: GenericTypeAttribute {
-	
-}
 extension Happy.nonConformingFloatStrategy: Hashable {
 	public static func == (lhs: Happy.nonConformingFloatStrategy<Float>, rhs: Happy.nonConformingFloatStrategy<Float>) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue
@@ -80,25 +77,26 @@ extension Happy.nonConformingFloatStrategy: Codable {
 }
 
 // MARK: - 以下修改自原生, 除非增加了strategy 否则一般都不需要改 https://github.com/apple/swift/blob/88b093e9d77d6201935a2c2fb13f27d961836777/stdlib/public/Darwin/Foundation/JSONEncoder.swift
-extension KeyedDecodingContainer {
-	public func decode<Float>(_ type: Happy.nonConformingFloatStrategy<Float>.Type, forKey key: Key) throws -> Happy.nonConformingFloatStrategy<Float> {
+
+extension Happy.nonConformingFloatStrategy: GenericTypeAttribute {
+	static func decode<K>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self where K : CodingKey {
 		guard
 			let decoder = Thread.decoder?(),
 			let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.NonConformingFloatStrategy<Float>
 		else {
-			return .init(value: Float(try decode(Double.self, forKey: key)), attribute: nil)
+			return .init(value: Float(try container.decode(Double.self, forKey: key)), attribute: nil)
 		}
 		do {
 			switch attribute.decode {
 			case .throw:
-				if contains(key) {
-					return .init(value: Float(try decode(Double.self, forKey: key)), attribute: attribute)
+				if container.contains(key) {
+					return .init(value: Float(try container.decode(Double.self, forKey: key)), attribute: attribute)
 				} else {
 					return .init(value: nil, attribute: attribute)
 				}
 			case let .convertFromString(posInfString, negInfString, nanString):
 				var float: Float?
-				if let string = try? decode(String.self, forKey: key) {
+				if let string = try? container.decode(String.self, forKey: key) {
 					if string == posInfString {
 						float = Float.infinity
 					}
@@ -112,7 +110,7 @@ extension KeyedDecodingContainer {
 						float = _float
 					}
 				}
-				if float == nil, let _float = try? decode(Double.self, forKey: key) {
+				if float == nil, let _float = try? container.decode(Double.self, forKey: key) {
 					float = Float(_float)
 				}
 				return .init(value: float, attribute: attribute)
@@ -120,6 +118,11 @@ extension KeyedDecodingContainer {
 		} catch {
 			return .init(value: attribute.defaultValue!(), attribute: attribute)
 		}
+	}
+}
+extension KeyedDecodingContainer {
+	public func decode<Float>(_ type: Happy.nonConformingFloatStrategy<Float>.Type, forKey key: Key) throws -> Happy.nonConformingFloatStrategy<Float> {
+		try .decode(container: self, forKey: key)
 	}
 }
 

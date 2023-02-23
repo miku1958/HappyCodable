@@ -36,9 +36,6 @@ extension Happy {
 	}
 }
 
-extension Happy.elementNullable: GenericTypeAttribute {
-	
-}
 extension Happy.elementNullable: Equatable where T: Equatable {
 	public static func == (lhs: Happy.elementNullable<T>, rhs: Happy.elementNullable<T>) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue
@@ -63,13 +60,18 @@ extension Happy.elementNullable: Encodable where T: Encodable {
 	}
 }
 
-extension KeyedDecodingContainer {
-	public func decode<T>(_ type: Happy.elementNullable<T>.Type, forKey key: Key) throws -> Happy.elementNullable<T> where T: Decodable {
-
-		let collection = try decode([T?].self, forKey: key)
+extension Happy.elementNullable: GenericTypeAttribute where T: Decodable {
+	static func decode<K>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self where K : CodingKey {
+		let collection = try container.decode([T?].self, forKey: key)
 			.compactMap { $0 }
 
 		return .init(storage: collection)
+	}
+}
+
+extension KeyedDecodingContainer {
+	public func decode<T>(_ type: Happy.elementNullable<T>.Type, forKey key: Key) throws -> Happy.elementNullable<T> where T: Decodable {
+		try .decode(container: self, forKey: key)
 	}
 }
 

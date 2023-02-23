@@ -1778,6 +1778,11 @@ private extension __JSONDecoder {
 			if value is NSNull, let key = codingPath.last, let defaultValue = dealingModel.defaltDecodeJSON?[key.stringValue] {
 				value = defaultValue
 			}
+
+			if let key = codingPath.last, let type = type as? GenericTypeAttribute.Type {
+				return try key.parseGenericTypeAttribute(for: type, with: self)
+			}
+			
 			self.storage.push(container: value)
 			pushDealingModel(type: type)
 			defer { self.storage.popContainer(); popDealingModel() }

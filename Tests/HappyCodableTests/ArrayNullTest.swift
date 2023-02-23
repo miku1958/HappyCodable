@@ -28,4 +28,20 @@ class ArrayNullTest: XCTestCase {
 		}
 		XCTAssertEqual(try HappyField.decode(from: json).data, ["a", "b"])
 	}
+
+
+	func testWithAlter() throws {
+		let json =
+"""
+{
+ "data1": ["a", "b", null]
+}
+"""
+		final class HappyField: HappyCodable {
+			@Happy.alterCodingKeys("data1")
+			@Happy.elementNullable
+			var data: [String] = []
+		}
+		XCTAssertEqual(try HappyField.decode(from: json).data, ["a", "b"])
+	}
 }

@@ -41,9 +41,6 @@ extension Happy {
 	}
 }
 
-extension Happy.dateStrategy: GenericTypeAttribute {
-	
-}
 extension Happy.dateStrategy: Hashable {
 	public static func == (lhs: Happy.dateStrategy, rhs: Happy.dateStrategy) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue
@@ -84,42 +81,42 @@ extension Happy.dateStrategy: Codable {
 }
 
 // MARK: - 以下修改自原生, 除非增加了strategy 否则一般都不需要改 https://github.com/apple/swift/blob/88b093e9d77d6201935a2c2fb13f27d961836777/stdlib/public/Darwin/Foundation/JSONEncoder.swift
-extension KeyedDecodingContainer {
-	public func decode(_ type: Happy.dateStrategy.Type, forKey key: Key) throws -> Happy.dateStrategy {
+extension Happy.dateStrategy: GenericTypeAttribute {
+	static func decode<K>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self where K : CodingKey {
 		guard
 			let decoder = Thread.decoder?(),
 			let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.DateStrategy
 		else {
-			return .init(try decode(Date.self, forKey: key), decode: .deferredToDate, encode: .deferredToDate)
+			return .init(try container.decode(Date.self, forKey: key), decode: .deferredToDate, encode: .deferredToDate)
 		}
 		let date: Date
 		do {
 			switch attribute.decode {
 			case .deferredToDate:
-				date = try decode(Date.self, forKey: key)
+				date = try container.decode(Date.self, forKey: key)
 			case .secondsSince1970:
-				date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key))
+				date = Date(timeIntervalSince1970: try container.decode(TimeInterval.self, forKey: key))
 			case .millisecondsSince1970:
-				date = Date(timeIntervalSince1970: try decode(TimeInterval.self, forKey: key) / 1000.0)
+				date = Date(timeIntervalSince1970: try container.decode(TimeInterval.self, forKey: key) / 1000.0)
 			case .iso8601:
 				if #available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *) {
-					let string = try decode(String.self, forKey: key)
+					let string = try container.decode(String.self, forKey: key)
 					guard let _date = _iso8601Formatter.date(from: string) else {
 						throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected date string to be ISO8601-formatted."))
 					}
-					
+
 					date = _date
 				} else {
 					fatalError("ISO8601DateFormatter is unavailable on this platform.")
 				}
 			case .formatted(let formatter):
-				let string = try decode(String.self, forKey: key)
+				let string = try container.decode(String.self, forKey: key)
 				guard let _date = formatter.date(from: string) else {
 					throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Date string does not match format expected by formatter."))
 				}
-				
+
 				date = _date
-				
+
 			case .custom(let closure):
 				let sentinel = decoder.pushStorage(key.stringValue)
 				defer { decoder.popStorage(sentinel) }
@@ -129,6 +126,12 @@ extension KeyedDecodingContainer {
 			date = attribute.defaultValue!()
 		}
 		return .init(date, decode: attribute.decode, encode: attribute.encode)
+	}
+}
+
+extension KeyedDecodingContainer {
+	public func decode(_ type: Happy.dateStrategy.Type, forKey key: Key) throws -> Happy.dateStrategy {
+		try .decode(container: self, forKey: key)
 	}
 }
 

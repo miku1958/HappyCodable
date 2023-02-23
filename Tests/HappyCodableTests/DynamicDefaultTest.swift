@@ -20,12 +20,11 @@ class DynamicDefaultTest: XCTestCase {
 			"intDynamic": fakeData_Int,
 			"intStatic": fakeData_Int
 		]
-		
+
 		assert(try TestStruct_dynamicDefault.decode(from: json).toJSON() as NSDictionary == json)
-		
-        
+
 		assert((try TestStruct_dynamicDefault.decode(from: [:])).intDynamic != (try TestStruct_dynamicDefault.decode(from: [:])).intDynamic)
-		
+
 		assert((try TestStruct_dynamicDefault.decode(from: [:])).intStatic == (try TestStruct_dynamicDefault.decode(from: [:])).intStatic)
 	}
 }

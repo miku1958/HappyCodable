@@ -71,8 +71,11 @@ extension Happy {
 }
 
 extension Happy.alterCodingKeys: GenericTypeAttribute, CodingKeysFilter {
-	
+	static func decode<K: CodingKey>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self {
+		throw GenericTypeAttribute.Error.noStaticDecode
+	}
 }
+
 extension Happy.alterCodingKeys: Equatable where T: Equatable {
 	public static func == (lhs: Happy.alterCodingKeys<T>, rhs: Happy.alterCodingKeys<T>) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue

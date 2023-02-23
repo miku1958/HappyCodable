@@ -38,9 +38,6 @@ extension Happy {
 	}
 }
 
-extension Happy.uncoding: GenericTypeAttribute {
-	
-}
 extension Happy.uncoding: Equatable where T: Equatable {
 	public static func == (lhs: Happy.uncoding<T>, rhs: Happy.uncoding<T>) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue
@@ -61,15 +58,20 @@ extension Happy.uncoding: Codable {
 	}
 }
 
-// MARK: - KeyedDecodingContainer
-extension KeyedDecodingContainer {
-	public func decode<T>(_ type: Happy.uncoding<T>.Type, forKey key: Key) throws -> Happy.uncoding<T> {
-		
+extension Happy.uncoding: GenericTypeAttribute {
+	static func decode<K>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self where K : CodingKey {
 		guard let decoder = Thread.decoder?() else {
 			throw DecodeError.unsupportedDecoder
 		}
 		let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as! ModelCache.Uncoding<T>
 		return .init(constructor: attribute.defaultValue)
+	}
+}
+
+// MARK: - KeyedDecodingContainer
+extension KeyedDecodingContainer {
+	public func decode<T>(_ type: Happy.uncoding<T>.Type, forKey key: Key) throws -> Happy.uncoding<T> {
+		try .decode(container: self, forKey: key)
 	}
 }
 

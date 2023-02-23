@@ -41,9 +41,6 @@ extension Happy {
 	}
 }
 
-extension Happy.dataStrategy: GenericTypeAttribute {
-	
-}
 extension Happy.dataStrategy: Hashable {
 	public static func == (lhs: Happy.dataStrategy, rhs: Happy.dataStrategy) -> Bool {
 		lhs.wrappedValue == rhs.wrappedValue
@@ -72,22 +69,22 @@ extension Happy.dataStrategy: Codable {
 }
 
 // MARK: - 以下修改自原生, 除非增加了strategy 否则一般都不需要改 https://github.com/apple/swift/blob/88b093e9d77d6201935a2c2fb13f27d961836777/stdlib/public/Darwin/Foundation/JSONEncoder.swift
-// MARK: - KeyedDecodingContainer
-extension KeyedDecodingContainer {
-	public func decode(_ type: Happy.dataStrategy.Type, forKey key: Key) throws -> Happy.dataStrategy {
+
+extension Happy.dataStrategy: GenericTypeAttribute {
+	static func decode<K>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self where K : CodingKey {
 		guard
 			let decoder = Thread.decoder?(),
 			let attribute = decoder.dealingModel.decodeAttributes[key.stringValue] as? ModelCache.DataStrategy
 		else {
-			return .init(try decode(Data.self, forKey: key), decode: .deferredToData, encode: .deferredToData)
+			return .init(try container.decode(Data.self, forKey: key), decode: .deferredToData, encode: .deferredToData)
 		}
 		let data: Data
 		do {
 			switch attribute.decode {
 			case .deferredToData:
-				data = try decode(Data.self, forKey: key)
+				data = try container.decode(Data.self, forKey: key)
 			case .base64:
-				guard let _data = Data(base64Encoded: try decode(String.self, forKey: key)) else {
+				guard let _data = Data(base64Encoded: try container.decode(String.self, forKey: key)) else {
 					throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Encountered Data is not valid Base64."))
 				}
 				data = _data
@@ -100,6 +97,13 @@ extension KeyedDecodingContainer {
 			data = attribute.defaultValue!()
 		}
 		return .init(data, decode: attribute.decode, encode: attribute.encode)
+	}
+}
+
+// MARK: - KeyedDecodingContainer
+extension KeyedDecodingContainer {
+	public func decode(_ type: Happy.dataStrategy.Type, forKey key: Key) throws -> Happy.dataStrategy {
+		try .decode(container: self, forKey: key)
 	}
 }
 

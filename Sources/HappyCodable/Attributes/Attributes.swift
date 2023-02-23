@@ -10,19 +10,13 @@ import Foundation
 
 // MARK: - GenericTypeCodable
 
-protocol GenericTypeAttribute: CustomDebugStringConvertible, CustomStringConvertible {
-	associatedtype T
-	var wrappedValue: T { get }
+enum GenericTypeAttributeError: Swift.Error {
+	case noStaticDecode
 }
 
-extension GenericTypeAttribute {
-	public var debugDescription: String {
-		String(describing: wrappedValue)
-	}
-	
-	public var description: String {
-		String(describing: wrappedValue)
-	}
+protocol GenericTypeAttribute {
+	typealias Error = GenericTypeAttributeError
+	static func decode<K: CodingKey>(container: KeyedDecodingContainer<K>, forKey key: K) throws -> Self
 }
 
 // MARK: - Attributes
