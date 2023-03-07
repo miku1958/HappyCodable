@@ -79,7 +79,7 @@ public extension Array where Element: HappyCodable {
 	/// this method converts it to a Models array
 	@inline(__always)
 	static func decode(from json: String?, designatedPath: String? = nil) throws -> [Element] {
-		try decode(from: json?.data(using: .utf8))
+		try decode(from: json?.data(using: .utf8), designatedPath: designatedPath)
 	}
 	
 	/// if the JSON field finded by `designatedPath` in `json` is representing a array, such as `[{...}, {...}, {...}]`,
