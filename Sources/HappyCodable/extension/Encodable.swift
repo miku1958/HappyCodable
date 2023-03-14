@@ -2,7 +2,6 @@
 //  Encodable.swift
 //  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/6/18.
 //
 
 import Foundation
@@ -12,23 +11,28 @@ public enum EncodeError: String, Swift.Error {
 	case toJSONTypeFail
 }
 
-public extension HappyCodable {
-	func toJSON() throws -> [String: Any] {
+extension HappyEncodable {
+	func getEncoder() -> JSONEncoder {
 		let encoder = JSONEncoder()
+		encoder.dataEncodingStrategy = .deferredToData
+		encoder.dateEncodingStrategy = .deferredToDate
+		return encoder
+	}
+	public func toJSON() throws -> [String: Any] {
+		let encoder = getEncoder()
 		let data = try encoder.encode(self)
 		guard let object = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
 			throw EncodeError.toJSONTypeFail
 		}
 		return object
 	}
-	
-	func toJSONString(prettyPrint: Bool = false) throws -> String {
-		let encoder = JSONEncoder()
-		
+
+	public func toJSONString(prettyPrint: Bool = false) throws -> String {
+		let encoder = getEncoder()
 		if prettyPrint {
 			encoder.outputFormatting = .prettyPrinted
 		}
-		
+
 		let data = try encoder.encode(self)
 		guard let string = String(data: data, encoding: .utf8) else {
 			throw EncodeError.stringEncodingFail
@@ -37,23 +41,21 @@ public extension HappyCodable {
 	}
 }
 
-public extension Array where Element: HappyCodable {
-	
-	func toJSON() throws -> [[String: Any]] {
+extension Array where Element: HappyEncodable {
+	public func toJSON() throws -> [[String: Any]] {
 		try self.map {
 			try $0.toJSON()
 		}
 	}
-	
-	func toJSONString(prettyPrint: Bool = false) throws -> String {
-		let string =
-		"""
+
+	public func toJSONString(prettyPrint: Bool = false) throws -> String {
+		return """
 		[
 			\(try self.map {
-				try $0.toJSONString(prettyPrint: prettyPrint)
-			}.joined(separator: ",\(prettyPrint ? "\n\t" : "")"))
+			  try $0.toJSONString(prettyPrint: prettyPrint)
+			}
+			.joined(separator: ",\(prettyPrint ? "\n\t" : "")"))
 		]
 		"""
-		return string
 	}
 }

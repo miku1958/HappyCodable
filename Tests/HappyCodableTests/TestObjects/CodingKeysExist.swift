@@ -1,14 +1,13 @@
 //
-//  TestStruct_codingKeysExist.swift
-//  HappyCodableDemo
+//  CodingKeysExist.swift
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/8/1.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import Foundation
 import HappyCodable
 
+@HappyCodable
 struct TestStruct_codingKeysExist: HappyCodable, Equatable {
 	var int: Int = 0
 	var string: String = ""
@@ -17,5 +16,11 @@ struct TestStruct_codingKeysExist: HappyCodable, Equatable {
 		case int = "int_alter"
 		case string = "string_alter"
 		case bool
+	}
+
+	init(int: Int, string: String, bool: Bool) {
+		self.int = int
+		self.string = string
+		self.bool = bool
 	}
 }

@@ -1,24 +1,28 @@
 //
 //  Uncoding.swift
-//  HappyCodableDemo
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/9/26.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import Foundation
 import HappyCodable
 
+@HappyCodable
 struct TestStruct_uncoding: HappyCodable {
-	@Happy.uncoding
-	var uncoing = NotCodable(int: Self.fakeData_int)
-	
-	@Happy.uncoding
+	@HappyUncoding
+	var uncoing: NotCodable = NotCodable(int: Self.fakeData_int)
+
+	@HappyUncoding
 	var uncoingOptional: NotCodable?
-	
-	static let fakeData_int = Int.random(in: 0...1000000)
-	
+
+	static let fakeData_int: Int = Int.random(in: 0...1000000)
+
 	struct NotCodable: Equatable {
 		let int: Int
+	}
+
+	init(uncoing: NotCodable = NotCodable(int: Self.fakeData_int), uncoingOptional: NotCodable? = nil) {
+		self.uncoing = uncoing
+		self.uncoingOptional = uncoingOptional
 	}
 }

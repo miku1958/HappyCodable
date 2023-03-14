@@ -1,18 +1,22 @@
 //
 //  HappyCodable.swift
-//  Demo
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/11/27.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import Foundation
 import HappyCodable
 
-extension HappyCodable {
-	public static var decodeOption: HappyCodableDecodeOption {
+extension HappyEncodable {
+	public static var encodeHelper: EncodeHelper {
+		.init()
+	}
+}
+
+extension HappyDecodable {
+	public static var decodeHelper: DecodeHelper {
 		#if DEBUG1
-		return .init { (error) in
+		return .init { error in
 			print(error)
 		}
 		#else

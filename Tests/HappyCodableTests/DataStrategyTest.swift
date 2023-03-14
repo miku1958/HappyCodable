@@ -1,51 +1,48 @@
 //
-//  DataCodingStrategyTest.swift
-//  CommonTests
+//  DataStrategyTest.swift
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/9/25.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
+import XCTest
 
 class DataCodingStrategyTest: XCTestCase {
-	func test() {
+	func test() throws {
 		let fakeData_string = "\(Int.random(in: 0...1000000000))"
+		// swiftlint:disable force_unwrapping
 		let fakeData_data = fakeData_string.data(using: .utf8)!
-		
+		// swiftlint:enable force_unwrapping
+
 		let json: NSMutableDictionary = [
-			
-			"date_deferredToDate": Array(fakeData_data),
-		
-			"date_base64": fakeData_data.base64EncodedString(),
-		
-			"date_custom": Array(fakeData_data)
+
+			"data_deferredToData": Array(fakeData_data),
+
+			"data_base64": fakeData_data.base64EncodedString(),
+
+			"data_custom": Array(fakeData_data)
 		]
-		let object = try! TestStruct_dataStrategy.decode(from: json)
-		
+		let object = try TestStruct_dataStrategy.decode(from: json)
+
 		assert(try object.toJSON() as NSDictionary != json)
-		json["date_custom"] = Array(TestStruct_dataStrategy.customData)
+		json["data_custom"] = Array(TestStruct_dataStrategy.customData)
 		assert(try object.toJSON() as NSDictionary == json)
 	}
-	func testNull() {
+	func testNull() throws {
 		let json: NSMutableDictionary = [
-			
-			"date_deferredToDate": NSNull(),
-		
-			"date_base64": NSNull(),
-		
-			"date_custom": NSNull()
+
+			"data_deferredToDate": NSNull(),
+
+			"data_base64": NSNull(),
+
+			"data_custom": NSNull()
 		]
-		let object = try! TestStruct_dataStrategy.decode(from: json)
-		
+		let object = try TestStruct_dataStrategy.decode(from: json)
+
 		assert(try object.toJSON() as NSDictionary != json)
-		
-		assert(object.date_deferredToDate == TestStruct_dataStrategy.defaultData)
-		assert(object.date_base64 == TestStruct_dataStrategy.defaultData)
-		assert(object.date_custom == TestStruct_dataStrategy.defaultData)
+
+		assert(object.data_deferredToData == TestStruct_dataStrategy.defaultData)
+		assert(object.data_base64 == TestStruct_dataStrategy.defaultData)
+		assert(object.data_custom == TestStruct_dataStrategy.defaultData)
 	}
 }

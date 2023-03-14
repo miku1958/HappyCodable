@@ -4,3 +4,6 @@ Pods/
 /.build
 /Packages
 xcuserdata/
+Package.resolved
+.swiftpm
+.build

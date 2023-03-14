@@ -1,20 +1,20 @@
 //
 //  ArrayNullTest.swift
-//  
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2023/2/23.
 //
 
 import Foundation
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
-
+import XCTest
 
 class ArrayNullTest: XCTestCase {
+	@HappyCodable(disableWarnings: [.noInitializer])
+	final class HappyField1: HappyCodable {
+		@HappyElementNullable
+		var data: [String] = []
+	}
 	func test() throws {
 		let json =
 """
@@ -22,14 +22,16 @@ class ArrayNullTest: XCTestCase {
 	"data": ["a", "b", null]
 }
 """
-		final class HappyField: HappyCodable {
-			@Happy.elementNullable
-			var data: [String] = []
-		}
-		XCTAssertEqual(try HappyField.decode(from: json).data, ["a", "b"])
+		let data: [String] = try HappyField1.decode(from: json).data
+		XCTAssertEqual(data, ["a", "b"])
 	}
 
-
+	@HappyCodable(disableWarnings: [.noInitializer])
+	final class HappyField2: HappyCodable {
+		@HappyAlterCodingKeys("data1")
+		@HappyElementNullable
+		var data: [String] = []
+	}
 	func testWithAlter() throws {
 		let json =
 """
@@ -37,11 +39,7 @@ class ArrayNullTest: XCTestCase {
  "data1": ["a", "b", null]
 }
 """
-		final class HappyField: HappyCodable {
-			@Happy.alterCodingKeys("data1")
-			@Happy.elementNullable
-			var data: [String] = []
-		}
-		XCTAssertEqual(try HappyField.decode(from: json).data, ["a", "b"])
+		let data: [String] = try HappyField2.decode(from: json).data
+		XCTAssertEqual(data, ["a", "b"])
 	}
 }

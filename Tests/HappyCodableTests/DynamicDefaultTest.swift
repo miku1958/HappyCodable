@@ -1,17 +1,12 @@
 //
 //  DynamicDefaultTest.swift
-//  CommonTests
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/9/26.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
-
+import XCTest
+// swiftlint:disable identical_operands
 class DynamicDefaultTest: XCTestCase {
 
 	func test() {
@@ -28,3 +23,4 @@ class DynamicDefaultTest: XCTestCase {
 		assert((try TestStruct_dynamicDefault.decode(from: [:])).intStatic == (try TestStruct_dynamicDefault.decode(from: [:])).intStatic)
 	}
 }
+// swiftlint:enable identical_operands

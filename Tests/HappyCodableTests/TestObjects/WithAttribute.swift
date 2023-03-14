@@ -1,23 +1,28 @@
 //
 //  WithAttribute.swift
-//  HappyCodableDemo
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/7/31.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import Foundation
 import HappyCodable
 
+@HappyCodable
 struct TestStruct_withAttribute: HappyCodable {
-	@Happy.alterCodingKeys("codingKey1", "codingKey2", "🍉")
-	public var codingKeys: Int = 0
-	
-	public var optional_allow: Int?
-	
-	public var optional_notAllow: Int?
-	
-	@Happy.uncoding
-	public var uncoding: Int = 0
-	
+	@HappyAlterCodingKeys("codingKey1", "codingKey2", "🍉")
+	var codingKeys: Int = 0
+
+	var optional_allow: Int?
+
+	var optional_notAllow: Int?
+
+	@HappyUncoding
+	var uncoding: Int = 0
+
+	init(codingKeys: Int = 0, optional_allow: Int? = nil, optional_notAllow: Int? = nil, uncoding: Int = 0) {
+		self.codingKeys = codingKeys
+		self.optional_allow = optional_allow
+		self.optional_notAllow = optional_notAllow
+		self.uncoding = uncoding
+	}
 }

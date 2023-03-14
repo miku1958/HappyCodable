@@ -1,19 +1,14 @@
 //
 //  KeyedDecodingContainerTests.swift
-//  CommonTests
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/7/31.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
+import XCTest
 
 class KeyedDecodingContainerTests: XCTestCase {
-    func test() {
+	func test() throws {
 		// 到127是为了防止Int8转不了
 		let fakeData_int = Int.random(in: 0...127)
 		let fakeData_bool = Bool.random()
@@ -32,7 +27,7 @@ class KeyedDecodingContainerTests: XCTestCase {
 			"UInt16_2": fakeData_int,
 			"UInt32_2": fakeData_int,
 			"UInt64_2": fakeData_int,
-			
+
 			"Bool_optional_2": fakeData_bool,
 			"String_optional_2": "\(fakeData_int)\(fakeData_bool)",
 			"Double_optional_2": fakeData_int,
@@ -48,7 +43,7 @@ class KeyedDecodingContainerTests: XCTestCase {
 			"UInt32_optional_2": fakeData_int,
 			"UInt64_optional_2": fakeData_int,
 		]
-		let object = try! TestStruct_ForKeyedDecodingContainer.decode(from: json)
+		let object = try TestStruct_ForKeyedDecodingContainer.decode(from: json)
 		assert(object.Bool == fakeData_bool)
 		assert(object.String == "\(fakeData_int)\(fakeData_bool)")
 		assert(object.Double == .init(fakeData_int))
@@ -63,7 +58,7 @@ class KeyedDecodingContainerTests: XCTestCase {
 		assert(object.UInt16 == .init(fakeData_int))
 		assert(object.UInt32 == .init(fakeData_int))
 		assert(object.UInt64 == .init(fakeData_int))
-		
+
 		assert(object.Bool_optional == fakeData_bool)
 		assert(object.String_optional == "\(fakeData_int)\(fakeData_bool)")
 		assert(object.Double_optional == .init(fakeData_int))
@@ -78,5 +73,5 @@ class KeyedDecodingContainerTests: XCTestCase {
 		assert(object.UInt16_optional == .init(fakeData_int))
 		assert(object.UInt32_optional == .init(fakeData_int))
 		assert(object.UInt64_optional == .init(fakeData_int))
-    }
+	}
 }
