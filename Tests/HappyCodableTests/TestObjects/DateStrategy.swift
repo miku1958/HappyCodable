@@ -9,22 +9,22 @@ import HappyCodable
 
 @HappyCodable(disableWarnings: [.noInitializer])
 struct TestStruct_dateStrategy: HappyCodable, Equatable {
-	@HappyDateStrategy(decode: .deferredToDate, encode: .deferredToDate)
+	@DateStrategy(decode: .deferredToDate, encode: .deferredToDate)
 	var date_deferredToDate: Date = Self.defaultDate
 
-	@HappyDateStrategy(decode: .secondsSince1970, encode: .secondsSince1970)
+	@DateStrategy(decode: .secondsSince1970, encode: .secondsSince1970)
 	var date_secondsSince1970: Date = Self.defaultDate
 
-	@HappyDateStrategy(decode: .millisecondsSince1970, encode: .millisecondsSince1970)
+	@DateStrategy(decode: .millisecondsSince1970, encode: .millisecondsSince1970)
 	var date_millisecondsSince1970: Date = Self.defaultDate
 
-	@HappyDateStrategy(decode: .iso8601, encode: .iso8601)
+	@DateStrategy(decode: .iso8601, encode: .iso8601)
 	var date_iso8601: Date = Self.defaultDate
 
-	@HappyDateStrategy(decode: .formatted(Self.dateFormater), encode: .formatted(Self.dateFormater))
+	@DateStrategy(decode: .formatted(Self.dateFormater), encode: .formatted(Self.dateFormater))
 	var date_formatted: Date = Self.defaultDate
 
-	@HappyDateStrategy(decode: .custom { _ in
+	@DateStrategy(decode: .custom { _ in
 		return Self.customDate
 	}, encode: .custom { _, encoder in
 		try Self.customDate.encode(to: encoder)

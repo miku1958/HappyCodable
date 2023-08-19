@@ -12,7 +12,7 @@ import XCTest
 class ArrayNullTest: XCTestCase {
 	@HappyCodable(disableWarnings: [.noInitializer])
 	final class HappyField1: HappyCodable {
-		@HappyElementNullable
+		@ElementNullable
 		var data: [String] = []
 	}
 	func test() throws {
@@ -28,8 +28,8 @@ class ArrayNullTest: XCTestCase {
 
 	@HappyCodable(disableWarnings: [.noInitializer])
 	final class HappyField2: HappyCodable {
-		@HappyAlterCodingKeys("data1")
-		@HappyElementNullable
+		@AlterCodingKeys("data1")
+		@ElementNullable
 		var data: [String] = []
 	}
 	func testWithAlter() throws {

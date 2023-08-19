@@ -1,5 +1,5 @@
 //
-//  NonConformingFloatStrategy.swift
+//  FloatStrategy.swift
 //  HappyCodable
 //
 //
@@ -8,13 +8,13 @@ import Foundation
 import HappyCodable
 
 @HappyCodable
-struct TestStruct_nonConformingFloatStrategy: HappyCodable {
-	@HappyNonConformingFloatStrategy(
+struct TestStruct_floatStrategy: HappyCodable {
+	@FloatStrategy(
 		decode: .convertFromString(positiveInfinity: Data.positiveInfinity, negativeInfinity: Data.negativeInfinity, nan: Data.nan),
 		encode: .convertToString(positiveInfinity: Data.positiveInfinity, negativeInfinity: Data.negativeInfinity, nan: Data.nan)
 	) var doubleConvertFromString: Double = Data.fakeData_double
 
-	@HappyNonConformingFloatStrategy(decode: .throw, encode: .throw)
+	@FloatStrategy(decode: .throw, encode: .throw)
 	var doubleThrow: Double = Data.fakeData_double
 
 	enum Data {

@@ -9,14 +9,14 @@ import HappyCodable
 
 @HappyCodable
 struct TestStruct_withAttribute: HappyCodable {
-	@HappyAlterCodingKeys("codingKey1", "codingKey2", "🍉")
+	@AlterCodingKeys("codingKey1", "codingKey2", "🍉")
 	var codingKeys: Int = 0
 
 	var optional_allow: Int?
 
 	var optional_notAllow: Int?
 
-	@HappyUncoding
+	@Uncoding
 	var uncoding: Int = 0
 
 	init(codingKeys: Int = 0, optional_allow: Int? = nil, optional_notAllow: Int? = nil, uncoding: Int = 0) {
