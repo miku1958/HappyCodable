@@ -3,5 +3,7 @@ Pods/
 .DS_Store
 /.build
 /Packages
-/*.xcodeproj
 xcuserdata/
+Package.resolved
+.swiftpm
+.build

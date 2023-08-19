@@ -1,29 +1,35 @@
 //
-//  DateCodingStrategy.swift
-//  HappyCodableDemo
+//  DataStrategy.swift
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/9/25.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
 import Foundation
 import HappyCodable
 
+@HappyCodable
 struct TestStruct_dataStrategy: HappyCodable, Equatable {
-	@Happy.dataStrategy(decode: .deferredToData, encode: .deferredToData)
-	var date_deferredToDate: Data = Self.defaultData
+	@HappyDataStrategy(decode: .deferredToData, encode: .deferredToData)
+	var data_deferredToData: Data = Self.defaultData
 
-	@Happy.dataStrategy(decode: .base64, encode: .base64)
-	var date_base64: Data = Self.defaultData
-	
-	@Happy.dataStrategy(decode: .custom({
+	@HappyDataStrategy(decode: .base64, encode: .base64)
+	var data_base64: Data = Self.defaultData
+
+	@HappyDataStrategy(decode: .custom {
 		_ = try $0.singleValueContainer().decode(Data.self)
 		return Self.customData
-	}), encode: .custom({ data, encoder in
+	}, encode: .custom { _, encoder in
 		try Self.customData.encode(to: encoder)
-	}))
-	var date_custom: Data = Self.defaultData
-	
+	})
+	var data_custom: Data = Self.defaultData
+	// swiftlint:disable force_unwrapping
 	static let customData = "\(Int.random(in: 0...1000))".data(using: .utf8)!
 	static let defaultData = "\(Int.random(in: 0...1000))".data(using: .utf8)!
+	// swiftlint:enable force_unwrapping
+
+	init(data_deferredToData: Data, data_base64: Data, data_custom: Data) {
+		self.data_deferredToData = data_deferredToData
+		self.data_base64 = data_base64
+		self.data_custom = data_custom
+	}
 }

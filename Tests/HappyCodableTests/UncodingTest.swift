@@ -1,19 +1,16 @@
 //
 //  UncodingTest.swift
-//  CommonTests
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/9/26.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
+import XCTest
+
+// swiftlint:disable empty_collection_literal
 
 class UncodingTest: XCTestCase {
-	func test() {
+	func test() throws {
 		let fakeData_Int = Int.random(in: 0...1000000000)
 		let json: NSDictionary = [
 			"uncoing": fakeData_Int,
@@ -21,14 +18,13 @@ class UncodingTest: XCTestCase {
 				"int": fakeData_Int
 			]
 		]
-		let object = try! TestStruct_uncoding.decode(from: json)
+		let object = try TestStruct_uncoding.decode(from: json)
 		assert(object.uncoingOptional == nil)
-		
+
 		assert(object.uncoing == TestStruct_uncoding().uncoing)
-		
-		assert((try object.toJSON() as NSDictionary) == [
-			"uncoing": [:],
-			"uncoingOptional": [:]
-		])
+
+		assert((try object.toJSON() as NSDictionary) == [:])
 	}
 }
+
+// swiftlint:enable empty_collection_literal

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
 	spec.name                  = "HappyCodable"
-	spec.version               = "3.0.1"
+	spec.version               = "3.0.2"
 	spec.summary               = "快乐使用Codable"
 	spec.homepage              = "https://github.com/miku1958/HappyCodable"
 	spec.license               = "Mozilla"

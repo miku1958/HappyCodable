@@ -1,19 +1,14 @@
 //
 //  CodingKeysExistTests.swift
-//  CommonTests
+//  HappyCodable
 //
-//  Created by 庄黛淳华 on 2020/8/1.
-//  Copyright © 2020 庄黛淳华. All rights reserved.
 //
 
-import XCTest
 @testable import HappyCodable
-#if canImport(Demo)
-@testable import Demo
-#endif
+import XCTest
 
 class CodingKeysExistTests: XCTestCase {
-    func test() {
+	func test() {
 		let fakeData_int = Int.random(in: 0...1000)
 		let fakeData_bool = Bool.random()
 		let fakeData_string = "\(fakeData_int)\(fakeData_bool)"
@@ -24,5 +19,5 @@ class CodingKeysExistTests: XCTestCase {
 			"bool": fakeData_bool
 		])
 		assert(try TestStruct_codingKeysExist.decode(from: try object.toJSON()) == object)
-    }
+	}
 }
