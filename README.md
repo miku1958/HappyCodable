@@ -1,41 +1,36 @@
 # HappyCodable
 
-使用Swift Macro 实现优雅的 Codable
+Elegant Codable implementation using Swift Macro
 
+## Differences from version 3.x
 
+The way of implementing a custom decoder at compile time has been changed to using Swift Macro (currently only supported by Swift Package). This has the following benefits over a custom decoder:
 
-## 与 3.x 的区别
+1. No need to maintain a custom decoder
+2. Further reduces the runtime overhead of PropertyWrapper
+3. Simpler implementation
+4. Since it no longer relies on extensions, extension restrictions will be lifted. For example, when using other third-party Coders, you no longer need to manually write CodingKeys
+5. Because Swift Macro does not support namespaces, the @Happy prefix needs to be removed
 
-从`编译时`加`自定义的 Decoder` 的方式实现改为使用Swift Macro 实现(目前只支持Swift Package)
+## Issues with native JSON Codable?
 
-相比自定义的 Decoder有以下好处:
+1. Does not support custom coding keys for a property. Once you have this requirement, you either have to manually implement all the coding keys and modify the ones you want, or set the Decoder during decoding, which is extremely inconvenient.
+2. Does not support ignoring properties that cannot be Codable. You still need to manually implement coding keys.
+3. Does not support multiple coding keys mapping to the same property during decoding.
+4. Cannot use the model's default values. When decoding data is missing, you cannot use the default values defined in the model and instead throw a data missing error. This design leads to errors when, for example, a server deletes an outdated field of a model after a version update, and old version apps will all be in error, even if they don't use this field (only invalid data is missing). This is clearly unreasonable.
+5. Does not support simple type conversion, such as converting 0/1 to false/true, "123" to Int's 123 or vice versa. Who can guarantee that the server personnel will not accidentally modify the field type and cause a failure on the app side?
 
-1. 不用再维护自定义的 Decoder
-2. 更进一步地减少PropertyWrapper的运行时的开销
-3. 更简单地实现
-4. 因为不再依赖extension, 因此extension的限制将被解除, 比如混用其他第三方的Coder时, 不用手写CodingKeys了
-5. 因为Swift Macro不支持命名空间, 所以@Happy.的前缀需要被移除
+All of these can be solved with HappyCodable.
 
-## 原生 JSON Codable 的问题 ?
-
-1. 不支持自定义某个属性的 coding key, 一旦你有这种需求, 要么把所有的 coding key 手动实现一遍去修改想要的 coding key, 要么就得在 decode 的时候去设置 Decoder , 极其不方便
-2. 不支持忽略掉某些不能 Codable 的属性, 还是需要手动实现 coding key 才行
-3. decode 的时候不支持多个 coding key 映射同一个属性
-4. 不能使用模型的默认值, 当 decode 的数据缺失时无法使用定义里的默认值而是 throw 数据缺失错误, 这个设计导致例如版本更新后, 服务端删掉了模型的某个过期字段, 然后旧版本 app 都会陷入错误, 即使不用这个字段旧版本客户端依旧是能正常工作的(只是无效的数据显示缺失而已), 这很明显是不合理的.
-5. 不支持简单的类型转换, 比如转换 0/1 到 false/true, "123" 到 Int的123 或者反过来, 谁又能确保服务端的人员不会失手修改了字段类型导致 app 端故障呢?
-
-而这些, 你全都可以用HappyCodable解决
-
-## 安装
+## Installation
 
 ### Swift Package
 
-1. 添加该repo到项目的Swift package中
+1. Add this repo to your project's Swift package.
 
+### Using in your project
 
-### 在项目中使用
-
-把 `HappyCodable` 应用到你的struct/class/enum:
+Apply `HappyCodable` to your struct/class/enum:
 
 ```swift
 import HappyCodable
@@ -65,18 +60,18 @@ struct Person: HappyCodable {
 }
 ```
 
-## 答疑
+## Q&A
 
-1. ### 你为什么会写这个库, 我为什么不用 HandyJSON
+1. ### Why did you write this library, and why not use HandyJSON?
 
-   我之前项目是用 HandyJSON 的, 但由于 HandyJSON 是基于操作 Swift 底层数据结构实现的, 已经好几次 Swift 版本迭代后, 由于数据结构的改变 HandyJSON 都会出问题, 由于我不想手动解析模型, 促使了我写这个库, 配上足够多的测试用例总比手动安全一些
+   I used HandyJSON before, but because HandyJSON is based on operating on Swift's underlying data structures, it has had problems several times after Swift version updates due to changes in data structures. Since I don't want to manually parse models, it prompted me to write this library. Having enough test cases with HappyCodable is safer than manual implementation.
 
-   可能有人会说更新 HandyJSON 不就好了, 但是你既不能确保以后 Swift 不会更新底层数据结构后, 直接导致HandyJSON 死亡, 也不能确保你所开发的 APP 突然被迫停止开发后, 你的用户更新系统就不能用了对吧
+   Some people might say that updating HandyJSON is enough, but you can't guarantee that Swift won't update the underlying data structure in the future, causing HandyJSON to die. Nor can you guarantee that your app suddenly stops development and your users can't use it after updating the system.
 
-   为了迁移到 HappyCodable, HappyCodable 的 API 很大程度参考了 HandyJSON
+   To migrate to HappyCodable, HappyCodable's API is largely based on HandyJSON.
 
-2. ### 我的项目用了其他基于Codable的库(比如WCDB.swift), 能共存吗?
+2. ### Can it coexist with other Codable-based libraries in my project (such as WCDB.swift)?
 
-   可以
+   Yes.
 
-3. 待补充...
+3. To be continued...
