@@ -9,13 +9,13 @@ import HappyCodable
 
 @HappyCodable
 struct TestStruct_dataStrategy: HappyCodable, Equatable {
-	@HappyDataStrategy(decode: .deferredToData, encode: .deferredToData)
+	@DataStrategy(decode: .deferredToData, encode: .deferredToData)
 	var data_deferredToData: Data = Self.defaultData
 
-	@HappyDataStrategy(decode: .base64, encode: .base64)
+	@DataStrategy(decode: .base64, encode: .base64)
 	var data_base64: Data = Self.defaultData
 
-	@HappyDataStrategy(decode: .custom {
+	@DataStrategy(decode: .custom {
 		_ = try $0.singleValueContainer().decode(Data.self)
 		return Self.customData
 	}, encode: .custom { _, encoder in

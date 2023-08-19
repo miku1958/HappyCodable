@@ -9,10 +9,10 @@ import HappyCodable
 
 @HappyCodable
 struct TestStruct_uncoding: HappyCodable {
-	@HappyUncoding
+	@Uncoding
 	var uncoing: NotCodable = NotCodable(int: Self.fakeData_int)
 
-	@HappyUncoding
+	@Uncoding
 	var uncoingOptional: NotCodable?
 
 	static let fakeData_int: Int = Int.random(in: 0...1000000)

@@ -44,11 +44,11 @@ struct CodableItem {
 	}
 	var dataStrategy: DataStrategy?
 
-	struct NonConformingFloatStrategy {
+	struct FloatStrategy {
 		let encode: String
 		let decode: String
 	}
-	var nonConformingFloatStrategy: NonConformingFloatStrategy?
+	var floatStrategy: FloatStrategy?
 
 	var elementNullable: Bool = false
 }
@@ -79,8 +79,8 @@ extension CodableItem {
 			additionalArgument = ", strategy: \(dataStrategy.decode)"
 		} else if let dateStrategy {
 			additionalArgument = ", strategy: \(dateStrategy.decode)"
-		} else if let nonConformingFloatStrategy {
-			additionalArgument = ", strategy: \(nonConformingFloatStrategy.decode)"
+		} else if let floatStrategy {
+			additionalArgument = ", strategy: \(floatStrategy.decode)"
 		} else if elementNullable {
 			additionalArgument = ", strategy: ()"
 		} else {
@@ -121,8 +121,8 @@ extension CodableItem {
 			additionalArgument = ", strategy: \(dataStrategy.encode)"
 		} else if let dateStrategy {
 			additionalArgument = ", strategy: \(dateStrategy.encode)"
-		} else if let nonConformingFloatStrategy {
-			additionalArgument = ", strategy: \(nonConformingFloatStrategy.encode)"
+		} else if let floatStrategy {
+			additionalArgument = ", strategy: \(floatStrategy.encode)"
 		} else {
 			additionalArgument = ""
 		}

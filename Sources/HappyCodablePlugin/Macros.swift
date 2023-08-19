@@ -148,7 +148,7 @@ public struct HappyCodableMemberMacro: MemberMacro {
 				let decodeArgument = arguments?["decode"]?.description
 
 				switch "\(attribute.attributeName)" {
-				case "HappyAlterCodingKeys":
+				case "AlterCodingKeys":
 					guard let arguments = arguments?.map(\.expression), !arguments.isEmpty else {
 						context.diagnose(
 							Diagnostic(
@@ -165,24 +165,24 @@ public struct HappyCodableMemberMacro: MemberMacro {
 					item.alterKeys = arguments.map {
 						"\($0)"
 					}
-				case "HappyDataStrategy":
+				case "DataStrategy":
 					item.dataStrategy = .init(
 						encode: encodeArgument ?? ".deferredToData",
 						decode: decodeArgument ?? ".deferredToData"
 					)
-				case "HappyDateStrategy":
+				case "DateStrategy":
 					item.dateStrategy = .init(
 						encode: encodeArgument ?? ".deferredToDate",
 						decode: decodeArgument ?? ".deferredToDate"
 					)
-				case "HappyNonConformingFloatStrategy":
-					item.nonConformingFloatStrategy = .init(
+				case "FloatStrategy":
+					item.floatStrategy = .init(
 						encode: encodeArgument ?? ".throw",
 						decode: decodeArgument ?? ".throw"
 					)
-				case "HappyElementNullable":
+				case "ElementNullable":
 					item.elementNullable = true
-				case "HappyUncoding":
+				case "Uncoding":
 					item.uncoding = true
 					if item.defaultValue == nil {
 						context.diagnose(
