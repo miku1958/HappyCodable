@@ -30,7 +30,17 @@
 
 ### Swift Package
 
-1. 添加该repo到项目的Swift package中
+1. 添加该repo到项目的Swift package中, 设置版本为 4.0.2 或以上
+
+<img width="833" alt="image" src="https://github.com/miku1958/HappyCodable/assets/24806909/b0ed5417-734e-4982-9fe4-45b7ebebb9c5">
+
+2. 添加 HappyCodable 到需要的target里
+
+<img width="767" alt="image" src="https://github.com/miku1958/HappyCodable/assets/24806909/d75b60c3-def7-45e0-97b2-e166272f38a7">
+
+3. 编译一次后查看 warnings / errors, 选择 trust HappyCodable
+
+<img width="277" alt="Screenshot 2023-09-22 at 19 31 45" src="https://github.com/miku1958/HappyCodable/assets/24806909/8ecf54b0-0812-465f-b0f4-cbf45943bc8c">
 
 
 ### 在项目中使用
@@ -40,21 +50,33 @@
 ```swift
 import HappyCodable
 
+extension HappyEncodable {
+  static var decodeHelper:  DecodeHelper {
+    .init()
+  }
+}
+
+extension HappyDecodable {
+  static var encodeHelper: EncodeHelper {
+    .init()
+  }
+}
+
 @HappyCodable
 struct Person: HappyCodable {
   var name: String = "abc"
 
   @AlterCodingKeys("🆔")
   var id: String = "abc"
-  
+
   @AlterCodingKeys("secret_number", "age")
   var age: Int = 18
 
   @DataStrategy(decode: .deferredToData, encode: .deferredToData)
-  var data_deferredToData: Data = Self.defaultData
+  var data_deferredToData: Data = Data()
 
   @DateStrategy(decode: .secondsSince1970, encode: .secondsSince1970)
-  var date_secondsSince1970: Date = Self.defaultDate
+  var date_secondsSince1970: Date = Date(timeIntervalSince1970: 1234)
 
   @AlterCodingKeys("data1")
   @ElementNullable
@@ -62,8 +84,9 @@ struct Person: HappyCodable {
 
   @Uncoding
   var secret_number: String = "3.1415"
+
+  init() { }
 }
-```
 
 ## 答疑
 
