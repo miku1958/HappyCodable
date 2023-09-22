@@ -27,10 +27,15 @@ All of these can be solved with HappyCodable.
 ### Swift Package
 
 1. Add this repo to your project's Swift package, set the version to 4.0.2 or higher
+
 <img width="833" alt="image" src="https://github.com/miku1958/HappyCodable/assets/24806909/b0ed5417-734e-4982-9fe4-45b7ebebb9c5">
+
 2. Add HappyCodable to the desired project
+
 <img width="767" alt="image" src="https://github.com/miku1958/HappyCodable/assets/24806909/d75b60c3-def7-45e0-97b2-e166272f38a7">
+
 3. View warnings and errors after compiling, trust HappyCodable
+
 <img width="277" alt="Screenshot 2023-09-22 at 19 31 45" src="https://github.com/miku1958/HappyCodable/assets/24806909/8ecf54b0-0812-465f-b0f4-cbf45943bc8c">
 
 ### Using in your project
